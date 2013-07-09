@@ -13,8 +13,12 @@ class JobList
     @jobs = jobs
   end
 
-  def post(job)
+  def add(job)
     @jobs.push job
+  end
+
+  def post(job)
+    add(job)
   end
   
   def include?(job)

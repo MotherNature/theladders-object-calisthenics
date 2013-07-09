@@ -5,6 +5,6 @@ Feature: Post Job
 
   Scenario: Post simple ATS Job
     Given a Recruiter with Name "Jane Doe"
-    And an empty JobList
-    When the Recruiter posts a Job titled "Simple Job" of Type "ATS" to the JobList
-    Then the JobList should contain a Job titled "Simple Job" of Type "ATS"
+    And an empty PostingList
+    When the Recruiter posts a Job titled "Simple Job" of Type "ATS" to the PostingList
+    Then the PostingList should contain a Posting of the Job by the Recruiter

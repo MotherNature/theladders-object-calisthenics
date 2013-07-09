@@ -2,12 +2,14 @@ $:.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'labels'
 require 'recruiter'
 require 'job'
+require 'posting'
 require 'pp'
 
 Before do
   @recruiters = []
   @jobs = []
   @joblist = nil
+  @postinglist = nil
   @job = nil
   @recruiter = nil
 end
@@ -30,9 +32,18 @@ Given(/^an empty JobList$/) do
   @joblist = JobList.new
 end
 
+Given(/^an empty PostingList$/) do
+  @postinglist = PostingList.new
+end
+
 When(/^the Recruiter posts a Job titled "(.*?)" of Type "(.*?)" to the JobList$/) do |title, type|
   @job = Job.new(title: Title.new(title), type: Type.new(type), posted_by: @recruiter)
   @recruiter.post_job_to_list(job: @job, joblist: @joblist)
+end
+
+When(/^the Recruiter posts a Job titled "(.*?)" of Type "(.*?)" to the PostingList$/) do |title, type|
+  @job = Job.new(title: Title.new(title), type: Type.new(type), posted_by: @recruiter)
+  @postinglist.post_job(job: @job, posted_by: @recruiter)
 end
 
 When(/^the first Recruiter posts a first Job to the JobList$/) do
@@ -57,6 +68,10 @@ end
 
 Then(/^the JobList should contain a Job titled "(.*?)" of Type "(.*?)"$/) do |title, type|
   @joblist.should include @job
+end
+
+Then(/^the PostingList should contain a Posting of the Job by the Recruiter$/) do
+  @postinglist.jobs_posted_by(@recruiter).should include @job
 end
 
 Then(/^the returned JobList should contain a Job titled "(.*?)" of Type "(.*?)"$/) do |arg1, arg2|
