@@ -8,7 +8,7 @@ Feature: See Jobs
     And an empty JobList
     When the Recruiter posts a Job titled "Simple Job" of Type "ATS" to the JobList
     And the Recruiter asks for a list of Jobs that they posted
-    Then the returned JobList should contain a Job titled "Simple Job" of Type "ATS"
+    Then the JobList should contain a Job titled "Simple Job" of Type "ATS"
 
   Scenario: Filtered list of Jobs
     Given a first Recruiter with Name "Jane Doe"
