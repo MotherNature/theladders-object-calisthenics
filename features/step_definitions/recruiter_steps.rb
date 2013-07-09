@@ -32,19 +32,19 @@ end
 
 When(/^the Recruiter posts a Job titled "(.*?)" of Type "(.*?)" to the JobList$/) do |title, type|
   @job = Job.new(title: Title.new(title), type: Type.new(type), posted_by: @recruiter)
-  @recruiter.postJobToList(job: @job, joblist: @joblist)
+  @recruiter.post_job_to_list(job: @job, joblist: @joblist)
 end
 
 When(/^the first Recruiter posts a first Job to the JobList$/) do
   job = Job.new(title: Title.new("Example Title"), type: Type.new("Example Type"), posted_by: @recruiters[0])
   @jobs[0] = job
-  @recruiters[0].postJobToList(job: @jobs[0], joblist: @joblist)
+  @recruiters[0].post_job_to_list(job: @jobs[0], joblist: @joblist)
 end
 
 When(/^the second Recruiter posts a second Job to the JobList$/) do
   job = Job.new(title: Title.new("Example Title"), type: Type.new("Example Type"), posted_by: @recruiters[1])
   @jobs[1] = job
-  @recruiters[1].postJobToList(job: @jobs[1], joblist: @joblist)
+  @recruiters[1].post_job_to_list(job: @jobs[1], joblist: @joblist)
 end
 
 When(/^the Recruiter asks for a list of Jobs that they posted$/) do

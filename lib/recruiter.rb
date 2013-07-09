@@ -3,7 +3,7 @@ class Recruiter
     @name = name
   end
 
-  def postJobToList(job: job, joblist: joblist)
+  def post_job_to_list(job: job, joblist: joblist)
     joblist.post(job)
   end
 end
