@@ -15,4 +15,8 @@ class JobList
   def include?(job)
     @jobs.include?(job)
   end
+
+  def posted_by(recruiter)
+    self
+  end
 end
