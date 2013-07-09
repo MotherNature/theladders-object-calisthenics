@@ -20,3 +20,11 @@ Then(/^the JobList should contain a Job titled "(.*?)" of Type "(.*?)"$/) do |ti
   expect(@joblist.include?(@job)).to be_true
 end
 
+When(/^the Recruiter asks for a list of Jobs that they posted$/) do
+  @new_joblist = @joblist.posted_by(@recruiter)
+end
+
+Then(/^the returned JobList should contain a Job titled "(.*?)" of Type "(.*?)"$/) do |arg1, arg2|
+  expect(@new_joblist.include?(@job)).to be_true
+end
+
