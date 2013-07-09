@@ -13,7 +13,7 @@ end
 
 When(/^the Recruiter posts a Job titled "(.*?)" of Type "(.*?)" to the JobList$/) do |title, type|
   @job = Job.new(title: Title.new(title), type: Type.new(type))
-  @joblist.post(@job)
+  @recruiter.postJobToList(job: @job, joblist: @joblist)
 end
 
 Then(/^the JobList should contain a Job titled "(.*?)" of Type "(.*?)"$/) do |title, type|
