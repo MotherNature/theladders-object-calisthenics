@@ -13,7 +13,7 @@ Before do
 end
 
 Given(/^a Recruiter with Name "(.*?)"$/) do |name|
-  @recruiter = Recruiter.new(name: Name.new("Jane Doe"))
+  @recruiter = Recruiter.new(name: Name.new(name))
 end
 
 Given(/^a first Recruiter with Name "(.*?)"$/) do |name|
