@@ -31,6 +31,10 @@ class PostingList
     PostingList.new(filtered_postings)
   end
 
+  def each(&each_block)
+    @postings.each &each_block
+  end
+
   def jobs_posted_by(recruiter)
     joblist = JobList.new
     filtered_postings = @postings.select do |posting|
