@@ -57,6 +57,10 @@ class JobApplication
   def applied_to_by?(jobseeker)
     @jobseeker == jobseeker
   end
+
+  def has_resume?
+    ! @resume.nil?
+  end
 end
 
 class JobApplicationList
@@ -143,6 +147,31 @@ class JobApplicationRecordList
     end
 
     jobapplicationlist
+  end
+end
+
+class JobApplicationRecordService
+  def initialize(jobapplicationrecordlist: JobApplicationRecordList.new)
+    @jobapplicationrecordlist = jobapplicationrecordlist
+  end
+
+  def apply_jobapplication_to_job(jobapplication: nil, job: nil)
+    if(! valid_jobapplication_for_job?(jobapplication: jobapplication, job: job))
+      raise InvalidJobApplicationError.new
+    end
+
+    @jobapplicationrecordlist.apply_jobapplication_to_job(jobapplication: jobapplication, job: job)
+  end
+
+  def valid_jobapplication_for_job?(jobapplication: nil, job: nil)
+    if job.requires_resume?
+      return jobapplication.has_resume?
+    end
+    return true
+  end
+
+  def jobapplications_submitted_for_job(job)
+    @jobapplicationrecordlist.jobapplications_submitted_for_job(job)
   end
 end
 

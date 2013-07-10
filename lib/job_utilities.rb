@@ -10,3 +10,11 @@ module JobApplicationListAppender
   end
 end
 
+class JobApplicationError < RuntimeError
+end
+
+class InvalidJobApplicationError < JobApplicationError
+  def to_s
+    "Invalid JobApplication"
+  end
+end
