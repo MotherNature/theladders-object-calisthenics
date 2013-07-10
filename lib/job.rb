@@ -1,14 +1,9 @@
 require 'job_utilities'
 
 class Job
-  def initialize(title: title, jobtype: jobtype, posted_by: posted_by)
+  def initialize(title: title, jobtype: jobtype)
     @title = title
     @jobtype = jobtype
-    @posted_by = posted_by
-  end
-
-  def posted_by(recruiter)
-    @posted_by == recruiter
   end
 
   def requires_resume?

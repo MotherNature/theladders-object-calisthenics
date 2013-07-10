@@ -34,18 +34,18 @@ Given(/^an empty PostingList$/) do
 end
 
 When(/^the Recruiter posts a Job titled "(.*?)" of JobType "(.*?)" to the PostingList$/) do |title, jobtype|
-  @job = Job.new(title: Title.new(title), jobtype: @jobtypefactory.build_jobtype(jobtype), posted_by: @recruiter)
+  @job = Job.new(title: Title.new(title), jobtype: @jobtypefactory.build_jobtype(jobtype))
   @postinglist.post_job(job: @job, posted_by: @recruiter)
 end
 
 When(/^the first Recruiter posts the first Job to the PostingList$/) do
-  job = Job.new(title: Title.new("Example Title"), jobtype: JobType.new, posted_by: @recruiters[0])
+  job = Job.new(title: Title.new("Example Title"), jobtype: JobType.new)
   @jobs[0] = job
   @postinglist.post_job(job: @jobs[0], posted_by: @recruiters[0])
 end
 
 When(/^the second Recruiter posts the second Job to the PostingList$/) do
-  job = Job.new(title: Title.new("Example Title"), jobtype: JobType.new, posted_by: @recruiters[1])
+  job = Job.new(title: Title.new("Example Title"), jobtype: JobType.new)
   @jobs[1] = job
   @postinglist.post_job(job: @jobs[1], posted_by: @recruiters[1])
 end
