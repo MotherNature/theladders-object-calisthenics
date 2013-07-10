@@ -4,3 +4,9 @@ module JobListAppender
   end
 end
 
+module JobApplicationListAppender
+  def add_jobapplication_to_jobapplicationlist(jobapplicationlist)
+    jobapplicationlist.add(@jobapplication)
+  end
+end
+

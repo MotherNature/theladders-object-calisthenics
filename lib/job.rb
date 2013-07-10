@@ -49,9 +49,9 @@ end
 class JobApplication
   include JobListAppender
 
-  def initialize(job: nil, jobseeker: nil)
-    @job = job
+  def initialize(jobseeker: nil, resume: nil)
     @jobseeker = jobseeker
+    @resume = resume
   end
 
   def applied_to_by?(jobseeker)
@@ -97,6 +97,52 @@ class JobApplicationList
     end
 
     joblist
+  end
+end
+
+class JobApplicationRecord
+  include JobApplicationListAppender
+
+  def initialize(jobapplication: nil, job: nil)
+    @jobapplication = jobapplication
+    @job = job
+  end
+
+  def submitted_for_job?(job)
+    @job == job
+  end
+end
+
+class JobApplicationRecordList
+  def initialize(jobapplicationrecords=[])
+    @jobapplicationrecords = jobapplicationrecords
+  end
+
+  def each(&each_block)
+    @jobapplicationrecords.each &each_block
+  end
+
+  def apply_jobapplication_to_job(jobapplication: nil, job: nil)
+    jobapplicationrecord = JobApplicationRecord.new(jobapplication: jobapplication, job: job)
+    @jobapplicationrecords.push(jobapplicationrecord)
+  end
+
+  def jobapplicationrecords_submitted_for_job(job)
+    filtered_jobapplicationrecords = @jobapplicationrecords.select do |jobapplicationrecord|
+      jobapplicationrecord.submitted_for_job?(job)
+    end
+
+    JobApplicationRecordList.new(filtered_jobapplicationrecords)
+  end
+
+  def jobapplications_submitted_for_job(job)
+    jobapplicationlist = JobApplicationList.new
+
+    jobapplicationrecords_submitted_for_job(job).each do |jobapplicationrecord|
+      jobapplicationrecord.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
+    end
+
+    jobapplicationlist
   end
 end
 
