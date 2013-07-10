@@ -39,3 +39,6 @@ class JobList
     JobList.new(filtered_jobs)
   end
 end
+
+class SavedJobList < JobList
+end
