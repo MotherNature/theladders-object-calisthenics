@@ -61,3 +61,11 @@ Then(/^the returned JobList should only contain the first Job$/) do
   @new_joblist.should include @jobs[0]
   @new_joblist.should_not include @jobs[1]
 end
+
+Then(/^the Job should require a Resume$/) do
+  @job.requires_resume?.should be_true
+end
+
+Then(/^the Job should not require a Resume$/) do
+  @job.requires_resume?.should be_false
+end
