@@ -1,5 +1,5 @@
 class Recruiter
-  def initialize(name: name)
+  def initialize(name: nil)
     @name = name
   end
 end
