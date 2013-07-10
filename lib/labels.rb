@@ -10,9 +10,9 @@ class Title
   end
 end
 
-class Type
+class JobType
   def initialize
-    @type_string = ""
+    @jobtype_string = ""
     @requires_resume = false
   end
 
@@ -21,27 +21,27 @@ class Type
   end
 end
 
-class TypeATS < Type
+class JobTypeATS < JobType
   def initialize
-    @type_string = "ATS"
+    @jobtype_string = "ATS"
     @requires_resume = false
   end
 end
 
-class TypeJReq < Type
+class JobTypeJReq < JobType
   def initialize
-    @type_string = "JReq"
+    @jobtype_string = "JReq"
     @requires_resume = true
   end
 end
 
-class TypeFactory
-  def build_type(type_string)
-    case type_string
+class JobTypeFactory
+  def build_jobtype(jobtype_string)
+    case jobtype_string
     when "ATS"
-      TypeATS.new
+      JobTypeATS.new
     when "JReq"
-      TypeJReq.new
+      JobTypeJReq.new
     end
   end
 end

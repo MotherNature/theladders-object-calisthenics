@@ -12,7 +12,7 @@ Before do
   @postinglist = nil
   @job = nil
   @recruiter = nil
-  @typefactory = TypeFactory.new
+  @jobtypefactory = JobTypeFactory.new
 end
 
 Given(/^a Recruiter with Name "(.*?)"$/) do |name|
@@ -33,19 +33,19 @@ Given(/^an empty PostingList$/) do
   @postinglist = PostingList.new
 end
 
-When(/^the Recruiter posts a Job titled "(.*?)" of Type "(.*?)" to the PostingList$/) do |title, type|
-  @job = Job.new(title: Title.new(title), type: @typefactory.build_type(type), posted_by: @recruiter)
+When(/^the Recruiter posts a Job titled "(.*?)" of JobType "(.*?)" to the PostingList$/) do |title, jobtype|
+  @job = Job.new(title: Title.new(title), jobtype: @jobtypefactory.build_jobtype(jobtype), posted_by: @recruiter)
   @postinglist.post_job(job: @job, posted_by: @recruiter)
 end
 
 When(/^the first Recruiter posts the first Job to the PostingList$/) do
-  job = Job.new(title: Title.new("Example Title"), type: Type.new, posted_by: @recruiters[0])
+  job = Job.new(title: Title.new("Example Title"), jobtype: JobType.new, posted_by: @recruiters[0])
   @jobs[0] = job
   @postinglist.post_job(job: @jobs[0], posted_by: @recruiters[0])
 end
 
 When(/^the second Recruiter posts the second Job to the PostingList$/) do
-  job = Job.new(title: Title.new("Example Title"), type: Type.new, posted_by: @recruiters[1])
+  job = Job.new(title: Title.new("Example Title"), jobtype: JobType.new, posted_by: @recruiters[1])
   @jobs[1] = job
   @postinglist.post_job(job: @jobs[1], posted_by: @recruiters[1])
 end

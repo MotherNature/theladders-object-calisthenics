@@ -1,7 +1,7 @@
 class Job
-  def initialize(title: title, type: type, posted_by: posted_by)
+  def initialize(title: title, jobtype: jobtype, posted_by: posted_by)
     @title = title
-    @type = type
+    @jobtype = jobtype
     @posted_by = posted_by
   end
 
@@ -10,7 +10,7 @@ class Job
   end
 
   def requires_resume?
-    @type.requires_resume?
+    @jobtype.requires_resume?
   end
 end
 
