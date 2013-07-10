@@ -1,5 +1,4 @@
-class Jobseeker
-  def initialize(name: nil)
-    @name = name
-  end
+require 'person'
+
+class Jobseeker < Person
 end
