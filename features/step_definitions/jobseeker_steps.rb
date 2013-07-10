@@ -15,7 +15,7 @@ Before do
 end
 
 Given(/^a Jobseeker with Name "(.*?)"$/) do |name|
-  pending # express the regexp above with the code you wish you had
+  @jobseeker = Jobseeker.new(name: Name.new(name))
 end
 
 Given(/^an empty SavedJobsList$/) do
