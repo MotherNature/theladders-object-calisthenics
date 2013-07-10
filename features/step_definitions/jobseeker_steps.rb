@@ -29,6 +29,10 @@ Given(/^an empty JobApplicationList$/) do
   @jobapplicationlist = JobApplicationList.new
 end
 
+Given(/^an empty JobApplicationRecordList$/) do
+  pending
+end
+
 When(/^the Jobseeker saves the Job to the SavedJobRecordList$/) do
   @savedjobrecordlist.save_job_for_jobseeker(job: @job, jobseeker: @jobseeker)
 end
@@ -43,4 +47,8 @@ end
 
 Then(/^the JobApplicationList should list the Job as applied to by the Jobseeker$/) do
   @jobapplicationlist.jobs_applied_to_by(@jobseeker).should include @job
+end
+
+Then(/^the JobApplicationRecordList should throw an "(.*?)" exception$/) do |exception_description|
+  pending # express the regexp above with the code you wish you had
 end
