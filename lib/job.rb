@@ -32,10 +32,6 @@ class JobList
   def add(job)
     @jobs.push job
   end
-
-  def post(job)
-    add(job)
-  end
   
   def include?(job)
     @jobs.include?(job)
