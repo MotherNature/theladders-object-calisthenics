@@ -1,5 +1,4 @@
-+ Recruiters can post jobs.
-+ Recruiters should be able to see a listing of the jobs they have posted.
+# Pending
 + Jobseekers can save jobs onsite for later viewing.
 + Jobseekers can apply to jobs posted by recruiters.
     + There are 2 different kinds of Jobs posted by recruiters: JReq and ATS.
@@ -20,3 +19,9 @@
 + TheLadders wants the system to be able to handle more than one job with the same title.
 + TheLadders wants the system to be able to handle more than one jobseeker with the same name.
 + TheLadders wants the system to be able to handle more than one recruiter with the same name.
+
+# In Progress
+
+# Completed
++ Recruiters can post jobs.
++ Recruiters should be able to see a listing of the jobs they have posted.
