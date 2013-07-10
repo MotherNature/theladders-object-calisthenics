@@ -37,11 +37,8 @@ class PostingList
 
   def jobs_posted_by(recruiter)
     joblist = JobList.new
-    filtered_postings = @postings.select do |posting|
-      posting.posted_by?(recruiter)
-    end
-    
-    filtered_postings.each do |posting|
+
+    postings_posted_by(recruiter).each do |posting|
       posting.add_job_to_joblist(joblist)
     end
 
