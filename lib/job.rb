@@ -64,13 +64,14 @@ class SavedJobRecordList
     SavedJobRecordList.new(filtered_savedjobrecords)
   end
 
+  def each(&each_block)
+    @savedjobrecords.each &each_block
+  end
+
   def jobs_saved_by(jobseeker)
     joblist = JobList.new
-    filtered_savedjobrecords = @savedjobrecords.select do |savedjobrecord|
-      savedjobrecord.saved_by?(jobseeker)
-    end
 
-    filtered_savedjobrecords.each do |savedjobrecord|
+    records_saved_by(jobseeker).each do |savedjobrecord|
       savedjobrecord.add_job_to_joblist(joblist)
     end
 
