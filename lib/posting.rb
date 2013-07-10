@@ -1,4 +1,8 @@
+require 'job_utilities'
+
 class Posting
+  include JobListAppender
+
   def initialize(job: nil, posted_by: posted_by)
     @job = job
     @posted_by = posted_by
@@ -6,10 +10,6 @@ class Posting
 
   def posted_by?(recruiter)
     @posted_by == recruiter
-  end
-
-  def add_job_to_joblist(joblist)
-    joblist.add(@job)
   end
 end
 
