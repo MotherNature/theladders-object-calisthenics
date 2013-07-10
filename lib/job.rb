@@ -56,7 +56,7 @@ class SavedJobRecordList
     @savedjobrecords.push(savedjobrecord)
   end
 
-  def saved_by(jobseeker)
+  def records_saved_by(jobseeker)
     filtered_savedjobrecords = @savedjobrecords.select do |savedjobrecord|
       savedjobrecord.saved_by?(jobseeker)
     end
