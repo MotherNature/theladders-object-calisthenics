@@ -14,6 +14,12 @@ class Job
   end
 end
 
+module JobListAppender
+  def add_job_to_joblist(joblist)
+    joblist.add(@job)
+  end
+end
+
 class SavedJobRecord
   def initialize(job: nil, jobseeker: nil)
     @job = job
