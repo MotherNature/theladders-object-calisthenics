@@ -6,8 +6,8 @@ Feature: See Jobs
   Scenario: Filtered list of Jobs
     Given a first Recruiter with Name "Jane Doe"
     Given a second Recruiter with Name "Vincent Price"
-    And an empty JobList
-    When the first Recruiter posts a first Job to the JobList
-    And the second Recruiter posts a second Job to the JobList
+    And an empty PostingList
+    When the first Recruiter posts the first Job to the PostingList
+    And the second Recruiter posts the second Job to the PostingList
     And the first Recruiter asks for a list of Jobs that they posted
     Then the returned JobList should only contain the first Job
