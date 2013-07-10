@@ -1,6 +1,8 @@
 $:.unshift(File.dirname(__FILE__) + '/../../lib')
 require 'labels'
 require 'job'
+require 'recruiter'
+require 'posting'
 require 'jobseeker'
 require 'pp'
 
