@@ -1,7 +1,7 @@
 require 'job_utilities'
 
 class Job
-  def initialize(title: title, jobtype: jobtype)
+  def initialize(title: nil, jobtype: nil)
     @title = title
     @jobtype = jobtype
   end
