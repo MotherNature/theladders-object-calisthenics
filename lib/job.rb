@@ -1,3 +1,5 @@
+require 'job_utilities'
+
 class Job
   def initialize(title: title, jobtype: jobtype, posted_by: posted_by)
     @title = title
@@ -11,12 +13,6 @@ class Job
 
   def requires_resume?
     @jobtype.requires_resume?
-  end
-end
-
-module JobListAppender
-  def add_job_to_joblist(joblist)
-    joblist.add(@job)
   end
 end
 
