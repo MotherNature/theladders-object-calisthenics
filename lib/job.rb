@@ -1,10 +1,16 @@
 class Job
   def initialize(title: title, type: type, posted_by: posted_by)
+    @title = title
+    @type = type
     @posted_by = posted_by
   end
 
   def posted_by(recruiter)
     @posted_by == recruiter
+  end
+
+  def requires_resume?
+    @type.requires_resume?
   end
 end
 
