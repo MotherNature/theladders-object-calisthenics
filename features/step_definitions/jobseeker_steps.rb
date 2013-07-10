@@ -25,7 +25,7 @@ Given(/^an empty SavedJobRecordList$/) do
 end
 
 When(/^the Jobseeker saves the Job to the SavedJobRecordList$/) do
-  pending
+  @savedjobrecordlist.save_job_for_jobseeker(job: @job, jobseeker: @jobseeker)
 end
 
 Then(/^the SavedJobRecordList should contain the Job$/) do
