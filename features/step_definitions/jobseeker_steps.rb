@@ -20,15 +20,15 @@ Given(/^a Jobseeker with Name "(.*?)"$/) do |name|
   @jobseeker = Jobseeker.new(name: Name.new(name))
 end
 
-Given(/^an empty SavedJobList$/) do
-  @savedjoblist = SavedJobList.new
+Given(/^an empty SavedJobRecordList$/) do
+  @savedjobrecordlist = SavedJobRecordList.new
 end
 
-When(/^the Jobseeker saves the Job to the SavedJobList$/) do
-  pending # express the regexp above with the code you wish you had
+When(/^the Jobseeker saves the Job to the SavedJobRecordList$/) do
+  pending
 end
 
-Then(/^the SavedJobList should contain the Job$/) do
+Then(/^the SavedJobRecordList should contain the Job$/) do
   pending # express the regexp above with the code you wish you had
 end
 

@@ -14,6 +14,13 @@ class Job
   end
 end
 
+class SavedJobRecord
+  def initialize(job: nil, jobseeker: nil)
+    @job = job
+    @jobseeker = jobseeker
+  end
+end
+
 class JobList
   def initialize(jobs=[])
     @jobs = jobs
@@ -40,5 +47,13 @@ class JobList
   end
 end
 
-class SavedJobList < JobList
+class SavedJobRecordList
+  def initialize(savedjobrecords=[])
+    @savedjobrecords = savedjobrecords
+  end
+
+  def save_job_for_jobseeker(job: nil, jobseeker: nil)
+    savedjobrecord = SavedJobRecord.new(job: job, jobseeker: jobseeker)
+    @savedjobrecords.push(savedjobrecord)
+  end
 end
