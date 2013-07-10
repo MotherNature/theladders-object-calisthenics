@@ -36,12 +36,14 @@ class JobTypeJReq < JobType
 end
 
 class JobTypeFactory
+  def initialize
+    @string_class_pairings = {
+      "ATS" => JobTypeATS.new,
+      "JReq" => JobTypeJReq.new
+    }
+  end
+
   def build_jobtype(jobtype_string)
-    case jobtype_string
-    when "ATS"
-      JobTypeATS.new
-    when "JReq"
-      JobTypeJReq.new
-    end
+    @string_class_pairings[jobtype_string]
   end
 end
