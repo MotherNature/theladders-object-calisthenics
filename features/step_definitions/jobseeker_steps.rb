@@ -29,6 +29,6 @@ When(/^the Jobseeker saves the Job to the SavedJobRecordList$/) do
 end
 
 Then(/^the SavedJobRecordList should contain the Job$/) do
-  pending # express the regexp above with the code you wish you had
+  @savedjobrecordlist.jobs_saved_by(@jobseeker).should include @job
 end
 
