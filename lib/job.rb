@@ -21,6 +21,8 @@ module JobListAppender
 end
 
 class SavedJobRecord
+  include JobListAppender
+
   def initialize(job: nil, jobseeker: nil)
     @job = job
     @jobseeker = jobseeker
@@ -28,10 +30,6 @@ class SavedJobRecord
 
   def saved_by?(jobseeker)
     @jobseeker == jobseeker
-  end
-
-  def add_job_to_joblist(joblist)
-    joblist.add(@job)
   end
 end
 
