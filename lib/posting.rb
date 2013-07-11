@@ -20,7 +20,7 @@ class PostingList < List
   end
 
   def postings_posted_by(recruiter)
-    items_filtered_for(recruiter) do |posting|
+    select do |posting|
       posting.posted_by?(recruiter)
     end
   end

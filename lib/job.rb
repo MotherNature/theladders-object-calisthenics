@@ -27,7 +27,7 @@ end
 
 class JobList < List
   def posted_by(recruiter)
-    items_filtered_for(recruiter) do |job|
+    select do |job|
       job.posted_by(recruiter)
     end
   end
@@ -57,13 +57,13 @@ class JobApplicationList < List
   end
 
   def jobapplications_submitted_by(jobseeker)
-    items_filtered_for(jobseeker) do |jobapplication|
+    select do |jobapplication|
       jobapplication.applied_to_by?(jobseeker)
     end
   end
 
   def jobs_applied_to_by(jobseeker)
-    items_filtered_for(jobseeker) do |jobapplication|
+    select do |jobapplication|
       jobapplication.add_job_to_joblist(joblist)
     end
   end
@@ -89,7 +89,7 @@ class JobApplicationRecordList < List
   end
 
   def jobapplicationrecords_submitted_for_job(job)
-    items_filtered_for(job) do |jobapplicationrecord|
+    select do |jobapplicationrecord|
       jobapplicationrecord.submitted_for_job?(job)
     end
   end
@@ -97,7 +97,7 @@ class JobApplicationRecordList < List
   def jobapplications_submitted_for_job(job)
     jobapplicationlist = JobApplicationList.new
 
-    items_filtered_for(job) do |jobapplicationrecord|
+    select do |jobapplicationrecord|
       jobapplicationrecord.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
     end
 
@@ -137,7 +137,7 @@ class SavedJobRecordList < List
   end
 
   def records_saved_by(jobseeker)
-    items_filtered_for(jobseeker) do |savedjobrecord|
+    select do |savedjobrecord|
       savedjobrecord.saved_by?(jobseeker)
     end
   end
