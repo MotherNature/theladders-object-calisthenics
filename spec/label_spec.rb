@@ -14,6 +14,13 @@ describe IDNumber do
 
     idnumber.to_s.should == "ID0001"
   end
+
+  it "should match IDNumbers created from the same String" do
+    idnumber1 = IDNumber.new("ID0001")
+    idnumber2 = IDNumber.new("ID0001")
+
+    idnumber1.same_id?(idnumber2)
+  end
 end
 
 describe Identity do
