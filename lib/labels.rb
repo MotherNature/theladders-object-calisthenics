@@ -3,6 +3,11 @@ class IDNumber
   end
 end
 
+class Identity
+  def initialize(name: nil, idnumber: nil)
+  end
+end
+
 class Name
   def initialize(name_string)
     @name_string = name_string
