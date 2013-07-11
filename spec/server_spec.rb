@@ -24,14 +24,4 @@ describe "The Jobseeker app" do
     last_response.should be_ok
     last_response.body.should match /Added new Recruiter: Jane Smith, ID: .*\./
   end
-
-  it "saves Recruiter profile submissions" do
-    post '/recruiters', { :name => "Jane Smith" }
-    id = /ID: (?<id>[^.])\.$/.match(last_response.body)[:id]
-    id.should be
-
-    get "/recruiters/#{id}"
-    last_response.should be_ok
-    last_response.body.should match /Name: Jane Smith. ID: #{id}/
-  end
 end
