@@ -56,5 +56,17 @@ describe Jobseeker do
       
       @jobapplicationrecordservice.jobapplications_submitted_for_job(job).should_not include @jobapplication
     end
+
+    it "should be able to apply to a JReq Job with a resume" do
+      job = @jobfactory.build_job(title_string: "Example Job", jobtype_string: "JReq")
+      @postinglist.post_job(job: job, posted_by: @recruiter)
+
+      resume = Resume.new(jobseeker: @jobseeker)
+      jobapplication = JobApplication.new(jobseeker: @jobseeker, resume: resume) 
+
+      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: jobapplication, job: job)
+      
+      @jobapplicationrecordservice.jobapplications_submitted_for_job(job).should include jobapplication
+    end
   end
 end
