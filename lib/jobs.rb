@@ -56,6 +56,10 @@ class JobApplication
   include JobListAppender
 
   def initialize(jobseeker: nil, resume: nil)
+    if(! resume.nil? && ! resume.belongs_to?(jobseeker))
+      raise InvalidJobApplicationError.new("The Resume does not belong to the Jobseeker")
+    end
+
     @jobseeker = jobseeker
     @resume = resume
   end
