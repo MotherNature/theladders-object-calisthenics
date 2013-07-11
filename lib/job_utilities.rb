@@ -14,13 +14,7 @@ class JobApplicationError < RuntimeError
 end
 
 class InvalidJobApplicationError < JobApplicationError
-  def to_s
-    "Invalid JobApplication"
-  end
 end
 
 class IncompatibleJobApplicationError < JobApplicationError
-  def to_s
-    "Incompatible JobApplication"
-  end
 end
