@@ -6,7 +6,7 @@ require 'rack/test'
 
 set :environment, :test
 
-describe "The HelloFromTheLadders app" do
+describe "The Jobseeker app" do
   include Rack::Test::Methods
 
   def app
@@ -17,5 +17,11 @@ describe "The HelloFromTheLadders app" do
     get '/'
     last_response.should be_ok
     last_response.body.should == 'Hello from TheLadders!'
+  end
+
+  it "accepts Recruiter profile submissions" do
+    post '/recruiters', { :name => "Jane Smith" }
+    last_response.should be_ok
+    last_response.body.should == "Added new Recruiter: Jane Smith."
   end
 end
