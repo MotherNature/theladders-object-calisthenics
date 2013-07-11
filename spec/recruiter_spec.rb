@@ -21,5 +21,13 @@ describe Recruiter do
 
       @postinglist.jobs_posted_by(@recruiter).should include job
     end
+
+    it "should be able to a post simple JReq job" do
+      title = Title.new("Example Job Title")
+      job = Job.new(title: Title.new(title), jobtype: jobtypefactory.build_jobtype("JReq"))
+      @postinglist.post_job(job: job, posted_by: @recruiter)
+
+      @postinglist.jobs_posted_by(@recruiter).should include job
+    end
   end
 end
