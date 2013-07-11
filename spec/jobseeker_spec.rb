@@ -17,13 +17,15 @@ describe Jobseeker do
     @savedjobrecordlist = SavedJobRecordList.new
 
     @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"))
+
+    @ats_job = @jobfactory.build_job(title_string: "Example Title", jobtype_string: "ATS")
+    @jreq_job = @jobfactory.build_job(title_string: "Example Title", jobtype_string: "JReq")
   end
 
   describe "Save Job" do
     it "should be able to save a List of Jobs" do
-      job = @jobfactory.build_job(title_string: "Example Title", jobtype_string: "ATS")
-      @savedjobrecordlist.save_job_for_jobseeker(job: job, jobseeker: @jobseeker)
-      @savedjobrecordlist.jobs_saved_by(@jobseeker).should include job
+      @savedjobrecordlist.save_job_for_jobseeker(job: @ats_job, jobseeker: @jobseeker)
+      @savedjobrecordlist.jobs_saved_by(@jobseeker).should include @ats_job
     end
   end
 
@@ -36,38 +38,32 @@ describe Jobseeker do
       @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"))
 
       @jobapplication = JobApplication.new(jobseeker: @jobseeker)
+
+      @postinglist.post_job(job: @ats_job, posted_by: @recruiter)
+      @postinglist.post_job(job: @jreq_job, posted_by: @recruiter)
     end
 
     it "should be able to apply to an ATS Job without a resume" do
-      job = @jobfactory.build_job(title_string: "Example Job", jobtype_string: "ATS")
-      @postinglist.post_job(job: job, posted_by: @recruiter)
-
-      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: @jobapplication, job: job)
+      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: @jobapplication, job: @ats_job)
       
-      @jobapplicationrecordservice.jobapplications_submitted_for_job(job).should include @jobapplication
+      @jobapplicationrecordservice.jobapplications_submitted_for_job(@ats_job).should include @jobapplication
     end
 
     it "should not be able to apply to a JReq Job without a resume" do
-      job = @jobfactory.build_job(title_string: "Example Job", jobtype_string: "JReq")
-      @postinglist.post_job(job: job, posted_by: @recruiter)
-
       expect {
-        @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: @jobapplication, job: job)
+        @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: @jobapplication, job: @jreq_job)
       }.to raise_error(InvalidJobApplicationError)
       
-      @jobapplicationrecordservice.jobapplications_submitted_for_job(job).should_not include @jobapplication
+      @jobapplicationrecordservice.jobapplications_submitted_for_job(@jreq_job).should_not include @jobapplication
     end
 
     it "should be able to apply to a JReq Job with a resume" do
-      job = @jobfactory.build_job(title_string: "Example Job", jobtype_string: "JReq")
-      @postinglist.post_job(job: job, posted_by: @recruiter)
-
       resume = Resume.new(jobseeker: @jobseeker)
       jobapplication = JobApplication.new(jobseeker: @jobseeker, resume: resume) 
 
-      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: jobapplication, job: job)
+      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: jobapplication, job: @jreq_job)
       
-      @jobapplicationrecordservice.jobapplications_submitted_for_job(job).should include jobapplication
+      @jobapplicationrecordservice.jobapplications_submitted_for_job(@jreq_job).should include jobapplication
     end
   end
 end
