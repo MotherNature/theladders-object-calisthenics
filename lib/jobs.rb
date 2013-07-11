@@ -145,7 +145,7 @@ class JobApplicationRecordService
 
   def apply_jobapplication_to_job(jobapplication: nil, job: nil)
     if(! valid_jobapplication_for_job?(jobapplication: jobapplication, job: job))
-      raise InvalidJobApplicationError.new
+      raise IncompatibleJobApplicationError.new("This JobApplication is incompatible with this Job. JobType mismatch?")
     end
 
     @jobapplicationrecordlist.apply_jobapplication_to_job(jobapplication: jobapplication, job: job)

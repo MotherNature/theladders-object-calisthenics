@@ -18,3 +18,9 @@ class InvalidJobApplicationError < JobApplicationError
     "Invalid JobApplication"
   end
 end
+
+class IncompatibleJobApplicationError < JobApplicationError
+  def to_s
+    "Incompatible JobApplication"
+  end
+end
