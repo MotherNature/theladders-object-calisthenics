@@ -19,7 +19,7 @@ describe IDNumber do
     idnumber1 = IDNumber.new("ID0001")
     idnumber2 = IDNumber.new("ID0001")
 
-    idnumber1.same_id?(idnumber2)
+    idnumber1.same_id?(idnumber2).should be_true
   end
 end
 
