@@ -14,7 +14,7 @@ describe Recruiter do
   end
 
   describe "Post Jobs" do
-    it "should be able to a post simple ATS job" do
+    it "should be able to post a simple ATS Job" do
       title = Title.new("Example Job Title")
       job = Job.new(title: Title.new(title), jobtype: jobtypefactory.build_jobtype("ATS"))
       @postinglist.post_job(job: job, posted_by: @recruiter)
@@ -22,7 +22,7 @@ describe Recruiter do
       @postinglist.jobs_posted_by(@recruiter).should include job
     end
 
-    it "should be able to a post simple JReq job" do
+    it "should be able to post a simple JReq Job" do
       title = Title.new("Example Job Title")
       job = Job.new(title: Title.new(title), jobtype: jobtypefactory.build_jobtype("JReq"))
       @postinglist.post_job(job: job, posted_by: @recruiter)
