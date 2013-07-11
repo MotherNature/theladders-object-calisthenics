@@ -1,3 +1,4 @@
+require 'utility'
 require 'job_utilities'
 
 class Posting
