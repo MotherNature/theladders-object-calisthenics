@@ -6,6 +6,7 @@ require 'jobs'
 require 'jobseekers'
 require 'recruiters'
 require 'postings'
+require 'resumes'
 
 describe Jobseeker do
   before(:each) do
