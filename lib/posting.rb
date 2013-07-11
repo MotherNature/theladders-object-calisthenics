@@ -13,26 +13,16 @@ class Posting
   end
 end
 
-class PostingList
-  def initialize(postings=[])
-    @postings = postings
-  end
-
+class PostingList < List
   def post_job(job: nil, posted_by: nil)
     posting = Posting.new(job: job, posted_by: posted_by)
-    @postings.push(posting)
+    add(posting)
   end
 
   def postings_posted_by(recruiter)
-    filtered_postings = @postings.select do |posting|
+    items_filtered_for(recruiter) do |posting|
       posting.posted_by?(recruiter)
     end
-
-    PostingList.new(filtered_postings)
-  end
-
-  def each(&each_block)
-    @postings.each &each_block
   end
 
   def jobs_posted_by(recruiter)
