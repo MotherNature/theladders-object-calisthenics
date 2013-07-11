@@ -52,7 +52,7 @@ describe Jobseeker do
     it "should not be able to apply to a JReq Job without a resume" do
       expect {
         @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: @jobapplication, job: @jreq_job)
-      }.to raise_error(InvalidJobApplicationError)
+      }.to raise_error(IncompatibleJobApplicationError)
       
       @jobapplicationrecordservice.jobapplications_submitted_for_job(@jreq_job).should_not include @jobapplication
     end

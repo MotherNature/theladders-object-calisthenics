@@ -1,7 +1,6 @@
 # Pending
 
 + Jobseekers should be able to see a listing of jobs they have saved for later viewing.
-+ Jobseekers should be able to see a listing of the jobs for which they have applied.
 + Recruiters should be able to see jobseekers who have applied to their jobs by both job and day. If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day.
 + TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day.
 + TheLadders should be able to get the job application report in either csv or html format.
@@ -15,8 +14,8 @@
 + TheLadders wants the system to be able to handle more than one recruiter with the same name.
 
 # In Progress
-+ Jobseekers can apply to jobs posted by recruiters.
-    + Jobseekers can not apply to a job with someone else’s resume.
+
++ Jobseekers should be able to see a listing of the jobs for which they have applied.
 
 # Completed
 
@@ -28,3 +27,4 @@
     + ATS jobs do not require a resume to apply to them.
     + JReq jobs require a resume to apply to them.
     + Jobseekers should be able to apply to different jobs with different resumes.
+    + Jobseekers can not apply to a job with someone else’s resume.
