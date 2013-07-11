@@ -85,5 +85,15 @@ describe Jobseeker do
       jobapplication2.has_this_resume?(resume2).should be_true
       jobapplication2.has_this_resume?(resume1).should be_false
     end
+
+    it "should not be able to apply to Jobs with another Jobseeker's Resume" do
+      jobseeker2 = Jobseeker.new(name: Name.new("Jane Deus"))
+
+      resume2 = Resume.new(jobseeker: jobseeker2)
+
+      expect {
+        jobapplication = JobApplication.new(jobseeker: @jobseeker, resume: resume2)
+      }.to raise_error(InvalidJobApplicationError)
+    end
   end
 end
