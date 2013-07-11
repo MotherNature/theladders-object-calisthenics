@@ -1,6 +1,6 @@
 # Object Calisthenics Exercise
 
-Current implementation: Cucumber features
+Current implementation: RSpec tests of library modules.
 
-Usage: `cucumber`.
+Usage: `rspec`.
 
