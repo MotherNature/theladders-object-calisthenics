@@ -8,6 +8,12 @@ describe IDNumber do
 
     idnumber.should be
   end
+
+  it "should convert to a String" do
+    idnumber = IDNumber.new("ID0001")
+
+    idnumber.to_s.should == "ID0001"
+  end
 end
 
 describe Identity do
