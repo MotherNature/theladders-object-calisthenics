@@ -51,5 +51,19 @@ describe Jobseeker do
       
       @jobapplicationrecordservice.jobapplications_submitted_for_job(job).should include jobapplication
     end
+
+    it "should not be able to apply to a JReq Job without a resume" do
+      # TODO: Refactor most of this spec into a helper method
+      jobtype = jobtypefactory.build_jobtype("JReq")
+      job = Job.new(title: @title, jobtype: jobtype)
+      @postinglist.post_job(job: job, posted_by: @recruiter)
+
+      jobapplication = JobApplication.new(jobseeker: @jobseeker)
+      expect {
+        @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: jobapplication, job: job)
+      }.to raise_error(InvalidJobApplicationError)
+      
+      @jobapplicationrecordservice.jobapplications_submitted_for_job(job).should_not include jobapplication
+    end
   end
 end
