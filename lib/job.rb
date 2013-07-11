@@ -31,6 +31,12 @@ class JobList < List
       job.posted_by(recruiter)
     end
   end
+
+  public
+  # TODO: Replace exposed method with a more explicit verb.
+  def add(job)
+    super(job)
+  end
 end
 
 class JobApplication
@@ -66,6 +72,12 @@ class JobApplicationList < List
     select do |jobapplication|
       jobapplication.add_job_to_joblist(joblist)
     end
+  end
+
+  public
+  # TODO: Replace exposed method with a more explicit verb.
+  def add(job)
+    super(job)
   end
 end
 

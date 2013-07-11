@@ -3,10 +3,6 @@ class List
     @list_items = list_items
   end
 
-  def add(list_item)
-    @list_items.push(list_item)
-  end
-
   def include?(list_item)
     @list_items.include?(list_item)
   end
@@ -16,6 +12,10 @@ class List
   end
 
   private
+  def add(list_item)
+    @list_items.push(list_item)
+  end
+
   def select(&filter_block)
     filtered_items = @list_items.select do |list_item|
       filter_block.call(list_item)
