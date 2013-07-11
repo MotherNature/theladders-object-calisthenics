@@ -96,4 +96,20 @@ describe Jobseeker do
       }.to raise_error(InvalidJobApplicationError)
     end
   end
+
+  describe "See Jobs" do
+    it "should be able to see a listing of the Jobs for which they have applied" do
+      pending "until the JobApplicationRecordReportGenerator class is created."
+      jobapplicationrecordreportrecordgenerator = JobApplicationRecordReportGenerator.new(@jobapplicationrecordservice)
+
+      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: @jobapplication, job: @ats_job)
+      jobapplicationrecordreportrecordgenerator.report_as_text_for(@jobseeker).should == "Jobseeker: Jane Doe\n- Job Title: Example Title\n- Job Type: ATS"
+
+      resume = Resume.new(jobseeker: @jobseeker)
+      jobapplication2 = JobApplication.new(jobseeker: @jobseeker, resume: resume) 
+
+      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: jobapplication2, job: @jreq_job)
+      jobapplicationrecordreportrecordgenerator.report_as_text_for(@jobseeker).should == "Jobseeker: Jane Doe\n- Job Title: Example Title\n- Job Type: ATS\n---\n- Job Title: Example Title\n- Job Type: JReq"
+    end
+  end
 end
