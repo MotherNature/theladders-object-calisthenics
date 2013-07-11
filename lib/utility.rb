@@ -12,12 +12,12 @@ class List
   end
 
   def each(&each_block)
-    @jobapplications.each &each_block
+    @list_items.each &each_block
   end
 
   private
   def items_filtered_for(subject_item, &filter_block)
-    filtered_items = @items.select do |list_item|
+    filtered_items = @list_items.select do |list_item|
       filter_block.call(list_item)
     end
 
