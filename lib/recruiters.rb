@@ -1,4 +1,4 @@
-require 'person'
+require 'people'
 
 class Recruiter < Person
 end

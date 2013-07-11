@@ -2,10 +2,10 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'spec'))
 
 require 'labels'
-require 'job'
-require 'jobseeker'
-require 'recruiter'
-require 'posting'
+require 'jobs'
+require 'jobseekers'
+require 'recruiters'
+require 'postings'
 
 describe Jobseeker do
   before(:each) do

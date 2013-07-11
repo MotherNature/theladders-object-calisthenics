@@ -1,9 +1,9 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
 
 require 'labels'
-require 'recruiter'
-require 'posting'
-require 'job'
+require 'recruiters'
+require 'postings'
+require 'jobs'
 
 jobtypefactory = JobTypeFactory.new
 
