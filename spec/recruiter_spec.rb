@@ -9,11 +9,14 @@ jobtypefactory = JobTypeFactory.new
 
 describe Recruiter do
   before(:each) do
-    @recruiter = Recruiter.new(name: Name.new("Rachel McExample"))
     @postinglist = PostingList.new
   end
 
   describe "Post Jobs" do
+    before(:each) do
+      @recruiter = Recruiter.new(name: Name.new("Rachel McExample"))
+    end
+
     it "should be able to post a simple ATS Job" do
       title = Title.new("Example Job Title")
       job = Job.new(title: Title.new(title), jobtype: jobtypefactory.build_jobtype("ATS"))
