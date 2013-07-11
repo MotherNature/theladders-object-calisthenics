@@ -11,6 +11,10 @@ class List
     @list_items.include?(list_item)
   end
 
+  def each(&each_block)
+    @jobapplications.each &each_block
+  end
+
   private
   def items_filtered_for(subject_item, &filter_block)
     filtered_items = @items.select do |list_item|
