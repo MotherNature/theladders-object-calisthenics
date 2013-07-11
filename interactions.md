@@ -1,9 +1,6 @@
 # Pending
 
 + Jobseekers can apply to jobs posted by recruiters.
-    + There are 2 different kinds of Jobs posted by recruiters: JReq and ATS.
-    + JReq jobs require a resume to apply to them.
-    + ATS jobs do not.
     + Jobseekers can not apply to a job with someone else’s resume.
     + Jobseekers should be able to apply to different jobs with different resumes.
 + Jobseekers should be able to see a listing of jobs they have saved for later viewing.
@@ -21,9 +18,8 @@
 + TheLadders wants the system to be able to handle more than one recruiter with the same name.
 
 # In Progress
-
 + Jobseekers can apply to jobs posted by recruiters.
-    + JReq jobs require a resume to apply to them.
+    + Jobseekers should be able to apply to different jobs with different resumes.
 
 # Completed
 
@@ -33,3 +29,4 @@
 + Jobseekers can apply to jobs posted by recruiters.
     + There are 2 different kinds of Jobs posted by recruiters: JReq and ATS.
     + ATS jobs do not require a resume to apply to them.
+    + JReq jobs require a resume to apply to them.
