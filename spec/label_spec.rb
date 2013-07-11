@@ -2,6 +2,15 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
 
 require 'labels'
 
+describe Name do
+  it "should match Names created from the same String" do
+    name1 = Name.new("Jane Smith")
+    name2 = Name.new("Jane Smith")
+
+    name1.same_name?(name2).should be_true
+  end
+end
+
 describe IDNumber do
   it "should initialize with a String for the ID" do
     idnumber = IDNumber.new("ID0001")
