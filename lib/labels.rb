@@ -1,3 +1,8 @@
+class IDNumber
+  def initialize(idnumber_string)
+  end
+end
+
 class Name
   def initialize(name_string)
     @name_string = name_string
