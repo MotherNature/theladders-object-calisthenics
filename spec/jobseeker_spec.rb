@@ -29,4 +29,27 @@ describe Jobseeker do
       @savedjobrecordlist.jobs_saved_by(@jobseeker).should include @job
     end
   end
+
+  describe "Apply to Job" do
+    before(:each) do
+      @jobapplicationlist = JobApplicationList.new
+      @jobapplicationrecordservice = JobApplicationRecordService.new
+
+      @title = Title.new("Example Title")
+
+      @recruiter = Recruiter.new(name: Name.new("Rachel McExample"))
+      @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"))
+    end
+
+    it "should be able to apply to an ATS Job without a resume" do
+      jobtype = jobtypefactory.build_jobtype("ATS")
+      job = Job.new(title: @title, jobtype: jobtype)
+      @postinglist.post_job(job: job, posted_by: @recruiter)
+
+      jobapplication = JobApplication.new(jobseeker: @jobseeker)
+      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: jobapplication, job: job)
+      
+      @jobapplicationrecordservice.jobapplications_submitted_for_job(job).should include jobapplication
+    end
+  end
 end
