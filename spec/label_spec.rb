@@ -25,4 +25,13 @@ describe Identity do
 
     identity.should be
   end
+
+  it "should convert to a String" do
+    name = Name.new("Jane Smith")
+    idnumber = IDNumber.new("ID0001")
+
+    identity = Identity.new(name: name, idnumber: idnumber)
+
+    identity.to_s.should == "Name: Jane Smith\nID Number: ID0001"
+  end
 end
