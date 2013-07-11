@@ -10,6 +10,12 @@ end
 
 class Identity
   def initialize(name: nil, idnumber: nil)
+    @name = name
+    @idnumber = idnumber
+  end
+
+  def to_s
+    "Name: #{@name}\nID Number: #{@idnumber}"
   end
 end
 
