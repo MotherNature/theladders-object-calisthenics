@@ -130,26 +130,16 @@ class JobApplicationRecordService
   end
 end
 
-class SavedJobRecordList
-  def initialize(savedjobrecords=[])
-    @savedjobrecords = savedjobrecords
-  end
-
+class SavedJobRecordList < List
   def save_job_for_jobseeker(job: nil, jobseeker: nil)
     savedjobrecord = SavedJobRecord.new(job: job, jobseeker: jobseeker)
-    @savedjobrecords.push(savedjobrecord)
+    add(savedjobrecord)
   end
 
   def records_saved_by(jobseeker)
-    filtered_savedjobrecords = @savedjobrecords.select do |savedjobrecord|
+    items_filtered_for(jobseeker) do |savedjobrecord|
       savedjobrecord.saved_by?(jobseeker)
     end
-
-    SavedJobRecordList.new(filtered_savedjobrecords)
-  end
-
-  def each(&each_block)
-    @savedjobrecords.each &each_block
   end
 
   def jobs_saved_by(jobseeker)
