@@ -21,6 +21,13 @@ describe IDNumber do
 
     idnumber1.same_id?(idnumber2).should be_true
   end
+
+  it "should not match IDNumbers created from different Strings" do
+    idnumber1 = IDNumber.new("ID0001")
+    idnumber2 = IDNumber.new("ID9999")
+
+    idnumber1.same_id?(idnumber2).should be_false
+  end
 end
 
 describe Identity do
