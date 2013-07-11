@@ -6,6 +6,10 @@ class IDNumber
   def to_s
     @idnumber_string
   end
+
+  def same_id?(other_idnumber)
+    self.to_s == other_idnumber.to_s
+  end
 end
 
 class Identity
