@@ -16,14 +16,6 @@ class List
   end
 
   private
-  def items_filtered_for(subject_item, &filter_block)
-    filtered_items = @list_items.select do |list_item|
-      filter_block.call(list_item)
-    end
-
-    self.class.new(filtered_items)
-  end
-
   def select(&filter_block)
     filtered_items = @list_items.select do |list_item|
       filter_block.call(list_item)
