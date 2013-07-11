@@ -65,5 +65,25 @@ describe Jobseeker do
       
       @jobapplicationrecordservice.jobapplications_submitted_for_job(@jreq_job).should include jobapplication
     end
+
+    it "should be able to apply to different Jobs with different Resumes" do
+      resume1 = Resume.new(jobseeker: @jobseeker)
+      resume2 = Resume.new(jobseeker: @jobseeker)
+      
+      jobapplication1 = JobApplication.new(jobseeker: @jobseeker, resume: resume1)
+      jobapplication2 = JobApplication.new(jobseeker: @jobseeker, resume: resume2)
+
+      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: jobapplication1, job: @ats_job)
+      @jobapplicationrecordservice.apply_jobapplication_to_job(jobapplication: jobapplication2, job: @jreq_job)
+      
+      @jobapplicationrecordservice.jobapplications_submitted_for_job(@jreq_job).should include jobapplication1
+      @jobapplicationrecordservice.jobapplications_submitted_for_job(@jreq_job).should include jobapplication2
+
+      jobapplication1.has_this_resume?(resume1).should be_true
+      jobapplication1.has_this_resume?(resume2).should be_false
+
+      jobapplication2.has_this_resume?(resume2).should be_true
+      jobapplication2.has_this_resume?(resume1).should be_false
+    end
   end
 end
