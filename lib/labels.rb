@@ -2,6 +2,10 @@ class Name
   def initialize(name_string)
     @name_string = name_string
   end
+
+  def to_s
+    @name_string
+  end
 end
 
 class Title
