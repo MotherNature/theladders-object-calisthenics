@@ -31,6 +31,10 @@ class Name
   def to_s
     @name_string
   end
+
+  def same_name?(other_name)
+    self.to_s == other_name.to_s
+  end
 end
 
 class Title
