@@ -67,6 +67,10 @@ class JobApplication
   def has_resume?
     ! @resume.nil?
   end
+
+  def has_this_resume?(resume)
+    @resume == resume
+  end
 end
 
 class JobApplicationList < List
