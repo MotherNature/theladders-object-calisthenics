@@ -1,4 +1,5 @@
 # Pending
+
 + Jobseekers can apply to jobs posted by recruiters.
     + There are 2 different kinds of Jobs posted by recruiters: JReq and ATS.
     + JReq jobs require a resume to apply to them.
@@ -21,9 +22,14 @@
 
 # In Progress
 
-# Completed in Back-end
++ Jobseekers can apply to jobs posted by recruiters.
+    + JReq jobs require a resume to apply to them.
+
+# Completed
+
 + Recruiters can post jobs.
 + Recruiters should be able to see a listing of the jobs they have posted.
 + Jobseekers can save jobs onsite for later viewing.
-
-# Completed in GUI
++ Jobseekers can apply to jobs posted by recruiters.
+    + There are 2 different kinds of Jobs posted by recruiters: JReq and ATS.
+    + ATS jobs do not require a resume to apply to them.
