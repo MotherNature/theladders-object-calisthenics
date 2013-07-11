@@ -1,5 +1,10 @@
 class IDNumber
   def initialize(idnumber_string)
+    @idnumber_string = idnumber_string
+  end
+
+  def to_s
+    @idnumber_string
   end
 end
 
