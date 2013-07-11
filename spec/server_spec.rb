@@ -22,6 +22,6 @@ describe "The Jobseeker app" do
   it "accepts Recruiter profile submissions" do
     post '/recruiters', { :name => "Jane Smith" }
     last_response.should be_ok
-    last_response.body.should == "Added new Recruiter: Jane Smith."
+    last_response.body.should match /Added new Recruiter: Jane Smith, ID: .*\./
   end
 end
