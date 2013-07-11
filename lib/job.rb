@@ -1,3 +1,4 @@
+require 'utility'
 require 'job_utilities'
 
 class Job
@@ -24,25 +25,11 @@ class SavedJobRecord
   end
 end
 
-class JobList
-  def initialize(jobs=[])
-    @jobs = jobs
-  end
-
-  def add(job)
-    @jobs.push job
-  end
-  
-  def include?(job)
-    @jobs.include?(job)
-  end
-
+class JobList < List
   def posted_by(recruiter)
-    filtered_jobs = @jobs.select do |job|
+    items_filtered_for(recruiter) do |job|
       job.posted_by(recruiter)
     end
-
-    JobList.new(filtered_jobs)
   end
 end
 
