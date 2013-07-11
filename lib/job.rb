@@ -1,5 +1,6 @@
 require 'utility'
 require 'job_utilities'
+require 'labels'
 
 class Job
   def initialize(title: nil, jobtype: nil)
@@ -9,6 +10,18 @@ class Job
 
   def requires_resume?
     @jobtype.requires_resume?
+  end
+end
+
+class JobFactory
+  def initialize
+    @jobtypefactory = JobTypeFactory.new
+  end
+
+  def build_job(title_string: nil, jobtype_string: nil)
+    title = Title.new(title_string)
+    jobtype = @jobtypefactory.build_jobtype(jobtype_string)
+    Job.new(title: title, jobtype: jobtype)
   end
 end
 
