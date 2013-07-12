@@ -32,6 +32,10 @@ class Name
     @name_string
   end
 
+  def to_string
+    to_s
+  end
+
   def same_name?(other_name)
     self.to_s == other_name.to_s
   end
