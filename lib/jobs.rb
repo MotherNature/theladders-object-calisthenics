@@ -16,6 +16,10 @@ class Job
   def title_to_string
     @title.to_string
   end
+
+  def jobtype_to_string
+    @jobtype.to_string
+  end
 end
 
 class JobFactory
@@ -58,19 +62,29 @@ class JobList < List
 end
 
 class JobListReport < ListReport
+  def to_string
+    jobs = @list.to_array
+    report_strings = jobs.map do |job|
+      "Title: #{job.title_to_string}\nType: #{job.jobtype_to_string}"
+    end
+    report_strings.join("\n---\n")
+  end
 end
 
 class JobListTitleReport < ListReport
   def to_string
     jobs = @list.to_array
     title_strings = jobs.map do |job|
-      job.title_to_string
+      "Title: #{job.title_to_string}"
     end
     title_strings.join("\n")
   end
 end
 
 class JobListReportGenerator < ListReportGenerator
+  def generate_from(joblist)
+    JobListReport.new(joblist)
+  end
   def generate_titles_from(joblist)
     JobListTitleReport.new(joblist)
   end
