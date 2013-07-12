@@ -31,5 +31,3 @@
 
 # Local TODO
 
-+ Refactor to_* and as_* usage to be more consistent.
-    + Favoring "to_*" language, in keeping with Ruby's own to_s, etc.
