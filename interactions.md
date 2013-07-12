@@ -13,7 +13,6 @@
 
 # In Progress
 
-+ Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
 
 # Completed
 
@@ -28,6 +27,7 @@
     + Jobseekers can not apply to a job with someone else’s resume.
 + Jobseekers, when displayed, should be displayed by their name.
 + Recruiters, when displayed, should be displayed by their name.
++ Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
 
 # Local TODO
 
