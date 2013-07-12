@@ -7,7 +7,6 @@
 + TheLadders should be able to get the job application report in either csv or html format.
 + TheLadders should be able to ascertain jobseeker, job, recruiter amd job application date from the job applicaiton report.
 + TheLadders should be able to see aggregate job application numbers by job and recruiter.
-+ Recruiters, when displayed, should be displayed by their name.
 + Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
 + TheLadders wants the system to be able to handle more than one job with the same title.
 + TheLadders wants the system to be able to handle more than one jobseeker with the same name.
@@ -15,7 +14,6 @@
 
 # In Progress
 
-+ Jobseekers, when displayed, should be displayed by their name.
 
 # Completed
 
@@ -28,6 +26,8 @@
     + JReq jobs require a resume to apply to them.
     + Jobseekers should be able to apply to different jobs with different resumes.
     + Jobseekers can not apply to a job with someone else’s resume.
++ Jobseekers, when displayed, should be displayed by their name.
++ Recruiters, when displayed, should be displayed by their name.
 
 # Local TODO
 
