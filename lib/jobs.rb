@@ -54,10 +54,6 @@ class JobList < List
   def add(job)
     super(job)
   end
-
-  def to_array
-    super
-  end
 end
 
 class JobApplication

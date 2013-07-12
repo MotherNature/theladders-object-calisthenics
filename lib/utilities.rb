@@ -11,6 +11,10 @@ class List
     @list_items.each &each_block
   end
 
+  def to_array
+    @list_items
+  end
+
   private
   def add(list_item)
     @list_items.push(list_item)
@@ -22,10 +26,6 @@ class List
     end
 
     self.class.new(filtered_items)
-  end
-
-  def to_array
-    @list_items
   end
 end
 
