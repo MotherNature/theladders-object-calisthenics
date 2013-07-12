@@ -8,7 +8,7 @@ class Jobseeker < Person
 end
 
 class JobseekerList < List
-  def jobseekers_as_array
+  def as_array
     jobseekers = to_array
     jobseekers.sort_by do |jobseeker|
       jobseeker.name_as_string
