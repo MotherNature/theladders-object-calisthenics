@@ -20,10 +20,15 @@ describe JobListReportGenerator do
   end
 
   describe "Generate Job Report" do
-    it "should list jobs by their title" do
+    it "should list jobs by their title and type by default" do
+      joblist = JobList.new([@job1, @job2, @job3])
+      joblistreport = @joblistreportgenerator.generate_from(joblist)
+      joblistreport.to_string.should == "Title: Applied Technologist\nType: ATS\n---\nTitle: Bench Warmer\nType: ATS\n---\nTitle: Candy Tester\nType: ATS"
+    end
+    it "should list jobs by their title if specified" do
       joblist = JobList.new([@job1, @job2, @job3])
       joblistreport = @joblistreportgenerator.generate_titles_from(joblist)
-      joblistreport.to_string.should == "Applied Technologist\nBench Warmer\nCandy Tester"
+      joblistreport.to_string.should == "Title: Applied Technologist\nTitle: Bench Warmer\nTitle: Candy Tester"
     end
   end
 end
