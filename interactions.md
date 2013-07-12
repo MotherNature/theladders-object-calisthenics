@@ -7,13 +7,13 @@
 + TheLadders should be able to get the job application report in either csv or html format.
 + TheLadders should be able to ascertain jobseeker, job, recruiter amd job application date from the job applicaiton report.
 + TheLadders should be able to see aggregate job application numbers by job and recruiter.
-+ Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
 + TheLadders wants the system to be able to handle more than one job with the same title.
 + TheLadders wants the system to be able to handle more than one jobseeker with the same name.
 + TheLadders wants the system to be able to handle more than one recruiter with the same name.
 
 # In Progress
 
++ Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
 
 # Completed
 
