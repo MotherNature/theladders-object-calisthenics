@@ -1,6 +1,7 @@
 require 'utilities'
 require 'job_utilities'
 require 'labels'
+require 'reports'
 
 class Job
   def initialize(title: nil, jobtype: nil)
@@ -53,6 +54,25 @@ class JobList < List
   # TODO: Replace exposed method with a more explicit verb.
   def add(job)
     super(job)
+  end
+end
+
+class JobListReport < ListReport
+end
+
+class JobListTitleReport < ListReport
+  def to_string
+    jobs = @list.to_array
+    title_strings = jobs.map do |job|
+      job.title_to_string
+    end
+    title_strings.join("\n")
+  end
+end
+
+class JobListReportGenerator < ListReportGenerator
+  def generate_titles_from(joblist)
+    JobListTitleReport.new(joblist)
   end
 end
 
