@@ -1,5 +1,6 @@
 require 'utilities'
 require 'job_utilities'
+require 'reports'
 
 class Posting
   include JobListAppender
@@ -11,6 +12,14 @@ class Posting
 
   def posted_by?(recruiter)
     @posted_by == recruiter
+  end
+
+  def job_title_to_string
+    @job.title_to_string
+  end
+
+  def recruiter_name_to_string
+    @posted_by.name_to_string
   end
 end
 
@@ -36,3 +45,20 @@ class PostingList < List
     joblist
   end
 end
+
+class PostingListReport < ListReport
+  def to_string
+    postings = @list.to_array
+    report_strings = postings.map do |posting|
+      "Job Title: #{posting.job_title_to_string}\nRecruiter: #{posting.recruiter_name_to_string}"
+    end
+    report_strings.join("\n---\n")
+  end
+end
+
+class PostingListReportGenerator < ListReportGenerator
+  def generate_from(list)
+    PostingListReport.new(list)
+  end
+end
+
