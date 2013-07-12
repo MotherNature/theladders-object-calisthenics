@@ -17,13 +17,9 @@ describe JobListReportGenerator do
 
   describe "Generate Job Report" do
     it "should list Jobs, showing their Title and the Name of the Recruiter who posted it" do
-      pending
       joblist = JobList.new([@job1, @job2, @job3])
       joblistreport = @joblistreportgenerator.generate_from(joblist)
-      joblistreport.to_string.should ==
-        "Job Title: Applied Technologist\nRecruiter: Alice Smith" +
-        "Job Title: Bench Warmer\nRecruiter: Brenda Long" +
-        "Job Title: Candy Tester\nRecruiter: Cindi Bond"
+      joblistreport.to_string.should == "Job Title: Applied Technologist\nRecruiter: Alice Smith\n---\nJob Title: Bench Warmer\nRecruiter: Brenda Long\n---\nJob Title: Candy Tester\nRecruiter: Cindi Bond"
     end
   end
 end
