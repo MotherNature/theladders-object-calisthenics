@@ -11,6 +11,10 @@ class Job
   def requires_resume?
     @jobtype.requires_resume?
   end
+
+  def title_to_string
+    @title.to_string
+  end
 end
 
 class JobFactory
