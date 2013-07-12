@@ -45,6 +45,10 @@ class Title
   def initialize(title_string)
     @title_string = title_string
   end
+
+  def to_string
+    @title_string
+  end
 end
 
 class JobType
