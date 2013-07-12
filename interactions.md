@@ -1,6 +1,5 @@
 # Pending
 
-+ Jobseekers should be able to see a listing of the jobs for which they have applied.
 + Jobseekers should be able to see a listing of jobs they have saved for later viewing.
 + Recruiters should be able to see jobseekers who have applied to their jobs by both job and day. If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day.
 + TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day.
@@ -13,6 +12,7 @@
 
 # In Progress
 
++ Jobseekers should be able to see a listing of the jobs for which they have applied.
 
 # Completed
 
