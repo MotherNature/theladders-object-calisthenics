@@ -1,9 +1,6 @@
 require 'people'
 
 class Recruiter < Person
-  def name_to_string
-    @name.to_string
-  end
 end
 
 class RecruiterList < List

@@ -2,9 +2,6 @@ require 'people'
 require 'utilities'
 
 class Jobseeker < Person
-  def name_to_string
-    @name.to_string
-  end
 end
 
 class JobseekerList < List
