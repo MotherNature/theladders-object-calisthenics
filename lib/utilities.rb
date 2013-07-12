@@ -29,3 +29,11 @@ class List
   end
 end
 
+module ListOrderedByName
+  def to_array
+    list_items = super
+    list_items.sort_by do |list_item|
+      list_item.name_to_string
+    end
+  end
+end

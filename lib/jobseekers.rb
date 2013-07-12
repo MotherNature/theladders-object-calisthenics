@@ -5,12 +5,7 @@ class Jobseeker < Person
 end
 
 class JobseekerList < List
-  def to_array
-    jobseekers = super
-    jobseekers.sort_by do |jobseeker|
-      jobseeker.name_to_string
-    end
-  end
+  include ListOrderedByName
 end
 
 class JobseekerListReport
