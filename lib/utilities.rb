@@ -23,5 +23,9 @@ class List
 
     self.class.new(filtered_items)
   end
+
+  def to_array
+    @list_items
+  end
 end
 
