@@ -23,3 +23,4 @@ describe RecruiterList do
     end
   end
 end
+
