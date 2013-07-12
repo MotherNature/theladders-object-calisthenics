@@ -28,3 +28,8 @@
     + JReq jobs require a resume to apply to them.
     + Jobseekers should be able to apply to different jobs with different resumes.
     + Jobseekers can not apply to a job with someone else’s resume.
+
+# Local TODO
+
++ Refactor to_* and as_* usage to be more consistent.
+    + Favoring "to_*" language, in keeping with Ruby's own to_s, etc.

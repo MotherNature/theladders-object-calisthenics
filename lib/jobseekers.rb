@@ -15,3 +15,22 @@ class JobseekerList < List
     end
   end
 end
+
+class JobseekerListReport
+  def initialize(jobseekerlist)
+    @jobseekerlist = jobseekerlist
+  end
+
+  def to_string
+    name_strings = @jobseekerlist.as_array.map do |jobseeker|
+      jobseeker.name_as_string
+    end
+    name_strings.join("\n")
+  end
+end
+
+class JobseekerListReportGenerator
+  def generate_from(jobseekerlist)
+    jobseekerlistreport = JobseekerListReport.new(jobseekerlist)
+  end
+end
