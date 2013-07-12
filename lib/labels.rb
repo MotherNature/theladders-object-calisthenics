@@ -60,6 +60,10 @@ class JobType
   def requires_resume?
     @requires_resume
   end
+
+  def to_string
+    @jobtype_string
+  end
 end
 
 class JobTypeATS < JobType
