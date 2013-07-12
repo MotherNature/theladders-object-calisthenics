@@ -14,12 +14,12 @@ describe JobseekerList do
   describe "List Jobseekers" do
     it "should list Jobseekers, ordered by name" do
       jobseekerlist = JobseekerList.new([@jobseeker1, @jobseeker2, @jobseeker3])
-      jobseekerlist.as_array.should == [@jobseeker1, @jobseeker2, @jobseeker3]
+      jobseekerlist.to_array.should == [@jobseeker1, @jobseeker2, @jobseeker3]
     end
 
     it "should list Jobseekers, ordered by name, even when added out of order" do
       jobseekerlist = JobseekerList.new([@jobseeker3, @jobseeker2, @jobseeker1])
-      jobseekerlist.as_array.should == [@jobseeker1, @jobseeker2, @jobseeker3]
+      jobseekerlist.to_array.should == [@jobseeker1, @jobseeker2, @jobseeker3]
     end
   end
 end

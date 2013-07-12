@@ -2,16 +2,16 @@ require 'people'
 require 'utilities'
 
 class Jobseeker < Person
-  def name_as_string
+  def name_to_string
     @name.to_string
   end
 end
 
 class JobseekerList < List
-  def as_array
-    jobseekers = to_array
+  def to_array
+    jobseekers = super
     jobseekers.sort_by do |jobseeker|
-      jobseeker.name_as_string
+      jobseeker.name_to_string
     end
   end
 end
@@ -22,8 +22,8 @@ class JobseekerListReport
   end
 
   def to_string
-    name_strings = @jobseekerlist.as_array.map do |jobseeker|
-      jobseeker.name_as_string
+    name_strings = @jobseekerlist.to_array.map do |jobseeker|
+      jobseeker.name_to_string
     end
     name_strings.join("\n")
   end
