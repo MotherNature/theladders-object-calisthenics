@@ -22,3 +22,9 @@ class ListReportGenerator
     ListReport.new(list)
   end
 end
+
+class JobsAppliedToReport
+end
+
+class JobsAppliedToReportGenerator
+end
