@@ -48,6 +48,12 @@ class PostingList < List
 
     joblist
   end
+
+  public
+  # TODO: Replace exposed method with a more explicit verb.
+  def add(job)
+    super(job)
+  end
 end
 
 class PostingListReport < ListReport
