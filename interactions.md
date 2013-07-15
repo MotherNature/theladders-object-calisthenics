@@ -32,3 +32,4 @@
 # Local TODO
 
 + Consider moving the Jobseeker/Recruiter sorting code out of the Lists.
++ Consider refactoring JobApplicationRecord to tie a Jobseeker to a Posting instead of to just a Job.
