@@ -153,6 +153,10 @@ class JobApplicationRecord
   def submitted_for_posting?(posting)
     @posting == posting
   end
+
+  def jobapplication_applied_to_by?(jobseeker)
+    @jobapplication.applied_to_by?(jobseeker)
+  end
 end
 
 class JobApplicationRecordList < List
@@ -177,6 +181,12 @@ class JobApplicationRecordList < List
     jobapplicationlist
   end
 
+  def jobapplicationrecords_submitted_by(jobseeker)
+    select do |jobapplicationrecord|
+      jobapplicationrecord.jobapplication_applied_to_by?(jobseeker)
+    end
+  end
+
   def jobapplications_submitted_by(jobseeker)
     jobapplicationlist = JobApplicationList.new
 
@@ -189,8 +199,10 @@ class JobApplicationRecordList < List
 
   def postings_submitted_to_by_jobseeker(jobseeker)
     postinglist = PostingList.new
+
+    filtered_jobapplicationrecords = jobapplicationrecords_submitted_by(jobseeker)
     
-    each do |jobapplicationrecord|
+    filtered_jobapplicationrecords.each do |jobapplicationrecord|
       jobapplicationrecord.add_posting_to_postinglist(postinglist)
     end
 
