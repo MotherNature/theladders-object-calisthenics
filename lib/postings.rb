@@ -21,6 +21,10 @@ class Posting
   def recruiter_name_to_string
     @posted_by.name_to_string
   end
+
+  def job_requires_resume?
+    @job.requires_resume?
+  end
 end
 
 class PostingList < List

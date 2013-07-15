@@ -143,29 +143,29 @@ end
 class JobApplicationRecord
   include JobApplicationListAppender
 
-  def initialize(jobapplication: nil, job: nil)
+  def initialize(jobapplication: nil, posting: nil)
     @jobapplication = jobapplication
-    @job = job
+    @posting = posting
   end
 
-  def submitted_for_job?(job)
-    @job == job
+  def submitted_for_posting?(posting)
+    @posting == posting
   end
 end
 
 class JobApplicationRecordList < List
-  def apply_jobapplication_to_job(jobapplication: nil, job: nil)
-    jobapplicationrecord = JobApplicationRecord.new(jobapplication: jobapplication, job: job)
+  def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
+    jobapplicationrecord = JobApplicationRecord.new(jobapplication: jobapplication, posting: posting)
     add(jobapplicationrecord)
   end
 
-  def jobapplicationrecords_submitted_for_job(job)
+  def jobapplicationrecords_submitted_for_posting(posting)
     select do |jobapplicationrecord|
-      jobapplicationrecord.submitted_for_job?(job)
+      jobapplicationrecord.submitted_for_posting?(posting)
     end
   end
 
-  def jobapplications_submitted_for_job(job)
+  def jobapplications_submitted_for_posting(posting)
     jobapplicationlist = JobApplicationList.new
 
     select do |jobapplicationrecord|
@@ -181,23 +181,23 @@ class JobApplicationRecordService
     @jobapplicationrecordlist = jobapplicationrecordlist
   end
 
-  def apply_jobapplication_to_job(jobapplication: nil, job: nil)
-    if(! valid_jobapplication_for_job?(jobapplication: jobapplication, job: job))
-      raise IncompatibleJobApplicationError.new("This JobApplication is incompatible with this Job. JobType mismatch?")
+  def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
+    if(! valid_jobapplication_for_posting?(jobapplication: jobapplication, posting: posting))
+      raise IncompatibleJobApplicationError.new("This JobApplication is incompatible with this Posting. JobType mismatch?")
     end
 
-    @jobapplicationrecordlist.apply_jobapplication_to_job(jobapplication: jobapplication, job: job)
+    @jobapplicationrecordlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)
   end
 
-  def valid_jobapplication_for_job?(jobapplication: nil, job: nil)
-    if job.requires_resume?
+  def valid_jobapplication_for_posting?(jobapplication: nil, posting: nil)
+    if posting.job_requires_resume?
       return jobapplication.has_resume?
     end
     return true
   end
 
-  def jobapplications_submitted_for_job(job)
-    @jobapplicationrecordlist.jobapplications_submitted_for_job(job)
+  def jobapplications_submitted_for_posting(posting)
+    @jobapplicationrecordlist.jobapplications_submitted_for_posting(posting)
   end
 end
 
