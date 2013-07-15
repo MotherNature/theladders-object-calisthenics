@@ -24,7 +24,20 @@ class ListReportGenerator
 end
 
 class JobsAppliedToReport
+  def initialize(joblist=nil)
+    @joblist = joblist
+  end
+
+  def to_string
+    joblistreport = JobListReport.new(@joblist)
+    joblistreport.to_string
+  end
 end
 
 class JobsAppliedToReportGenerator
+  def generate_for_jobseeker_from_jobapplicationrecordlist(jobseeker: nil, jobapplicationrecordlist: nil)
+    joblist = jobapplicationrecordlist.jobs_submitted_to_by_jobseeker(jobseeker)
+    
+    return JobsAppliedToReport.new(joblist)
+  end
 end
