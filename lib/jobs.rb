@@ -1,5 +1,6 @@
 require 'utilities'
 require 'job_utilities'
+require 'posting_utilities'
 require 'labels'
 require 'reports'
 
@@ -142,6 +143,7 @@ end
 
 class JobApplicationRecord
   include JobApplicationListAppender
+  include PostingListAppender
 
   def initialize(jobapplication: nil, posting: nil)
     @jobapplication = jobapplication
@@ -168,11 +170,43 @@ class JobApplicationRecordList < List
   def jobapplications_submitted_for_posting(posting)
     jobapplicationlist = JobApplicationList.new
 
-    select do |jobapplicationrecord|
+    each do |jobapplicationrecord|
       jobapplicationrecord.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
     end
 
     jobapplicationlist
+  end
+
+  def jobapplications_submitted_by(jobseeker)
+    jobapplicationlist = JobApplicationList.new
+
+    each do |jobapplicationrecord|
+      jobapplicationrecord.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
+    end
+
+    jobapplicationlist
+  end
+
+  def postings_submitted_to_by_jobseeker(jobseeker)
+    postinglist = PostingList.new
+    
+    each do |jobapplicationrecord|
+      jobapplicationrecord.add_posting_to_postinglist(postinglist)
+    end
+
+    postinglist
+  end
+
+  def jobs_submitted_to_by_jobseeker(jobseeker)
+    postinglist = postings_submitted_to_by_jobseeker(jobseeker)
+
+    joblist = JobList.new
+
+    postinglist.each do |posting|
+      posting.add_job_to_joblist(joblist)
+    end
+
+    joblist
   end
 end
 
