@@ -54,6 +54,20 @@ describe SavedJobListReportGenerator do
 
       savedjoblistreport.to_string.should == "Title: Applied Technologist"
     end
+
+    it "should only list Jobs saved by the Jobseeker" do
+      other_job = @jobfactory.build_job(title_string: "Difference Engine Technician", jobtype_string: "ATS")
+      other_jobseeker = Jobseeker.new(name: Name.new("Olivia Thatcher"))
+
+      @savedjobrecordlist.save_job_for_jobseeker(job: @job, jobseeker: @jobseeker)
+      @savedjobrecordlist.save_job_for_jobseeker(job: other_job, jobseeker: other_jobseeker)
+
+      savedjoblist = @savedjobrecordlist.jobs_saved_by(@jobseeker)
+
+      savedjoblistreport = @savedjoblistreportgenerator.generate_from(savedjoblist)
+
+      savedjoblistreport.to_string.should == "Title: Applied Technologist"
+    end
   end
 end
 
