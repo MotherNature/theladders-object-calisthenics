@@ -46,6 +46,10 @@ class SavedJobRecord
   def saved_by?(jobseeker)
     @jobseeker == jobseeker
   end
+
+  def job_title_to_string
+    @job.title_to_string
+  end
 end
 
 class JobList < List
@@ -270,5 +274,18 @@ class SavedJobRecordList < List
   end
 end
 
+class SavedJobListReport < ListReport
+  def to_string
+    jobs = @list.to_array
+    title_strings = jobs.map do |job|
+      "Title: #{job.title_to_string}"
+    end
+    title_strings.join("\n")
+  end
+end
+
 class SavedJobListReportGenerator < ListReportGenerator
+  def generate_from(savedjoblist)
+    SavedJobListReport.new(savedjoblist)
+  end
 end
