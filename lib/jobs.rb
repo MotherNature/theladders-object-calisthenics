@@ -161,6 +161,10 @@ class JobApplicationSubmission
   def jobapplication_applied_to_by?(jobseeker)
     @jobapplication.applied_to_by?(jobseeker)
   end
+
+  def submitted_for_jobapplication?(jobapplication)
+    @jobapplication == jobapplication
+  end
 end
 
 class JobApplicationSubmissionList < List
@@ -246,6 +250,12 @@ class JobApplicationSubmissionService
     return true
   end
 
+  def jobapplicationsubmissions_submitted_for_jobapplication(jobapplication)
+    @jobapplicationsubmissionlist.select do |jobapplicationsubmission|
+      jobapplicationsubmission.submitted_for_jobapplication?(jobapplication)
+    end
+  end
+
   def jobapplications_submitted_for_posting(posting)
     @jobapplicationsubmissionlist.jobapplications_submitted_for_posting(posting)
   end
@@ -287,5 +297,16 @@ end
 class SavedJobListReportGenerator < ListReportGenerator
   def generate_from(savedjoblist)
     SavedJobListReport.new(savedjoblist)
+  end
+end
+
+class JobApplicationSubmissionRecord
+  def initialize(jobapplication: nil, recorded_at_datetime: nil)
+    @jobapplication = jobapplication
+    @recorded_at_datetime = recorded_at_datetime
+  end
+
+  def recorded_at_datetime?(datetime)
+    @recorded_at_datetime == datetime
   end
 end
