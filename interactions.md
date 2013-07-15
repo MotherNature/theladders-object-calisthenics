@@ -12,7 +12,6 @@
 
 # In Progress
 
-+ Jobseekers should be able to see a listing of the jobs for which they have applied.
 
 # Completed
 
@@ -28,6 +27,7 @@
 + Jobseekers, when displayed, should be displayed by their name.
 + Recruiters, when displayed, should be displayed by their name.
 + Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
++ Jobseekers should be able to see a listing of the jobs for which they have applied.
 
 # Local TODO
 
