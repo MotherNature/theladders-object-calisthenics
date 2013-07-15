@@ -269,3 +269,6 @@ class SavedJobRecordList < List
     joblist
   end
 end
+
+class SavedJobListReportGenerator < ListReportGenerator
+end

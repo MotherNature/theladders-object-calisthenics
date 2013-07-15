@@ -31,6 +31,32 @@ describe JobseekerListReportGenerator do
   end
 end
 
+describe SavedJobListReportGenerator do
+  describe "Generated \List of Jobs saved\" Report" do
+    before(:each) do
+      @jobfactory = JobFactory.new
+
+      @savedjobrecordlist = SavedJobRecordList.new
+
+      @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"))
+
+      @job = @jobfactory.build_job(title_string: "Applied Technologist", jobtype_string: "ATS")
+
+      @savedjoblistreportgenerator = SavedJobListReportGenerator.new
+    end
+
+    it "should list Jobs saved by the Jobseeker" do
+      @savedjobrecordlist.save_job_for_jobseeker(job: @job, jobseeker: @jobseeker)
+
+      savedjoblist = @savedjobrecordlist.jobs_saved_by(@jobseeker)
+
+      savedjoblistreport = @savedjoblistreportgenerator.generate_from(savedjoblist)
+
+      savedjoblistreport.to_string.should == "Title: Applied Technologist"
+    end
+  end
+end
+
 describe JobsAppliedToReportGenerator do
   describe "Generate \"Jobs applied to\" Report" do
     before(:each) do
