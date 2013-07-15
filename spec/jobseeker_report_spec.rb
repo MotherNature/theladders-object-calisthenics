@@ -93,25 +93,25 @@ describe JobsAppliedToReportGenerator do
       @jobapplication = JobApplication.new(jobseeker: @jobseeker)
       @other_jobapplication = JobApplication.new(jobseeker: @other_jobseeker)
 
-      @jobapplicationrecord1 = JobApplicationRecord.new(jobapplication: @jobapplication, posting: @posting1)
-      @jobapplicationrecord2 = JobApplicationRecord.new(jobapplication: @jobapplication, posting: @posting2)
-      @jobapplicationrecord3 = JobApplicationRecord.new(jobapplication: @jobapplication, posting: @posting3)
-      @other_jobapplicationrecord = JobApplicationRecord.new(jobapplication: @other_jobapplication, posting: @other_posting)
+      @jobapplicationsubmission1 = JobApplicationSubmission.new(jobapplication: @jobapplication, posting: @posting1)
+      @jobapplicationsubmission2 = JobApplicationSubmission.new(jobapplication: @jobapplication, posting: @posting2)
+      @jobapplicationsubmission3 = JobApplicationSubmission.new(jobapplication: @jobapplication, posting: @posting3)
+      @other_jobapplicationsubmission = JobApplicationSubmission.new(jobapplication: @other_jobapplication, posting: @other_posting)
 
       @jobsappliedtoreportgenerator = JobsAppliedToReportGenerator.new
     end
 
     it "should list Jobs applied to by the Jobseeker" do
-      jobapplicationrecordlist = JobApplicationRecordList.new([@jobapplicationrecord1, @jobapplicationrecord2, @jobapplicationrecord3])
+      jobapplicationsubmissionlist = JobApplicationSubmissionList.new([@jobapplicationsubmission1, @jobapplicationsubmission2, @jobapplicationsubmission3])
 
-      jobsappliedtoreport = @jobsappliedtoreportgenerator.generate_for_jobseeker_from_jobapplicationrecordlist(jobseeker: @jobseeker, jobapplicationrecordlist: jobapplicationrecordlist)
+      jobsappliedtoreport = @jobsappliedtoreportgenerator.generate_for_jobseeker_from_jobapplicationsubmissionlist(jobseeker: @jobseeker, jobapplicationsubmissionlist: jobapplicationsubmissionlist)
       jobsappliedtoreport.to_string.should == "Title: Applied Technologist\nType: ATS\n---\nTitle: Bench Warmer\nType: ATS\n---\nTitle: Candy Tester\nType: ATS"
     end
 
     it "should only list Jobs applied to by the Jobseeker" do
-      jobapplicationrecordlist = JobApplicationRecordList.new([@jobapplicationrecord1, @jobapplicationrecord2, @jobapplicationrecord3, @other_jobapplicationrecord])
+      jobapplicationsubmissionlist = JobApplicationSubmissionList.new([@jobapplicationsubmission1, @jobapplicationsubmission2, @jobapplicationsubmission3, @other_jobapplicationsubmission])
 
-      jobsappliedtoreport = @jobsappliedtoreportgenerator.generate_for_jobseeker_from_jobapplicationrecordlist(jobseeker: @jobseeker, jobapplicationrecordlist: jobapplicationrecordlist)
+      jobsappliedtoreport = @jobsappliedtoreportgenerator.generate_for_jobseeker_from_jobapplicationsubmissionlist(jobseeker: @jobseeker, jobapplicationsubmissionlist: jobapplicationsubmissionlist)
       jobsappliedtoreport.to_string.should == "Title: Applied Technologist\nType: ATS\n---\nTitle: Bench Warmer\nType: ATS\n---\nTitle: Candy Tester\nType: ATS"
     end
   end

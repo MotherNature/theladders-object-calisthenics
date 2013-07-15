@@ -145,7 +145,7 @@ class JobApplicationList < List
   end
 end
 
-class JobApplicationRecord
+class JobApplicationSubmission
   include JobApplicationListAppender
   include PostingListAppender
 
@@ -163,39 +163,39 @@ class JobApplicationRecord
   end
 end
 
-class JobApplicationRecordList < List
+class JobApplicationSubmissionList < List
   def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
-    jobapplicationrecord = JobApplicationRecord.new(jobapplication: jobapplication, posting: posting)
-    add(jobapplicationrecord)
+    jobapplicationsubmission = JobApplicationSubmission.new(jobapplication: jobapplication, posting: posting)
+    add(jobapplicationsubmission)
   end
 
-  def jobapplicationrecords_submitted_for_posting(posting)
-    select do |jobapplicationrecord|
-      jobapplicationrecord.submitted_for_posting?(posting)
+  def jobapplicationsubmissions_submitted_for_posting(posting)
+    select do |jobapplicationsubmission|
+      jobapplicationsubmission.submitted_for_posting?(posting)
     end
   end
 
   def jobapplications_submitted_for_posting(posting)
     jobapplicationlist = JobApplicationList.new
 
-    each do |jobapplicationrecord|
-      jobapplicationrecord.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
+    each do |jobapplicationsubmission|
+      jobapplicationsubmission.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
     end
 
     jobapplicationlist
   end
 
-  def jobapplicationrecords_submitted_by(jobseeker)
-    select do |jobapplicationrecord|
-      jobapplicationrecord.jobapplication_applied_to_by?(jobseeker)
+  def jobapplicationsubmissions_submitted_by(jobseeker)
+    select do |jobapplicationsubmission|
+      jobapplicationsubmission.jobapplication_applied_to_by?(jobseeker)
     end
   end
 
   def jobapplications_submitted_by(jobseeker)
     jobapplicationlist = JobApplicationList.new
 
-    each do |jobapplicationrecord|
-      jobapplicationrecord.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
+    each do |jobapplicationsubmission|
+      jobapplicationsubmission.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
     end
 
     jobapplicationlist
@@ -204,10 +204,10 @@ class JobApplicationRecordList < List
   def postings_submitted_to_by_jobseeker(jobseeker)
     postinglist = PostingList.new
 
-    filtered_jobapplicationrecords = jobapplicationrecords_submitted_by(jobseeker)
+    filtered_jobapplicationsubmissions = jobapplicationsubmissions_submitted_by(jobseeker)
     
-    filtered_jobapplicationrecords.each do |jobapplicationrecord|
-      jobapplicationrecord.add_posting_to_postinglist(postinglist)
+    filtered_jobapplicationsubmissions.each do |jobapplicationsubmission|
+      jobapplicationsubmission.add_posting_to_postinglist(postinglist)
     end
 
     postinglist
@@ -226,9 +226,9 @@ class JobApplicationRecordList < List
   end
 end
 
-class JobApplicationRecordService
-  def initialize(jobapplicationrecordlist: JobApplicationRecordList.new)
-    @jobapplicationrecordlist = jobapplicationrecordlist
+class JobApplicationSubmissionService
+  def initialize(jobapplicationsubmissionlist: JobApplicationSubmissionList.new)
+    @jobapplicationsubmissionlist = jobapplicationsubmissionlist
   end
 
   def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
@@ -236,7 +236,7 @@ class JobApplicationRecordService
       raise IncompatibleJobApplicationError.new("This JobApplication is incompatible with this Posting. JobType mismatch?")
     end
 
-    @jobapplicationrecordlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)
+    @jobapplicationsubmissionlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)
   end
 
   def valid_jobapplication_for_posting?(jobapplication: nil, posting: nil)
@@ -247,7 +247,7 @@ class JobApplicationRecordService
   end
 
   def jobapplications_submitted_for_posting(posting)
-    @jobapplicationrecordlist.jobapplications_submitted_for_posting(posting)
+    @jobapplicationsubmissionlist.jobapplications_submitted_for_posting(posting)
   end
 end
 
