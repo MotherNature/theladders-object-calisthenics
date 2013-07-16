@@ -24,7 +24,9 @@ class List
   end
 
   def add(list_item)
-    @list_items.push(list_item)
+    if(! @list_items.include?(list_item))
+      @list_items.push(list_item)
+    end
   end
 end
 
