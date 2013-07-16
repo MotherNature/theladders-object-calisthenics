@@ -62,13 +62,9 @@ describe JobApplicationSubmissionRecordList do
     @jobapplication2 = JobApplication.new(jobseeker: @jobseeker1)
     @jobapplication3 = JobApplication.new(jobseeker: @jobseeker2)
 
-    @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication1, posting: @posting1)
-    @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication2, posting: @posting2)
-    @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication3, posting: @posting3)
-
-    @jobapplicationsubmission1 = @jobapplicationsubmissionservice.jobapplicationsubmissions_submitted_for_jobapplication(@jobapplication1).to_array.first
-    @jobapplicationsubmission2 = @jobapplicationsubmissionservice.jobapplicationsubmissions_submitted_for_jobapplication(@jobapplication2).to_array.first
-    @jobapplicationsubmission3 = @jobapplicationsubmissionservice.jobapplicationsubmissions_submitted_for_jobapplication(@jobapplication3).to_array.first
+    @jobapplicationsubmission1 = @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication1, posting: @posting1)
+    @jobapplicationsubmission2 = @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication2, posting: @posting2)
+    @jobapplicationsubmission3 = @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication3, posting: @posting3)
 
     @datetime1 = DateTime.new(2013, 7, 12, 0, 0, 0)
     @datetime2 = DateTime.new(2013, 8, 13, 0, 0, 0)
