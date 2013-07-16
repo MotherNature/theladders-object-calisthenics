@@ -7,13 +7,16 @@ require 'jobseekers'
 require 'recruiters'
 require 'postings'
 require 'resumes'
+require 'examples'
 
 describe JobApplicationSubmissionRecord do
   before(:each) do
+    examplejobseekerfactory = ExampleJobseekerFactory.new
+
     @jobfactory = JobFactory.new
     @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
 
-    @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"))
+    @jobseeker = examplejobseekerfactory.build
     @recruiter = Recruiter.new(name: Name.new("Rudy Smith"))
 
     @job = @jobfactory.build_job(title_string: "Example Title", jobtype_string: "ATS")
@@ -38,11 +41,13 @@ end
 
 describe JobApplicationSubmissionRecordList do
   before(:each) do
+    examplejobseekerfactory = ExampleJobseekerFactory.new
+
     @jobfactory = JobFactory.new
     @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
 
-    @jobseeker1 = Jobseeker.new(name: Name.new("Jane Doe"))
-    @jobseeker2 = Jobseeker.new(name: Name.new("Sally Lane"))
+    @jobseeker1 = examplejobseekerfactory.build
+    @jobseeker2 = examplejobseekerfactory.build
 
     @recruiter1 = Recruiter.new(name: Name.new("Rudy Smith"))
     @recruiter2 = Recruiter.new(name: Name.new("Larry Nowel"))
