@@ -3,6 +3,7 @@ require 'job_utilities'
 require 'posting_utilities'
 require 'labels'
 require 'reports'
+require 'jobseekers'
 
 class Job
   def initialize(title: nil, jobtype: nil)
@@ -107,6 +108,7 @@ class JobApplication
     @resume = resume
   end
 
+  # TODO: rename to applied_to_by_jobseeker?
   def applied_to_by?(jobseeker)
     @jobseeker == jobseeker
   end
@@ -117,6 +119,10 @@ class JobApplication
 
   def has_this_resume?(resume)
     @resume == resume
+  end
+
+  def add_jobseeker_to_jobseekerlist(jobseekerlist)
+    jobseekerlist.add(@jobseeker)
   end
 end
 
@@ -164,6 +170,14 @@ class JobApplicationSubmission
 
   def submitted_for_jobapplication?(jobapplication)
     @jobapplication == jobapplication
+  end
+
+  def posting_posted_by_recruiter?(recruiter)
+    @posting.posted_by_recruiter?(recruiter)
+  end
+
+  def add_jobseeker_to_jobseekerlist(jobseekerlist)
+    @jobapplication.add_jobseeker_to_jobseekerlist(jobseekerlist)
   end
 end
 
@@ -301,12 +315,43 @@ class SavedJobListReportGenerator < ListReportGenerator
 end
 
 class JobApplicationSubmissionRecord
-  def initialize(jobapplication: nil, recorded_at_datetime: nil)
-    @jobapplication = jobapplication
+  def initialize(jobapplicationsubmission: nil, recorded_at_datetime: nil)
+    @jobapplicationsubmission = jobapplicationsubmission
     @recorded_at_datetime = recorded_at_datetime
   end
 
   def recorded_at_datetime?(datetime)
     @recorded_at_datetime == datetime
+  end
+
+  def add_jobseeker_to_jobseekerlist(jobseekerlist)
+    @jobapplicationsubmission.add_jobseeker_to_jobseekerlist(jobseekerlist)
+  end
+
+  def applied_to_by_jobseeker?(jobseeker)
+    @jobapplicationsubmission.jobapplication_applied_to_by?(jobseeker)
+  end
+
+  def posting_posted_by_recruiter?(recruiter)
+    @jobapplicationsubmission.posting_posted_by_recruiter?(recruiter)
+  end
+end
+
+class JobApplicationSubmissionRecordList < List
+  def jobapplicationsubmissionrecords_for_postings_by_recruiter(recruiter)
+  end
+
+  def jobseekers_applying_to_jobs_posted_by_recruiter(recruiter)
+    jobseekerlist = JobseekerList.new
+
+    filtered_jobapplicationsubmissionrecordlist = select do |jobapplicationsubmissionrecord|
+      jobapplicationsubmissionrecord.posting_posted_by_recruiter?(recruiter)
+    end
+
+    filtered_jobapplicationsubmissionrecordlist.each do |jobapplicationsubmissionrecord|
+      jobapplicationsubmissionrecord.add_jobseeker_to_jobseekerlist(jobseekerlist)
+    end
+
+    jobseekerlist
   end
 end
