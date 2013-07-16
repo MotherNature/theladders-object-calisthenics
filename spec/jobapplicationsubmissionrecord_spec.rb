@@ -11,13 +11,13 @@ require 'examples'
 
 describe JobApplicationSubmissionRecord do
   before(:each) do
-    examplejobseekerfactory = ExampleJobseekerFactory.new
+    examplefactory = ExampleFactory.new
 
     @jobfactory = JobFactory.new
     @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
 
-    @jobseeker = examplejobseekerfactory.build
-    @recruiter = Recruiter.new(name: Name.new("Rudy Smith"))
+    @jobseeker = examplefactory.build_jobseeker
+    @recruiter = examplefactory.build_recruiter
 
     @job = @jobfactory.build_job(title_string: "Example Title", jobtype_string: "ATS")
     @posting = Posting.new(job: @job, posted_by: @recruiter)
@@ -41,16 +41,16 @@ end
 
 describe JobApplicationSubmissionRecordList do
   before(:each) do
-    examplejobseekerfactory = ExampleJobseekerFactory.new
+    examplefactory = ExampleFactory.new
 
     @jobfactory = JobFactory.new
     @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
 
-    @jobseeker1 = examplejobseekerfactory.build
-    @jobseeker2 = examplejobseekerfactory.build
+    @jobseeker1 = examplefactory.build_jobseeker
+    @jobseeker2 = examplefactory.build_jobseeker
 
-    @recruiter1 = Recruiter.new(name: Name.new("Rudy Smith"))
-    @recruiter2 = Recruiter.new(name: Name.new("Larry Nowel"))
+    @recruiter1 = examplefactory.build_recruiter
+    @recruiter2 = examplefactory.build_recruiter
 
     @job1 = @jobfactory.build_job(title_string: "Example Title", jobtype_string: "ATS")
     @job2 = @jobfactory.build_job(title_string: "Other Example Title", jobtype_string: "ATS")
