@@ -30,7 +30,7 @@ describe JobApplicationSubmissionRecord do
   describe "Record Time" do
     it "should record a given time for a JobApplicationSubmission" do
       datetime = DateTime.new(2013, 7, 12, 0, 0, 0)
-      jobapplicationsubmissionrecord = JobApplicationSubmissionRecord.new(jobapplication: @jobapplication, recorded_at_datetime: datetime)
+      jobapplicationsubmissionrecord = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission, recorded_at_datetime: datetime)
       jobapplicationsubmissionrecord.recorded_at_datetime?(datetime).should be_true
     end
   end
@@ -63,15 +63,19 @@ describe JobApplicationSubmissionRecordList do
     @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication2, posting: @posting2)
     @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication3, posting: @posting3)
 
+    @jobapplicationsubmission1 = @jobapplicationsubmissionservice.jobapplicationsubmissions_submitted_for_jobapplication(@jobapplication1).to_array.first
+    @jobapplicationsubmission2 = @jobapplicationsubmissionservice.jobapplicationsubmissions_submitted_for_jobapplication(@jobapplication2).to_array.first
+    @jobapplicationsubmission3 = @jobapplicationsubmissionservice.jobapplicationsubmissions_submitted_for_jobapplication(@jobapplication3).to_array.first
+
     @datetime1 = DateTime.new(2013, 7, 12, 0, 0, 0)
     @datetime2 = DateTime.new(2013, 8, 13, 0, 0, 0)
     @datetime3 = DateTime.new(2013, 9, 14, 0, 0, 0)
     @datetime4 = DateTime.new(2013, 10, 15, 0, 0, 0)
 
-    @jobapplicationsubmissionrecord1 = JobApplicationSubmissionRecord.new(jobapplication: @jobapplication1, recorded_at_datetime: @datetime1)
-    @jobapplicationsubmissionrecord2 = JobApplicationSubmissionRecord.new(jobapplication: @jobapplication2, recorded_at_datetime: @datetime2)
-    @jobapplicationsubmissionrecord3 = JobApplicationSubmissionRecord.new(jobapplication: @jobapplication2, recorded_at_datetime: @datetime3)
-    @jobapplicationsubmissionrecord4 = JobApplicationSubmissionRecord.new(jobapplication: @jobapplication3, recorded_at_datetime: @datetime4)
+    @jobapplicationsubmissionrecord1 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission1, recorded_at_datetime: @datetime1)
+    @jobapplicationsubmissionrecord2 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission2, recorded_at_datetime: @datetime2)
+    @jobapplicationsubmissionrecord3 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission2, recorded_at_datetime: @datetime3)
+    @jobapplicationsubmissionrecord4 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission3, recorded_at_datetime: @datetime4)
   end
 
   describe "Find JobApplicationSubmissionRecords for Jobs posted by the Recruiter" do
