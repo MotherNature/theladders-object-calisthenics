@@ -255,7 +255,8 @@ class JobApplicationSubmissionService
       raise IncompatibleJobApplicationError.new("This JobApplication is incompatible with this Posting. JobType mismatch?")
     end
 
-    @jobapplicationsubmissionlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)
+    jobapplicationsubmission = @jobapplicationsubmissionlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)
+    jobapplicationsubmission
   end
 
   def valid_jobapplication_for_posting?(jobapplication: nil, posting: nil)
