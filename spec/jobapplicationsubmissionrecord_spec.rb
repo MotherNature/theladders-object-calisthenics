@@ -78,12 +78,6 @@ describe JobApplicationSubmissionRecordList do
     @jobapplicationsubmissionrecord4 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission3, recorded_at_datetime: @datetime4)
   end
 
-  describe "Find JobApplicationSubmissionRecords for Jobs posted by the Recruiter" do
-    it "should return a list of JobApplicationSubmissionRecords for Jobs posted by the Recruiter" do
-      pending
-    end
-  end
-
   describe "Find Jobseekers who applied to the Recruiter's Jobs" do
     it "should return a list of Jobseekers who have applied to Jobs posted by the Recruiter" do
       jobapplicationsubmissionrecordlist = JobApplicationSubmissionRecordList.new([@jobapplicationsubmissionrecord1, @jobapplicationsubmissionrecord2, @jobapplicationsubmissionrecord3, @jobapplicationsubmissionrecord4])
@@ -104,9 +98,5 @@ describe JobApplicationSubmissionRecordList do
       jobseekers = jobseekerlist.to_array
       jobseekers.size.should == 1
     end
-  end
-
-  describe "Find Jobseekers by DateTime of application" do
-    pending
   end
 end
