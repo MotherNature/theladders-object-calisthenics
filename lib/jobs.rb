@@ -185,6 +185,7 @@ class JobApplicationSubmissionList < List
   def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
     jobapplicationsubmission = JobApplicationSubmission.new(jobapplication: jobapplication, posting: posting)
     add(jobapplicationsubmission)
+    jobapplicationsubmission
   end
 
   def jobapplicationsubmissions_submitted_for_posting(posting)
