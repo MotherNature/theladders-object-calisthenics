@@ -10,8 +10,13 @@ class Posting
     @posted_by = posted_by
   end
 
+  # TODO: refactor to use posted_by_recruiter? everywhere
   def posted_by?(recruiter)
     @posted_by == recruiter
+  end
+
+  def posted_by_recruiter?(recruiter)
+    posted_by?(recruiter)
   end
 
   def job_title_to_string
