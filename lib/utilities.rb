@@ -23,7 +23,6 @@ class List
     self.class.new(filtered_items)
   end
 
-  private
   def add(list_item)
     @list_items.push(list_item)
   end
