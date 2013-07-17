@@ -21,6 +21,7 @@ describe "Compositors" do
 
     @jobapplicationlist = JobApplicationList.new
     @postinglist = PostingList.new
+    @jobapplicationsubmissionrecordlist = JobApplicationSubmissionRecordList.new
 
     @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
   end
@@ -83,8 +84,6 @@ describe "Compositors" do
       @posting = jobposter.post_job(@job)
 
       @jobapplicationsubmitter = JobApplicationSubmitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
-
-      @jobapplicationsubmissionrecordlist = JobApplicationSubmissionRecordList.new
     end
 
     describe "#submit_application" do
@@ -96,6 +95,24 @@ describe "Compositors" do
 
         [jobapplicationsubmissionrecord.class, *jobapplicationsubmissionrecord.class.ancestors].should include(JobApplicationSubmissionRecord)
       end
+    end
+  end
+
+  describe "Full Run" do
+    it "should compose in a complete chain without an error" do
+      jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+
+      jobapplication = jobapplicationpreparer.prepare_application
+
+      jobapplicationsubmitter = JobApplicationSubmitter.new(jobapplication: jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+
+      jobapplicationsubmissionrecorder = JobApplicationSubmissionRecorder.new(jobapplicationsubmitter: jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
+
+      jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
+
+      posting = jobposter.post_job(@job)
+
+      jobapplicationsubmissionrecorder.submit_application(posting)
     end
   end
 end
