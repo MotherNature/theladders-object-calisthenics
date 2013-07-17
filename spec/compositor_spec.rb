@@ -51,3 +51,40 @@ describe JobApplicationPreparer do
     end
   end
 end
+
+describe JobApplicationSubmitter do
+  before(:each) do
+    examplefactory = ExampleFactory.new
+
+    @recruiter = examplefactory.build_recruiter
+
+    @job = examplefactory.build_job
+
+    @jobseeker = examplefactory.build_jobseeker
+
+    @jobapplicationlist = JobApplicationList.new
+
+    jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+
+    @jobapplication = jobapplicationpreparer.prepare_application
+
+    @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
+
+    @postinglist = PostingList.new
+
+    jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
+
+    @posting = jobposter.post_job(@job)
+  end
+
+  describe "#submit_application" do
+    it "should return a JobApplicationSubmission" do
+      jobapplicationsubmitter = JobApplicationSubmitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+
+
+      jobapplicationsubmission = jobapplicationsubmitter.submit_application(@posting)
+
+      [jobapplicationsubmission.class, *jobapplicationsubmission.class.ancestors].should include(JobApplicationSubmission)
+    end
+  end
+end
