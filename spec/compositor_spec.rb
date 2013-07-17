@@ -8,6 +8,7 @@ require 'recruiters'
 require 'postings'
 require 'resumes'
 require 'examples'
+require 'compositors'
 
 describe JobPoster do
   before(:each) do
