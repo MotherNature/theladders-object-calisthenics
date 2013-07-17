@@ -31,3 +31,23 @@ describe JobPoster do
     end
   end
 end
+
+describe JobApplicationPreparer do
+  before(:each) do
+    examplefactory = ExampleFactory.new
+
+    @jobseeker = examplefactory.build_jobseeker
+
+    @jobapplicationlist = JobApplicationList.new
+  end
+
+  describe "#prepare_application" do
+    it "should return a JobApplication" do
+      jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+
+      jobapplication = jobapplicationpreparer.prepare_application
+
+      [jobapplication.class, *jobapplication.class.ancestors].should include(JobApplication)
+    end
+  end
+end
