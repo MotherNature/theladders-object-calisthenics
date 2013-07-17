@@ -71,4 +71,31 @@ describe "Compositors" do
       end
     end
   end
+
+  describe JobApplicationSubmissionRecorder do
+    before(:each) do
+      jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+
+      @jobapplication = jobapplicationpreparer.prepare_application
+
+      jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
+
+      @posting = jobposter.post_job(@job)
+
+      @jobapplicationsubmitter = JobApplicationSubmitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+
+      @jobapplicationsubmissionrecordlist = JobApplicationSubmissionRecordList.new
+    end
+
+    describe "#submit_application" do
+      it "should return a JobApplicationSubmissionRecord" do
+        jobapplicationsubmissionrecorder = JobApplicationSubmissionRecorder.new(jobapplicationsubmitter: @jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
+
+
+        jobapplicationsubmissionrecord = jobapplicationsubmissionrecorder.submit_application(@posting)
+
+        [jobapplicationsubmissionrecord.class, *jobapplicationsubmissionrecord.class.ancestors].should include(JobApplicationSubmissionRecord)
+      end
+    end
+  end
 end
