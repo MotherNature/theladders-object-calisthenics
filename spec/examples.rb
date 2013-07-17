@@ -35,4 +35,8 @@ class ExampleFactory
   def build_job
     @jobfactory.build_job(title_string: @job_title_strings.shift, jobtype_string: @jobtype_strings.shift)
   end
+
+  def build_resume_for_jobseeker(jobseeker)
+    Resume.new(jobseeker: jobseeker)
+  end
 end
