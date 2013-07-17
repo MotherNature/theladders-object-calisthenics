@@ -41,3 +41,16 @@ class JobApplicationSubmitter
   end
 end
 
+class JobApplicationSubmissionRecorder
+  def initialize(jobapplicationsubmitter: nil, jobapplicationsubmissionrecordlist: nil)
+    @jobapplicationsubmitter = jobapplicationsubmitter
+    @jobapplicationsubmissionrecordlist = jobapplicationsubmissionrecordlist
+  end
+  
+  def submit_application(posting)
+    jobapplicationsubmission = @jobapplicationsubmitter.submit_application(posting)
+    jobapplicationsubmissionrecord = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission, recorded_at_datetime: DateTime.new)
+    @jobapplicationsubmissionrecordlist.add(jobapplicationsubmissionrecord)
+    jobapplicationsubmissionrecord
+  end
+end
