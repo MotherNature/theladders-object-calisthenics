@@ -18,8 +18,6 @@ describe JobPoster do
 
     @job = examplefactory.build_job
 
-    @posting = Posting.new(job: @job, posted_by: @recruiter)
-
     @postinglist = PostingList.new
   end
 
@@ -27,7 +25,9 @@ describe JobPoster do
     it "should return a Posting" do
       jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
 
-      jobposter.post_job(@job)
+      posting = jobposter.post_job(@job)
+
+      [posting.class, *posting.class.ancestors].should include(Posting)
     end
   end
 end
