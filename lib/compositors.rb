@@ -29,3 +29,15 @@ class JobApplicationPreparer
   end
 end
 
+class JobApplicationSubmitter
+  def initialize(jobapplication: nil, jobapplicationsubmissionservice: nil)
+    @jobapplication = jobapplication
+    @jobapplicationsubmissionservice = jobapplicationsubmissionservice
+  end
+
+  def submit_application(posting)
+    jobapplicationsubmission = @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication, posting: posting)
+    jobapplicationsubmission
+  end
+end
+
