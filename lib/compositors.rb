@@ -15,3 +15,17 @@ class JobPoster
     posting
   end
 end
+
+class JobApplicationPreparer
+  def initialize(jobseeker: nil, jobapplicationlist: nil)
+    @jobseeker = jobseeker
+    @jobapplicationlist = jobapplicationlist
+  end
+
+  def prepare_application(resume=nil)
+    jobapplication = JobApplication.new(jobseeker: @jobseeker, resume: resume)
+    @jobapplicationlist.add(jobapplication)
+    jobapplication
+  end
+end
+
