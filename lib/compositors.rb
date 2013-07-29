@@ -49,7 +49,7 @@ class JobApplicationSubmissionRecorder
   
   def submit_application(posting)
     jobapplicationsubmission = @jobapplicationsubmitter.submit_application(posting)
-    jobapplicationsubmissionrecord = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission, recorded_at_datetime: DateTime.new)
+    jobapplicationsubmissionrecord = JobApplicationSubmissionRecord.new(jobapplicationsubmission: jobapplicationsubmission, recorded_at_datetime: DateTime.new)
     @jobapplicationsubmissionrecordlist.add(jobapplicationsubmissionrecord)
     jobapplicationsubmissionrecord
   end

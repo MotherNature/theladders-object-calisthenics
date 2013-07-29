@@ -243,6 +243,20 @@ class JobApplicationSubmissionList < List
 
     joblist
   end
+
+  def jobs_posted_by(recruiter)
+    postinglist = select do |jobapplicationsubmission|
+      jobapplicationsubmission.posting_submitted_by?(recruiter)
+    end
+
+    joblist = JobList.new
+
+    postinglist.each do |posting|
+      posting.add_job_to_joblist(joblist)
+    end
+
+    joblist
+  end
 end
 
 class JobApplicationSubmissionService
@@ -330,6 +344,10 @@ class JobApplicationSubmissionRecord
     @jobapplicationsubmission.add_jobseeker_to_jobseekerlist(jobseekerlist)
   end
 
+  def add_posting_to_postinglist(postinglist)
+    @jobapplicationsubmission.add_posting_to_postinglist(postinglist)
+  end
+
   def applied_to_by_jobseeker?(jobseeker)
     @jobapplicationsubmission.jobapplication_applied_to_by?(jobseeker)
   end
@@ -355,5 +373,30 @@ class JobApplicationSubmissionRecordList < List
     end
 
     jobseekerlist
+  end
+
+  def postings_posted_by_recruiter(recruiter)
+    postinglist = PostingList.new
+
+    filteredrecords = select do |jobapplicationsubmissionrecord|
+      jobapplicationsubmissionrecord.posting_posted_by_recruiter?(recruiter)
+    end
+
+    filteredrecords.each do |record|
+      record.add_posting_to_postinglist(postinglist)
+    end
+
+    postinglist
+  end
+
+  def jobs_posted_by(recruiter)
+    joblist = JobList.new
+
+    filtered_postinglist = postings_posted_by_recruiter(recruiter) # Why do I keep running into empty lists or what looks like them?
+    filtered_postinglist.each do |posting|
+      posting.add_job_to_joblist(joblist)
+    end
+
+    joblist
   end
 end
