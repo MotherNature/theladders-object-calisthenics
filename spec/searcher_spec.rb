@@ -40,17 +40,29 @@ describe "Searchers" do
 
     jobapplicationsubmissionrecorder.submit_application(@posting)
 
-    @chaintop = jobapplicationsubmissionrecorder
+    @toplist = @jobapplicationsubmissionrecordlist
   end
 
   describe JobSearcher do
-    describe "#posted_by" do
-      it "should return a JobList with the Job posted by a given Recruiter" do
-        jobsearcher = JobSearcher.new(@chaintop)
+    describe "#posted_by_recruiter" do
+      describe "[PostingList]" do
+        it "should return a JobList with the Job posted by a given Recruiter" do
+          jobsearcher = JobSearcher.new(@postinglist)
 
-        joblist = jobsearcher.posted_by(@recruiter)
+          joblist = jobsearcher.posted_by_recruiter(@recruiter)
 
-        joblist.should include(@job)
+          joblist.should include(@job)
+        end
+      end
+
+      describe "[JobApplicationSubmissionRecordList]" do
+        it "should return a JobList with the Job posted by a given Recruiter" do
+          jobsearcher = JobSearcher.new(@jobapplicationsubmissionrecordlist)
+
+          joblist = jobsearcher.posted_by_recruiter(@recruiter)
+
+          joblist.should include(@job)
+        end
       end
     end
   end
