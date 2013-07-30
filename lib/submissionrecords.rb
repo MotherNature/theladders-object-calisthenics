@@ -47,6 +47,20 @@ class SubmissionRecordList < List
     jobseekerlist
   end
 
+  def jobseekers_applying_to_jobs_posted_on_date(date)
+    jobseekerlist = JobseekerList.new
+
+    filtered_submissionrecordlist = select do |submissionrecord|
+      submissionrecord.recorded_on_date?(date)
+    end
+
+    filtered_submissionrecordlist.each do |submissionrecord|
+      submissionrecord.add_jobseeker_to_jobseekerlist(jobseekerlist)
+    end
+
+    jobseekerlist
+  end
+
   def postings_posted_by_recruiter(recruiter)
     postinglist = PostingList.new
 
@@ -92,4 +106,12 @@ class RecruiterSubmissionRecordFilterer
 end
 
 class DateSubmissionRecordFilterer
+  def initialize(date: nil, submissionrecordlist: nil)
+    @date = date
+    @list = submissionrecordlist
+  end
+
+  def jobseekers
+    @list.jobseekers_applying_to_jobs_posted_on_date(@date)
+  end
 end
