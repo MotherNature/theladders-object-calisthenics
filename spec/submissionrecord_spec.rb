@@ -212,6 +212,17 @@ describe DateSubmissionRecordFilterer do
     @submissionrecordlist = SubmissionRecordList.new([@submissionrecord1, @submissionrecord2, @submissionrecord3, @submissionrecord4])
   end
 
+  describe "Filter SubmissionRecords" do
+    it "should return a list of only SubmissionRecords recorded on the given Date" do
+      filterer = DateSubmissionRecordFilterer.new(@datetime1.to_date)
+      filtered_list = filterer.as_filtered(@submissionrecordlist)
+      filtered_list.should include(@submissionrecord1)
+      filtered_list.should_not include(@submissionrecord2)
+      filtered_list.should_not include(@submissionrecord3)
+      filtered_list.should include(@submissionrecord4)
+    end
+  end
+
   describe "Find Jobseekers who applied on a given Date" do
     it "should return a list of Jobseekers who have applied to Jobs on the given Date" do
       date = @datetime1.to_date
