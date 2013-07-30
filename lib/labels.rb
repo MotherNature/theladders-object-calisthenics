@@ -12,21 +12,6 @@ class IDNumber
   end
 end
 
-class PersonIdentity
-  def initialize(name: nil, idnumber: nil)
-    @name = name
-    @idnumber = idnumber
-  end
-
-  def name_to_string
-    @name.to_string
-  end
-
-  def to_s
-    "Name: #{@name}\nID Number: #{@idnumber}"
-  end
-end
-
 class JobIdentity
   def initialize(title: nil, idnumber: nil)
     @title = title

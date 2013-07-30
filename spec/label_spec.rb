@@ -38,23 +38,3 @@ describe IDNumber do
     idnumber1.same_id?(idnumber2).should be_false
   end
 end
-
-describe PersonIdentity do
-  it "should initialize with a Name and an IDNumber" do
-    name = Name.new("Jane Smith")
-    idnumber = IDNumber.new("ID0001")
-
-    identity = PersonIdentity.new(name: name, idnumber: idnumber)
-
-    identity.should be
-  end
-
-  it "should convert to a String" do
-    name = Name.new("Jane Smith")
-    idnumber = IDNumber.new("ID0001")
-
-    identity = PersonIdentity.new(name: name, idnumber: idnumber)
-
-    identity.to_s.should == "Name: Jane Smith\nID Number: ID0001"
-  end
-end
