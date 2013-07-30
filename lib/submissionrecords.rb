@@ -68,3 +68,6 @@ class SubmissionRecordList < List
     joblist
   end
 end
+
+class RecruiterSubmissionRecordFilter
+end

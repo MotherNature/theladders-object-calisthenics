@@ -100,3 +100,6 @@ describe SubmissionRecordList do
     end
   end
 end
+
+describe RecruiterSubmissionRecordFilter do
+end
