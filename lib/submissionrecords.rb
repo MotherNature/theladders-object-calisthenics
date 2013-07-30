@@ -65,6 +65,20 @@ class SubmissionRecordList < List
     jobseekerlist
   end
 
+  def jobseekers_applying_to_job(job)
+    jobseekerlist = JobseekerList.new
+
+    filtered_submissionrecordlist = select do |submissionrecord|
+      submissionrecord.for_job?(job)
+    end
+
+    filtered_submissionrecordlist.each do |submissionrecord|
+      submissionrecord.add_jobseeker_to_jobseekerlist(jobseekerlist)
+    end
+
+    jobseekerlist
+  end
+
   def postings_posted_by_recruiter(recruiter)
     postinglist = PostingList.new
 
@@ -126,6 +140,10 @@ end
 class JobSubmissionRecordFilterer
   def initialize(job)
     @job = job
+  end
+
+  def jobseekers_in(submissionrecordlist)
+    submissionrecordlist.jobseekers_applying_to_job(@job)
   end
 
   def as_filtered(submissionrecordlist)
