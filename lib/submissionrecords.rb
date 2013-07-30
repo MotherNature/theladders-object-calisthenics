@@ -98,12 +98,11 @@ class RecruiterSubmissionRecordFilterer
 end
 
 class DateSubmissionRecordFilterer
-  def initialize(date: nil, submissionrecordlist: nil)
+  def initialize(date)
     @date = date
-    @list = submissionrecordlist
   end
 
-  def jobseekers
-    @list.jobseekers_applying_to_jobs_posted_on_date(@date)
+  def jobseekers_in(submissionrecordlist)
+    submissionrecordlist.jobseekers_applying_to_jobs_posted_on_date(@date)
   end
 end
