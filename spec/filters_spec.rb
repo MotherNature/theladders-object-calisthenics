@@ -44,10 +44,10 @@ describe "Combine Filterers" do
     it "should return a list of Jobseekers who have applied to Jobs on the given Date" do
       date = @datetime1.to_date
       datefilterer = DateSubmissionRecordFilterer.new(date: date, submissionrecordlist: @submissionrecordlist)
-      recruiterfilterer = RecruiterSubmissionRecordFilterer.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
+      recruiterfilterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
 
       list1 = datefilterer.jobseekers
-      list2 = recruiterfilterer.jobseekers
+      list2 = recruiterfilterer.jobseekers_in(@submissionrecordlist)
 
       jobseekerlist = list1.to_array & list2.to_array
 

@@ -144,21 +144,21 @@ describe RecruiterSubmissionRecordFilterer do
 
   describe "Find Jobseekers who applied to the Recruiter's Jobs" do
     it "should return a list of Jobseekers who have applied to Jobs posted by the Recruiter" do
-      filterer = RecruiterSubmissionRecordFilterer.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
-      jobseekerlist = filterer.jobseekers
+      filterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
       jobseekerlist.should include(@jobseeker1)
     end
 
     it "should return a list that does not include Jobseekers who have only applied to Jobs not posted by the Recruiter" do
-      filterer = RecruiterSubmissionRecordFilterer.new(recruiter: @recruiter2, submissionrecordlist: @submissionrecordlist)
-      jobseekerlist = filterer.jobseekers
+      filterer = RecruiterSubmissionRecordFilterer.new(@recruiter2)
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
       jobseekerlist.should_not include(@jobseeker1)
       jobseekerlist.should include(@jobseeker2)
     end
 
     it "should return a list with only one instance of each Jobseeker" do
-      filterer = RecruiterSubmissionRecordFilterer.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
-      jobseekerlist = filterer.jobseekers
+      filterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
       jobseekers = jobseekerlist.to_array
       jobseekers.size.should == 1
     end
