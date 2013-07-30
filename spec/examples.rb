@@ -22,14 +22,15 @@ class ExampleFactory
     ]
 
     @jobfactory = JobFactory.new
+    @idnumberservice = IDNumberService.new
   end
 
   def build_jobseeker
-    Jobseeker.new(name: Name.new(@jobseeker_name_strings.shift))
+    Jobseeker.new(name: Name.new(@jobseeker_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
   end
 
   def build_recruiter
-    Recruiter.new(name: Name.new(@recruiter_name_strings.shift))
+    Recruiter.new(name: Name.new(@recruiter_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
   end
 
   def build_job
