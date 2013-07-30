@@ -255,15 +255,24 @@ describe "Combine Filterers" do
     @submissionrecord2 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime2)
     @submissionrecord3 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime3)
     @submissionrecord4 = SubmissionRecord.new(submission: @submission3, recorded_at_datetime: @datetime4)
+    @submissionrecord5 = SubmissionRecord.new(submission: @submission3, recorded_at_datetime: @datetime1)
+
+    @submissionrecordlist = SubmissionRecordList.new([@submissionrecord1, @submissionrecord2, @submissionrecord3, @submissionrecord4])
   end
 
-  describe "Find Jobseekers who applied to Jobs posted by a given Recruiter on a given Date" do
+  describe "Find just Jobseekers who applied to Jobs posted by a given Recruiter on a given Date" do
     it "should return a list of Jobseekers who have applied to Jobs on the given Date" do
-      pending
       date = @datetime1.to_date
-      filterer = DateSubmissionRecordFilterer.new(date: date, submissionrecordlist: @submissionrecordlist)
-      jobseekerlist = filterer.jobseekers
+      datefilterer = DateSubmissionRecordFilterer.new(date: date, submissionrecordlist: @submissionrecordlist)
+      recruiterfilterer = RecruiterSubmissionRecordFilterer.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
+
+      list1 = datefilterer.jobseekers
+      list2 = recruiterfilterer.jobseekers
+
+      jobseekerlist = list1.to_array & list2.to_array
+
       jobseekerlist.should include(@jobseeker1)
+      jobseekerlist.should_not include(@jobseeker2)
     end
   end
 end
