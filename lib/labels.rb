@@ -23,6 +23,17 @@ class Identity
   end
 end
 
+class JobIdentity
+  def initialize(title: nil, idnumber: nil)
+    @title = title
+    @idnumber = idnumber
+  end
+
+  def title_to_string
+    @title.to_string
+  end
+end
+
 class Name
   def initialize(name_string)
     @name_string = name_string

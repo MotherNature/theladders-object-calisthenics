@@ -7,7 +7,7 @@ require 'jobseekers'
 
 class Job
   def initialize(title: nil, jobtype: nil)
-    @title = title
+    @jobidentity = JobIdentity.new(title: title, idnumber: IDNumber.new("PLACEHOLDER"))
     @jobtype = jobtype
   end
 
@@ -16,7 +16,7 @@ class Job
   end
 
   def title_to_string
-    @title.to_string
+    @jobidentity.title_to_string
   end
 
   def jobtype_to_string
