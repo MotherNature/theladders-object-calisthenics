@@ -96,38 +96,6 @@ class JobListReportGenerator < ListReportGenerator
   end
 end
 
-class JobApplicationSubmissionService
-  def initialize(jobapplicationsubmissionlist: JobApplicationSubmissionList.new)
-    @jobapplicationsubmissionlist = jobapplicationsubmissionlist
-  end
-
-  def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
-    if(! valid_jobapplication_for_posting?(jobapplication: jobapplication, posting: posting))
-      raise IncompatibleJobApplicationError.new("This JobApplication is incompatible with this Posting. JobType mismatch?")
-    end
-
-    jobapplicationsubmission = @jobapplicationsubmissionlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)
-    jobapplicationsubmission
-  end
-
-  def valid_jobapplication_for_posting?(jobapplication: nil, posting: nil)
-    if posting.job_requires_resume?
-      return jobapplication.has_resume?
-    end
-    return true
-  end
-
-  def jobapplicationsubmissions_submitted_for_jobapplication(jobapplication)
-    @jobapplicationsubmissionlist.select do |jobapplicationsubmission|
-      jobapplicationsubmission.submitted_for_jobapplication?(jobapplication)
-    end
-  end
-
-  def jobapplications_submitted_for_posting(posting)
-    @jobapplicationsubmissionlist.jobapplications_submitted_for_posting(posting)
-  end
-end
-
 class SavedJobRecordList < List
   def save_job_for_jobseeker(job: nil, jobseeker: nil)
     savedjobrecord = SavedJobRecord.new(job: job, jobseeker: jobseeker)
