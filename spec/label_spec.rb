@@ -39,12 +39,12 @@ describe IDNumber do
   end
 end
 
-describe Identity do
+describe PersonIdentity do
   it "should initialize with a Name and an IDNumber" do
     name = Name.new("Jane Smith")
     idnumber = IDNumber.new("ID0001")
 
-    identity = Identity.new(name: name, idnumber: idnumber)
+    identity = PersonIdentity.new(name: name, idnumber: idnumber)
 
     identity.should be
   end
@@ -53,7 +53,7 @@ describe Identity do
     name = Name.new("Jane Smith")
     idnumber = IDNumber.new("ID0001")
 
-    identity = Identity.new(name: name, idnumber: idnumber)
+    identity = PersonIdentity.new(name: name, idnumber: idnumber)
 
     identity.to_s.should == "Name: Jane Smith\nID Number: ID0001"
   end

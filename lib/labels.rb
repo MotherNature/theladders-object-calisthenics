@@ -12,7 +12,7 @@ class IDNumber
   end
 end
 
-class Identity
+class PersonIdentity
   def initialize(name: nil, idnumber: nil)
     @name = name
     @idnumber = idnumber
