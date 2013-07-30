@@ -176,21 +176,17 @@ describe DateSubmissionRecordFilterer do
 
     @recruiter = examplefactory.build_recruiter
 
-    @job1 = examplefactory.build_job
-    @job2 = examplefactory.build_job
-    @job3 = examplefactory.build_job
+    @job = examplefactory.build_job
 
-    @posting1 = Posting.new(job: @job1, posted_by: @recruiter)
-    @posting2 = Posting.new(job: @job2, posted_by: @recruiter)
-    @posting3 = Posting.new(job: @job3, posted_by: @recruiter)
+    @posting = Posting.new(job: @job, posted_by: @recruiter)
 
     @application1 = Application.new(jobseeker: @jobseeker1)
     @application2 = Application.new(jobseeker: @jobseeker1)
     @application3 = Application.new(jobseeker: @jobseeker2)
 
-    @submission1 = @submissionservice.apply_application_to_posting(application: @application1, posting: @posting1)
-    @submission2 = @submissionservice.apply_application_to_posting(application: @application2, posting: @posting2)
-    @submission3 = @submissionservice.apply_application_to_posting(application: @application3, posting: @posting3)
+    @submission1 = @submissionservice.apply_application_to_posting(application: @application1, posting: @posting)
+    @submission2 = @submissionservice.apply_application_to_posting(application: @application2, posting: @posting)
+    @submission3 = @submissionservice.apply_application_to_posting(application: @application3, posting: @posting)
 
     @datetime1 = DateTime.new(2013, 7, 12, 0, 0, 0)
     @datetime2 = DateTime.new(2013, 8, 13, 0, 0, 0)
