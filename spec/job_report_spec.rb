@@ -4,18 +4,20 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'spec'))
 require 'labels'
 require 'jobs'
 require 'savedjobrecords'
+require 'idnumberservice'
 
 describe JobListReportGenerator do
   before(:each) do
     jobfactory = JobFactory.new
+    idnumberservice = IDNumberService.new
 
     @job1 = jobfactory.build_job(title_string: "Applied Technologist", jobtype_string: "ATS")
     @job2 = jobfactory.build_job(title_string: "Bench Warmer", jobtype_string: "ATS")
     @job3 = jobfactory.build_job(title_string: "Candy Tester", jobtype_string: "ATS")
 
-    @recruiter1 = Recruiter.new(name: Name.new("Alice Smith"))
-    @recruiter2 = Recruiter.new(name: Name.new("Brenda Long"))
-    @recruiter3 = Recruiter.new(name: Name.new("Cindi Maxton"))
+    @recruiter1 = Recruiter.new(name: Name.new("Alice Smith"), idnumber: idnumberservice.generate_idnumber)
+    @recruiter2 = Recruiter.new(name: Name.new("Brenda Long"), idnumber: idnumberservice.generate_idnumber)
+    @recruiter3 = Recruiter.new(name: Name.new("Cindi Maxton"), idnumber: idnumberservice.generate_idnumber)
 
     @joblistreportgenerator = JobListReportGenerator.new
   end
