@@ -10,11 +10,12 @@ jobtypefactory = JobTypeFactory.new
 describe Recruiter do
   before(:each) do
     @postinglist = PostingList.new
+    @idnumberservice = IDNumberService.new
   end
 
   describe "Post Jobs" do
     before(:each) do
-      @recruiter = Recruiter.new(name: Name.new("Rachel McExample"))
+      @recruiter = Recruiter.new(name: Name.new("Rachel McExample"), idnumber: @idnumberservice.generate_idnumber)
     end
 
     it "should be able to post a simple ATS Job" do
@@ -39,8 +40,8 @@ describe Recruiter do
       title = "Example Title"
       jobtype = "ATS"
 
-      @recruiter1 = Recruiter.new(name: Name.new("Rachel McExample"))
-      @recruiter2 = Recruiter.new(name: Name.new("Jake Sample"))
+      @recruiter1 = Recruiter.new(name: Name.new("Rachel McExample"), idnumber: @idnumberservice.generate_idnumber)
+      @recruiter2 = Recruiter.new(name: Name.new("Jake Sample"), idnumber: @idnumberservice.generate_idnumber)
       @job1 = Job.new(title: Title.new(title), jobtype: jobtypefactory.build_jobtype(jobtype))
       @job2 = Job.new(title: Title.new(title), jobtype: jobtypefactory.build_jobtype(jobtype))
 
