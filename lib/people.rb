@@ -1,9 +1,9 @@
 class Person
   def initialize(name: nil)
-    @name = name
+    @identity = PersonIdentity.new(name: name, idnumber: IDNumber.new("PLACEHOLDER"))
   end
 
   def name_to_string
-    @name.to_string
+    @identity.name_to_string
   end
 end
