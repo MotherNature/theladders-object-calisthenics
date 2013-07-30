@@ -248,6 +248,7 @@ describe JobSubmissionRecordFilterer do
 
     @jobseeker1 = examplefactory.build_jobseeker
     @jobseeker2 = examplefactory.build_jobseeker
+    @jobseeker3 = examplefactory.build_jobseeker
 
     @recruiter1 = examplefactory.build_recruiter
     @recruiter2 = examplefactory.build_recruiter
@@ -262,10 +263,12 @@ describe JobSubmissionRecordFilterer do
     @application1 = Application.new(jobseeker: @jobseeker1)
     @application2 = Application.new(jobseeker: @jobseeker1)
     @application3 = Application.new(jobseeker: @jobseeker2)
+    @application4 = Application.new(jobseeker: @jobseeker3)
 
     @submission1 = @submissionservice.apply_application_to_posting(application: @application1, posting: @posting1)
     @submission2 = @submissionservice.apply_application_to_posting(application: @application2, posting: @posting2)
     @submission3 = @submissionservice.apply_application_to_posting(application: @application3, posting: @posting3)
+    @submission4 = @submissionservice.apply_application_to_posting(application: @application4, posting: @posting2)
 
     @datetime1 = DateTime.new(2013, 7, 12, 0, 0, 0)
     @datetime2 = DateTime.new(2013, 8, 13, 0, 0, 0)
@@ -276,6 +279,7 @@ describe JobSubmissionRecordFilterer do
     @submissionrecord2 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime2)
     @submissionrecord3 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime3)
     @submissionrecord4 = SubmissionRecord.new(submission: @submission3, recorded_at_datetime: @datetime1_2)
+    @submissionrecord5 = SubmissionRecord.new(submission: @submission4, recorded_at_datetime: @datetime3)
 
     @submissionrecordlist = SubmissionRecordList.new([@submissionrecord1, @submissionrecord2, @submissionrecord3, @submissionrecord4])
   end
@@ -288,6 +292,7 @@ describe JobSubmissionRecordFilterer do
       filtered_list.should_not include(@submissionrecord2)
       filtered_list.should_not include(@submissionrecord3)
       filtered_list.should include(@submissionrecord4)
+      filtered_list.should_not include(@submissionrecord5)
     end
   end
 end
