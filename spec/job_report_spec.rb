@@ -3,6 +3,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'spec'))
 
 require 'labels'
 require 'jobs'
+require 'savedjobrecords'
 
 describe JobListReportGenerator do
   before(:each) do
