@@ -13,12 +13,13 @@ describe Jobseeker do
       
     @jobfactory = JobFactory.new
     @submissionservice = SubmissionService.new
+    @idnumberservice = IDNumberService.new
 
     @savedjobrecordlist = SavedJobRecordList.new
 
-    @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"))
+    @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"), idnumber: @idnumberservice.generate_idnumber)
 
-    @recruiter = Recruiter.new(name: Name.new("Rudy Smith"))
+    @recruiter = Recruiter.new(name: Name.new("Rudy Smith"), idnumber: @idnumberservice.generate_idnumber)
 
     @ats_job = @jobfactory.build_job(title_string: "Example Title", jobtype_string: "ATS")
     @jreq_job = @jobfactory.build_job(title_string: "Example Title", jobtype_string: "JReq")
@@ -83,7 +84,7 @@ describe Jobseeker do
     end
 
     it "should not be able to apply to Jobs with another Jobseeker's Resume" do
-      jobseeker2 = Jobseeker.new(name: Name.new("Jane Deus"))
+      jobseeker2 = Jobseeker.new(name: Name.new("Jane Deus"), idnumber: @idnumberservice.generate_idnumber)
 
       resume2 = Resume.new(jobseeker: jobseeker2)
 
