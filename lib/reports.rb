@@ -35,8 +35,8 @@ class JobsAppliedToReport
 end
 
 class JobsAppliedToReportGenerator
-  def generate_for_jobseeker_from_jobapplicationsubmissionlist(jobseeker: nil, jobapplicationsubmissionlist: nil)
-    joblist = jobapplicationsubmissionlist.jobs_submitted_to_by_jobseeker(jobseeker)
+  def generate_for_jobseeker_from_submissionlist(jobseeker: nil, submissionlist: nil)
+    joblist = submissionlist.jobs_submitted_to_by_jobseeker(jobseeker)
     
     return JobsAppliedToReport.new(joblist)
   end

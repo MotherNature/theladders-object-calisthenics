@@ -30,38 +30,38 @@ end
 
 class SubmissionList < List
   def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
-    jobapplicationsubmission = Submission.new(jobapplication: jobapplication, posting: posting)
-    add(jobapplicationsubmission)
-    jobapplicationsubmission
+    submission = Submission.new(jobapplication: jobapplication, posting: posting)
+    add(submission)
+    submission
   end
 
-  def jobapplicationsubmissions_submitted_for_posting(posting)
-    select do |jobapplicationsubmission|
-      jobapplicationsubmission.submitted_for_posting?(posting)
+  def submissions_submitted_for_posting(posting)
+    select do |submission|
+      submission.submitted_for_posting?(posting)
     end
   end
 
   def jobapplications_submitted_for_posting(posting)
     jobapplicationlist = JobApplicationList.new
 
-    each do |jobapplicationsubmission|
-      jobapplicationsubmission.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
+    each do |submission|
+      submission.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
     end
 
     jobapplicationlist
   end
 
-  def jobapplicationsubmissions_submitted_by(jobseeker)
-    select do |jobapplicationsubmission|
-      jobapplicationsubmission.jobapplication_applied_to_by?(jobseeker)
+  def submissions_submitted_by(jobseeker)
+    select do |submission|
+      submission.jobapplication_applied_to_by?(jobseeker)
     end
   end
 
   def jobapplications_submitted_by(jobseeker)
     jobapplicationlist = JobApplicationList.new
 
-    each do |jobapplicationsubmission|
-      jobapplicationsubmission.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
+    each do |submission|
+      submission.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
     end
 
     jobapplicationlist
@@ -70,10 +70,10 @@ class SubmissionList < List
   def postings_submitted_to_by_jobseeker(jobseeker)
     postinglist = PostingList.new
 
-    filtered_jobapplicationsubmissions = jobapplicationsubmissions_submitted_by(jobseeker)
+    filtered_submissions = submissions_submitted_by(jobseeker)
     
-    filtered_jobapplicationsubmissions.each do |jobapplicationsubmission|
-      jobapplicationsubmission.add_posting_to_postinglist(postinglist)
+    filtered_submissions.each do |submission|
+      submission.add_posting_to_postinglist(postinglist)
     end
 
     postinglist
@@ -92,8 +92,8 @@ class SubmissionList < List
   end
 
   def jobs_posted_by(recruiter)
-    postinglist = select do |jobapplicationsubmission|
-      jobapplicationsubmission.posting_submitted_by?(recruiter)
+    postinglist = select do |submission|
+      submission.posting_submitted_by?(recruiter)
     end
 
     joblist = JobList.new
@@ -107,8 +107,8 @@ class SubmissionList < List
 end
 
 class SubmissionService
-  def initialize(jobapplicationsubmissionlist: SubmissionList.new)
-    @jobapplicationsubmissionlist = jobapplicationsubmissionlist
+  def initialize(submissionlist: SubmissionList.new)
+    @submissionlist = submissionlist
   end
 
   def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
@@ -116,8 +116,8 @@ class SubmissionService
       raise IncompatibleJobApplicationError.new("This JobApplication is incompatible with this Posting. JobType mismatch?")
     end
 
-    jobapplicationsubmission = @jobapplicationsubmissionlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)
-    jobapplicationsubmission
+    submission = @submissionlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)
+    submission
   end
 
   def valid_jobapplication_for_posting?(jobapplication: nil, posting: nil)
@@ -127,14 +127,14 @@ class SubmissionService
     return true
   end
 
-  def jobapplicationsubmissions_submitted_for_jobapplication(jobapplication)
-    @jobapplicationsubmissionlist.select do |jobapplicationsubmission|
-      jobapplicationsubmission.submitted_for_jobapplication?(jobapplication)
+  def submissions_submitted_for_jobapplication(jobapplication)
+    @submissionlist.select do |submission|
+      submission.submitted_for_jobapplication?(jobapplication)
     end
   end
 
   def jobapplications_submitted_for_posting(posting)
-    @jobapplicationsubmissionlist.jobapplications_submitted_for_posting(posting)
+    @submissionlist.jobapplications_submitted_for_posting(posting)
   end
 end
 

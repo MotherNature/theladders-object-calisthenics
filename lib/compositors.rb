@@ -30,27 +30,27 @@ class JobApplicationPreparer
 end
 
 class Submitter
-  def initialize(jobapplication: nil, jobapplicationsubmissionservice: nil)
+  def initialize(jobapplication: nil, submissionservice: nil)
     @jobapplication = jobapplication
-    @jobapplicationsubmissionservice = jobapplicationsubmissionservice
+    @submissionservice = submissionservice
   end
 
   def submit_application(posting)
-    jobapplicationsubmission = @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication, posting: posting)
-    jobapplicationsubmission
+    submission = @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication, posting: posting)
+    submission
   end
 end
 
 class SubmissionRecorder
-  def initialize(jobapplicationsubmitter: nil, jobapplicationsubmissionrecordlist: nil)
-    @jobapplicationsubmitter = jobapplicationsubmitter
-    @jobapplicationsubmissionrecordlist = jobapplicationsubmissionrecordlist
+  def initialize(submitter: nil, submissionrecordlist: nil)
+    @submitter = submitter
+    @submissionrecordlist = submissionrecordlist
   end
   
   def submit_application(posting)
-    jobapplicationsubmission = @jobapplicationsubmitter.submit_application(posting)
-    jobapplicationsubmissionrecord = SubmissionRecord.new(jobapplicationsubmission: jobapplicationsubmission, recorded_at_datetime: DateTime.new)
-    @jobapplicationsubmissionrecordlist.add(jobapplicationsubmissionrecord)
-    jobapplicationsubmissionrecord
+    submission = @submitter.submit_application(posting)
+    submissionrecord = SubmissionRecord.new(submission: submission, recorded_at_datetime: DateTime.new)
+    @submissionrecordlist.add(submissionrecord)
+    submissionrecord
   end
 end

@@ -12,7 +12,7 @@ describe Jobseeker do
   before(:each) do
       
     @jobfactory = JobFactory.new
-    @jobapplicationsubmissionservice = SubmissionService.new
+    @submissionservice = SubmissionService.new
 
     @savedjobrecordlist = SavedJobRecordList.new
 
@@ -38,28 +38,28 @@ describe Jobseeker do
     it "should be able to apply to an ATS Job Posting without a resume" do
       jobapplication = JobApplication.new(jobseeker: @jobseeker)
 
-      @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @ats_job_posting)
+      @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @ats_job_posting)
       
-      @jobapplicationsubmissionservice.jobapplications_submitted_for_posting(@ats_job_posting).should include jobapplication
+      @submissionservice.jobapplications_submitted_for_posting(@ats_job_posting).should include jobapplication
     end
 
     it "should not be able to apply to a JReq Job Posting without a resume" do
       jobapplication = JobApplication.new(jobseeker: @jobseeker)
 
       expect {
-        @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @jreq_job_posting)
+        @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @jreq_job_posting)
       }.to raise_error(IncompatibleJobApplicationError)
 
-      @jobapplicationsubmissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should_not include jobapplication
+      @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should_not include jobapplication
     end
 
     it "should be able to apply to a JReq Job Posting with a resume" do
       resume = Resume.new(jobseeker: @jobseeker)
       jobapplication = JobApplication.new(jobseeker: @jobseeker, resume: resume) 
 
-      @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @jreq_job_posting)
+      @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @jreq_job_posting)
       
-      @jobapplicationsubmissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication
+      @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication
     end
 
     it "should be able to apply to different Jobs Posting with different Resumes" do
@@ -69,11 +69,11 @@ describe Jobseeker do
       jobapplication1 = JobApplication.new(jobseeker: @jobseeker, resume: resume1)
       jobapplication2 = JobApplication.new(jobseeker: @jobseeker, resume: resume2)
 
-      @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication1, posting: @ats_job_posting)
-      @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication2, posting: @jreq_job_posting)
+      @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication1, posting: @ats_job_posting)
+      @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication2, posting: @jreq_job_posting)
       
-      @jobapplicationsubmissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication1
-      @jobapplicationsubmissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication2
+      @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication1
+      @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication2
 
       jobapplication1.has_this_resume?(resume1).should be_true
       jobapplication1.has_this_resume?(resume2).should be_false

@@ -22,25 +22,25 @@ describe "Searchers" do
 
     @jobapplicationlist = JobApplicationList.new
     @postinglist = PostingList.new
-    @jobapplicationsubmissionrecordlist = SubmissionRecordList.new
+    @submissionrecordlist = SubmissionRecordList.new
 
-    @jobapplicationsubmissionservice = SubmissionService.new
+    @submissionservice = SubmissionService.new
 
     jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
 
     @jobapplication = jobapplicationpreparer.prepare_application
 
-    jobapplicationsubmitter = Submitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+    submitter = Submitter.new(jobapplication: @jobapplication, submissionservice: @submissionservice)
 
-    jobapplicationsubmissionrecorder = SubmissionRecorder.new(jobapplicationsubmitter: jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
+    submissionrecorder = SubmissionRecorder.new(submitter: submitter, submissionrecordlist: @submissionrecordlist)
 
     jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
 
     @posting = jobposter.post_job(@job)
 
-    jobapplicationsubmissionrecorder.submit_application(@posting)
+    submissionrecorder.submit_application(@posting)
 
-    @toplist = @jobapplicationsubmissionrecordlist
+    @toplist = @submissionrecordlist
   end
 
   describe JobSearcher do
@@ -57,7 +57,7 @@ describe "Searchers" do
 
       describe "[SubmissionRecordList]" do
         it "should return a JobList with the Job posted by a given Recruiter" do
-          jobsearcher = JobSearcher.new(@jobapplicationsubmissionrecordlist)
+          jobsearcher = JobSearcher.new(@submissionrecordlist)
 
           joblist = jobsearcher.posted_by_recruiter(@recruiter)
 

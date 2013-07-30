@@ -21,9 +21,9 @@ describe "Compositors" do
 
     @jobapplicationlist = JobApplicationList.new
     @postinglist = PostingList.new
-    @jobapplicationsubmissionrecordlist = SubmissionRecordList.new
+    @submissionrecordlist = SubmissionRecordList.new
 
-    @jobapplicationsubmissionservice = SubmissionService.new
+    @submissionservice = SubmissionService.new
   end
 
   describe JobPoster do
@@ -63,12 +63,12 @@ describe "Compositors" do
 
     describe "#submit_application" do
       it "should return a Submission" do
-        jobapplicationsubmitter = Submitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+        submitter = Submitter.new(jobapplication: @jobapplication, submissionservice: @submissionservice)
 
 
-        jobapplicationsubmission = jobapplicationsubmitter.submit_application(@posting)
+        submission = submitter.submit_application(@posting)
 
-        [jobapplicationsubmission.class, *jobapplicationsubmission.class.ancestors].should include(Submission)
+        [submission.class, *submission.class.ancestors].should include(Submission)
       end
     end
   end
@@ -83,17 +83,17 @@ describe "Compositors" do
 
       @posting = jobposter.post_job(@job)
 
-      @jobapplicationsubmitter = Submitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+      @submitter = Submitter.new(jobapplication: @jobapplication, submissionservice: @submissionservice)
     end
 
     describe "#submit_application" do
       it "should return a SubmissionRecord" do
-        jobapplicationsubmissionrecorder = SubmissionRecorder.new(jobapplicationsubmitter: @jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
+        submissionrecorder = SubmissionRecorder.new(submitter: @submitter, submissionrecordlist: @submissionrecordlist)
 
 
-        jobapplicationsubmissionrecord = jobapplicationsubmissionrecorder.submit_application(@posting)
+        submissionrecord = submissionrecorder.submit_application(@posting)
 
-        [jobapplicationsubmissionrecord.class, *jobapplicationsubmissionrecord.class.ancestors].should include(SubmissionRecord)
+        [submissionrecord.class, *submissionrecord.class.ancestors].should include(SubmissionRecord)
       end
     end
   end
@@ -104,15 +104,15 @@ describe "Compositors" do
 
       jobapplication = jobapplicationpreparer.prepare_application
 
-      jobapplicationsubmitter = Submitter.new(jobapplication: jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+      submitter = Submitter.new(jobapplication: jobapplication, submissionservice: @submissionservice)
 
-      jobapplicationsubmissionrecorder = SubmissionRecorder.new(jobapplicationsubmitter: jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
+      submissionrecorder = SubmissionRecorder.new(submitter: submitter, submissionrecordlist: @submissionrecordlist)
 
       jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
 
       posting = jobposter.post_job(@job)
 
-      jobapplicationsubmissionrecorder.submit_application(posting)
+      submissionrecorder.submit_application(posting)
     end
   end
 end

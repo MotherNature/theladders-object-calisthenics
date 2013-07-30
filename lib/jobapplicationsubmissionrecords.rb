@@ -1,6 +1,6 @@
 class SubmissionRecord
-  def initialize(jobapplicationsubmission: nil, recorded_at_datetime: nil)
-    @jobapplicationsubmission = jobapplicationsubmission
+  def initialize(submission: nil, recorded_at_datetime: nil)
+    @submission = submission
     @recorded_at_datetime = recorded_at_datetime
   end
 
@@ -9,35 +9,35 @@ class SubmissionRecord
   end
 
   def add_jobseeker_to_jobseekerlist(jobseekerlist)
-    @jobapplicationsubmission.add_jobseeker_to_jobseekerlist(jobseekerlist)
+    @submission.add_jobseeker_to_jobseekerlist(jobseekerlist)
   end
 
   def add_posting_to_postinglist(postinglist)
-    @jobapplicationsubmission.add_posting_to_postinglist(postinglist)
+    @submission.add_posting_to_postinglist(postinglist)
   end
 
   def applied_to_by_jobseeker?(jobseeker)
-    @jobapplicationsubmission.jobapplication_applied_to_by?(jobseeker)
+    @submission.jobapplication_applied_to_by?(jobseeker)
   end
 
   def posting_posted_by_recruiter?(recruiter)
-    @jobapplicationsubmission.posting_posted_by_recruiter?(recruiter)
+    @submission.posting_posted_by_recruiter?(recruiter)
   end
 end
 
 class SubmissionRecordList < List
-  def jobapplicationsubmissionrecords_for_postings_by_recruiter(recruiter)
+  def submissionrecords_for_postings_by_recruiter(recruiter)
   end
 
   def jobseekers_applying_to_jobs_posted_by_recruiter(recruiter)
     jobseekerlist = JobseekerList.new
 
-    filtered_jobapplicationsubmissionrecordlist = select do |jobapplicationsubmissionrecord|
-      jobapplicationsubmissionrecord.posting_posted_by_recruiter?(recruiter)
+    filtered_submissionrecordlist = select do |submissionrecord|
+      submissionrecord.posting_posted_by_recruiter?(recruiter)
     end
 
-    filtered_jobapplicationsubmissionrecordlist.each do |jobapplicationsubmissionrecord|
-      jobapplicationsubmissionrecord.add_jobseeker_to_jobseekerlist(jobseekerlist)
+    filtered_submissionrecordlist.each do |submissionrecord|
+      submissionrecord.add_jobseeker_to_jobseekerlist(jobseekerlist)
     end
 
     jobseekerlist
@@ -46,8 +46,8 @@ class SubmissionRecordList < List
   def postings_posted_by_recruiter(recruiter)
     postinglist = PostingList.new
 
-    filteredrecords = select do |jobapplicationsubmissionrecord|
-      jobapplicationsubmissionrecord.posting_posted_by_recruiter?(recruiter)
+    filteredrecords = select do |submissionrecord|
+      submissionrecord.posting_posted_by_recruiter?(recruiter)
     end
 
     filteredrecords.each do |record|
