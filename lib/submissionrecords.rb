@@ -95,6 +95,12 @@ class RecruiterSubmissionRecordFilterer
   def jobseekers_in(submissionrecordlist)
     submissionrecordlist.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter)
   end
+
+  def as_filtered(submissionrecordlist)
+    submissionrecordlist.select do |submissionrecord|
+      submissionrecord.posting_posted_by_recruiter?(@recruiter)
+    end
+  end
 end
 
 class DateSubmissionRecordFilterer
