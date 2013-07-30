@@ -21,9 +21,9 @@ describe "Compositors" do
 
     @jobapplicationlist = JobApplicationList.new
     @postinglist = PostingList.new
-    @jobapplicationsubmissionrecordlist = JobApplicationSubmissionRecordList.new
+    @jobapplicationsubmissionrecordlist = SubmissionRecordList.new
 
-    @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
+    @jobapplicationsubmissionservice = SubmissionService.new
   end
 
   describe JobPoster do
@@ -50,7 +50,7 @@ describe "Compositors" do
     end
   end
 
-  describe JobApplicationSubmitter do
+  describe Submitter do
     before(:each) do
       jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
 
@@ -62,18 +62,18 @@ describe "Compositors" do
     end
 
     describe "#submit_application" do
-      it "should return a JobApplicationSubmission" do
-        jobapplicationsubmitter = JobApplicationSubmitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+      it "should return a Submission" do
+        jobapplicationsubmitter = Submitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
 
 
         jobapplicationsubmission = jobapplicationsubmitter.submit_application(@posting)
 
-        [jobapplicationsubmission.class, *jobapplicationsubmission.class.ancestors].should include(JobApplicationSubmission)
+        [jobapplicationsubmission.class, *jobapplicationsubmission.class.ancestors].should include(Submission)
       end
     end
   end
 
-  describe JobApplicationSubmissionRecorder do
+  describe SubmissionRecorder do
     before(:each) do
       jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
 
@@ -83,17 +83,17 @@ describe "Compositors" do
 
       @posting = jobposter.post_job(@job)
 
-      @jobapplicationsubmitter = JobApplicationSubmitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+      @jobapplicationsubmitter = Submitter.new(jobapplication: @jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
     end
 
     describe "#submit_application" do
-      it "should return a JobApplicationSubmissionRecord" do
-        jobapplicationsubmissionrecorder = JobApplicationSubmissionRecorder.new(jobapplicationsubmitter: @jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
+      it "should return a SubmissionRecord" do
+        jobapplicationsubmissionrecorder = SubmissionRecorder.new(jobapplicationsubmitter: @jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
 
 
         jobapplicationsubmissionrecord = jobapplicationsubmissionrecorder.submit_application(@posting)
 
-        [jobapplicationsubmissionrecord.class, *jobapplicationsubmissionrecord.class.ancestors].should include(JobApplicationSubmissionRecord)
+        [jobapplicationsubmissionrecord.class, *jobapplicationsubmissionrecord.class.ancestors].should include(SubmissionRecord)
       end
     end
   end
@@ -104,9 +104,9 @@ describe "Compositors" do
 
       jobapplication = jobapplicationpreparer.prepare_application
 
-      jobapplicationsubmitter = JobApplicationSubmitter.new(jobapplication: jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
+      jobapplicationsubmitter = Submitter.new(jobapplication: jobapplication, jobapplicationsubmissionservice: @jobapplicationsubmissionservice)
 
-      jobapplicationsubmissionrecorder = JobApplicationSubmissionRecorder.new(jobapplicationsubmitter: jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
+      jobapplicationsubmissionrecorder = SubmissionRecorder.new(jobapplicationsubmitter: jobapplicationsubmitter, jobapplicationsubmissionrecordlist: @jobapplicationsubmissionrecordlist)
 
       jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
 

@@ -12,7 +12,7 @@ describe Jobseeker do
   before(:each) do
       
     @jobfactory = JobFactory.new
-    @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
+    @jobapplicationsubmissionservice = SubmissionService.new
 
     @savedjobrecordlist = SavedJobRecordList.new
 

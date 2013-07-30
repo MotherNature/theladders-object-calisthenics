@@ -5,7 +5,7 @@ require 'labels'
 require 'jobs'
 require 'examples'
 
-describe JobApplicationSubmissionService do
+describe SubmissionService do
   before(:each) do
 
     examplefactory = ExampleFactory.new
@@ -17,12 +17,12 @@ describe JobApplicationSubmissionService do
     @posting = Posting.new(job: job, posted_by: recruiter)
     @jobapplication = JobApplication.new(jobseeker: jobseeker)
 
-    @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
+    @jobapplicationsubmissionservice = SubmissionService.new
   end
 
   # TODO: Ask whether this implicit return is a bad idea and, if so, for alternative approaches.
   describe "#apply_jobapplication_to_posting" do
-    it "should return the JobApplicationSubmission created to record the posting activity" do
+    it "should return the Submission created to record the posting activity" do
       jobapplicationsubmission = @jobapplicationsubmissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication, posting: @posting)
       jobapplicationsubmission.submitted_for_jobapplication?(@jobapplication).should be_true
       jobapplicationsubmission.submitted_for_posting?(@posting).should be_true

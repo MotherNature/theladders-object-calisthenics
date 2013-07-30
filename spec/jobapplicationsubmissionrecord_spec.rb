@@ -10,11 +10,11 @@ require 'postings'
 require 'resumes'
 require 'examples'
 
-describe JobApplicationSubmissionRecord do
+describe SubmissionRecord do
   before(:each) do
     examplefactory = ExampleFactory.new
 
-    @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
+    @jobapplicationsubmissionservice = SubmissionService.new
 
     @jobseeker = examplefactory.build_jobseeker
     @recruiter = examplefactory.build_recruiter
@@ -31,19 +31,19 @@ describe JobApplicationSubmissionRecord do
   end
 
   describe "Record Time" do
-    it "should record a given time for a JobApplicationSubmission" do
+    it "should record a given time for a Submission" do
       datetime = DateTime.new(2013, 7, 12, 0, 0, 0)
-      jobapplicationsubmissionrecord = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission, recorded_at_datetime: datetime)
+      jobapplicationsubmissionrecord = SubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission, recorded_at_datetime: datetime)
       jobapplicationsubmissionrecord.recorded_at_datetime?(datetime).should be_true
     end
   end
 end
 
-describe JobApplicationSubmissionRecordList do
+describe SubmissionRecordList do
   before(:each) do
     examplefactory = ExampleFactory.new
 
-    @jobapplicationsubmissionservice = JobApplicationSubmissionService.new
+    @jobapplicationsubmissionservice = SubmissionService.new
 
     @jobseeker1 = examplefactory.build_jobseeker
     @jobseeker2 = examplefactory.build_jobseeker
@@ -72,28 +72,28 @@ describe JobApplicationSubmissionRecordList do
     @datetime3 = DateTime.new(2013, 9, 14, 0, 0, 0)
     @datetime4 = DateTime.new(2013, 10, 15, 0, 0, 0)
 
-    @jobapplicationsubmissionrecord1 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission1, recorded_at_datetime: @datetime1)
-    @jobapplicationsubmissionrecord2 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission2, recorded_at_datetime: @datetime2)
-    @jobapplicationsubmissionrecord3 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission2, recorded_at_datetime: @datetime3)
-    @jobapplicationsubmissionrecord4 = JobApplicationSubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission3, recorded_at_datetime: @datetime4)
+    @jobapplicationsubmissionrecord1 = SubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission1, recorded_at_datetime: @datetime1)
+    @jobapplicationsubmissionrecord2 = SubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission2, recorded_at_datetime: @datetime2)
+    @jobapplicationsubmissionrecord3 = SubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission2, recorded_at_datetime: @datetime3)
+    @jobapplicationsubmissionrecord4 = SubmissionRecord.new(jobapplicationsubmission: @jobapplicationsubmission3, recorded_at_datetime: @datetime4)
   end
 
   describe "Find Jobseekers who applied to the Recruiter's Jobs" do
     it "should return a list of Jobseekers who have applied to Jobs posted by the Recruiter" do
-      jobapplicationsubmissionrecordlist = JobApplicationSubmissionRecordList.new([@jobapplicationsubmissionrecord1, @jobapplicationsubmissionrecord2, @jobapplicationsubmissionrecord3, @jobapplicationsubmissionrecord4])
+      jobapplicationsubmissionrecordlist = SubmissionRecordList.new([@jobapplicationsubmissionrecord1, @jobapplicationsubmissionrecord2, @jobapplicationsubmissionrecord3, @jobapplicationsubmissionrecord4])
       jobseekerlist = jobapplicationsubmissionrecordlist.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter1)
       jobseekerlist.should include(@jobseeker1)
     end
 
     it "should return a list that does not include Jobseekers who have only applied to Jobs not posted by the Recruiter" do
-      jobapplicationsubmissionrecordlist = JobApplicationSubmissionRecordList.new([@jobapplicationsubmissionrecord1, @jobapplicationsubmissionrecord2, @jobapplicationsubmissionrecord3, @jobapplicationsubmissionrecord4])
+      jobapplicationsubmissionrecordlist = SubmissionRecordList.new([@jobapplicationsubmissionrecord1, @jobapplicationsubmissionrecord2, @jobapplicationsubmissionrecord3, @jobapplicationsubmissionrecord4])
       jobseekerlist = jobapplicationsubmissionrecordlist.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter2)
       jobseekerlist.should_not include(@jobseeker1)
       jobseekerlist.should include(@jobseeker2)
     end
 
     it "should return a list with only one instance of each Jobseeker" do
-      jobapplicationsubmissionrecordlist = JobApplicationSubmissionRecordList.new([@jobapplicationsubmissionrecord1, @jobapplicationsubmissionrecord2, @jobapplicationsubmissionrecord3, @jobapplicationsubmissionrecord4])
+      jobapplicationsubmissionrecordlist = SubmissionRecordList.new([@jobapplicationsubmissionrecord1, @jobapplicationsubmissionrecord2, @jobapplicationsubmissionrecord3, @jobapplicationsubmissionrecord4])
       jobseekerlist = jobapplicationsubmissionrecordlist.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter1)
       jobseekers = jobseekerlist.to_array
       jobseekers.size.should == 1

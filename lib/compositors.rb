@@ -29,7 +29,7 @@ class JobApplicationPreparer
   end
 end
 
-class JobApplicationSubmitter
+class Submitter
   def initialize(jobapplication: nil, jobapplicationsubmissionservice: nil)
     @jobapplication = jobapplication
     @jobapplicationsubmissionservice = jobapplicationsubmissionservice
@@ -41,7 +41,7 @@ class JobApplicationSubmitter
   end
 end
 
-class JobApplicationSubmissionRecorder
+class SubmissionRecorder
   def initialize(jobapplicationsubmitter: nil, jobapplicationsubmissionrecordlist: nil)
     @jobapplicationsubmitter = jobapplicationsubmitter
     @jobapplicationsubmissionrecordlist = jobapplicationsubmissionrecordlist
@@ -49,7 +49,7 @@ class JobApplicationSubmissionRecorder
   
   def submit_application(posting)
     jobapplicationsubmission = @jobapplicationsubmitter.submit_application(posting)
-    jobapplicationsubmissionrecord = JobApplicationSubmissionRecord.new(jobapplicationsubmission: jobapplicationsubmission, recorded_at_datetime: DateTime.new)
+    jobapplicationsubmissionrecord = SubmissionRecord.new(jobapplicationsubmission: jobapplicationsubmission, recorded_at_datetime: DateTime.new)
     @jobapplicationsubmissionrecordlist.add(jobapplicationsubmissionrecord)
     jobapplicationsubmissionrecord
   end

@@ -1,4 +1,4 @@
-class JobApplicationSubmission
+class Submission
   include JobApplicationListAppender
   include PostingListAppender
 
@@ -28,9 +28,9 @@ class JobApplicationSubmission
   end
 end
 
-class JobApplicationSubmissionList < List
+class SubmissionList < List
   def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
-    jobapplicationsubmission = JobApplicationSubmission.new(jobapplication: jobapplication, posting: posting)
+    jobapplicationsubmission = Submission.new(jobapplication: jobapplication, posting: posting)
     add(jobapplicationsubmission)
     jobapplicationsubmission
   end
@@ -106,8 +106,8 @@ class JobApplicationSubmissionList < List
   end
 end
 
-class JobApplicationSubmissionService
-  def initialize(jobapplicationsubmissionlist: JobApplicationSubmissionList.new)
+class SubmissionService
+  def initialize(jobapplicationsubmissionlist: SubmissionList.new)
     @jobapplicationsubmissionlist = jobapplicationsubmissionlist
   end
 

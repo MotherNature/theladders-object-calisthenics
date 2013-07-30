@@ -1,4 +1,4 @@
-class JobApplicationSubmissionRecord
+class SubmissionRecord
   def initialize(jobapplicationsubmission: nil, recorded_at_datetime: nil)
     @jobapplicationsubmission = jobapplicationsubmission
     @recorded_at_datetime = recorded_at_datetime
@@ -25,7 +25,7 @@ class JobApplicationSubmissionRecord
   end
 end
 
-class JobApplicationSubmissionRecordList < List
+class SubmissionRecordList < List
   def jobapplicationsubmissionrecords_for_postings_by_recruiter(recruiter)
   end
 
