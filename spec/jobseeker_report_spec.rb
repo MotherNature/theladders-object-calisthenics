@@ -6,12 +6,15 @@ require 'jobseekers'
 require 'jobs'
 require 'postings'
 require 'reports'
+require 'idnumberservice'
 
 describe JobseekerListReportGenerator do
   before(:each) do
-    @jobseeker1 = Jobseeker.new(name: Name.new("Alice Green"))
-    @jobseeker2 = Jobseeker.new(name: Name.new("Betty Smith"))
-    @jobseeker3 = Jobseeker.new(name: Name.new("Candice Yarn"))
+    idnumberservice = IDNumberService.new
+
+    @jobseeker1 = Jobseeker.new(name: Name.new("Alice Green"), idnumber: idnumberservice.generate_idnumber)
+    @jobseeker2 = Jobseeker.new(name: Name.new("Betty Smith"), idnumber: idnumberservice.generate_idnumber)
+    @jobseeker3 = Jobseeker.new(name: Name.new("Candice Yarn"), idnumber: idnumberservice.generate_idnumber)
 
     @jobseekerlistreportgenerator = JobseekerListReportGenerator.new
   end
@@ -35,10 +38,11 @@ describe SavedJobListReportGenerator do
   describe "Generated \List of Jobs saved\" Report" do
     before(:each) do
       @jobfactory = JobFactory.new
+      @idnumberservice = IDNumberService.new
 
       @savedjobrecordlist = SavedJobRecordList.new
 
-      @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"))
+      @jobseeker = Jobseeker.new(name: Name.new("Jane Doe"), idnumber: @idnumberservice.generate_idnumber)
 
       @job = @jobfactory.build_job(title_string: "Applied Technologist", jobtype_string: "ATS")
 
@@ -57,7 +61,7 @@ describe SavedJobListReportGenerator do
 
     it "should only list Jobs saved by the Jobseeker" do
       other_job = @jobfactory.build_job(title_string: "Difference Engine Technician", jobtype_string: "ATS")
-      other_jobseeker = Jobseeker.new(name: Name.new("Olivia Thatcher"))
+      other_jobseeker = Jobseeker.new(name: Name.new("Olivia Thatcher"), idnumber: @idnumberservice.generate_idnumber)
 
       @savedjobrecordlist.save_job_for_jobseeker(job: @job, jobseeker: @jobseeker)
       @savedjobrecordlist.save_job_for_jobseeker(job: other_job, jobseeker: other_jobseeker)
@@ -74,9 +78,11 @@ end
 describe JobsAppliedToReportGenerator do
   describe "Generate \"Jobs applied to\" Report" do
     before(:each) do
-      @jobseeker = Jobseeker.new(name: Name.new("Alice Green"))
-      @other_jobseeker = Jobseeker.new(name: Name.new("Betty Smith"))
-      recruiter = Recruiter.new(name: Name.new("Rudy Zane"))
+      idnumberservice = IDNumberService.new
+
+      @jobseeker = Jobseeker.new(name: Name.new("Alice Green"), idnumber: idnumberservice.generate_idnumber)
+      @other_jobseeker = Jobseeker.new(name: Name.new("Betty Smith"), idnumber: idnumberservice.generate_idnumber)
+      recruiter = Recruiter.new(name: Name.new("Rudy Zane"), idnumber: idnumberservice.generate_idnumber)
 
       jobfactory = JobFactory.new
 
