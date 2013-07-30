@@ -18,6 +18,10 @@ class PersonIdentity
     @idnumber = idnumber
   end
 
+  def name_to_string
+    @name.to_string
+  end
+
   def to_s
     "Name: #{@name}\nID Number: #{@idnumber}"
   end
