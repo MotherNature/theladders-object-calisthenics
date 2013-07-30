@@ -96,13 +96,6 @@ class RecruiterSubmissionRecordFilterer
   def jobseekers
     @list.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter)
   end
-
-  def jobseekers_who_applied_on(date)
-    @list.select do |submissionrecord|
-      submissionrecord.recorded_on_date?(date)
-    end
-    jobseekers
-  end
 end
 
 class DateSubmissionRecordFilterer
