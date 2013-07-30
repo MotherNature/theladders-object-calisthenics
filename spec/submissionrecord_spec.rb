@@ -282,34 +282,12 @@ describe JobSubmissionRecordFilterer do
 
   describe "Filter SubmissionRecords" do
     it "should return a list of only SubmissionRecords associated with the given Job" do
-      filterer = JobSubmissionRecordFilterer.new(@recruiter1)
+      filterer = JobSubmissionRecordFilterer.new(@job1)
       filtered_list = filterer.as_filtered(@submissionrecordlist)
       filtered_list.should include(@submissionrecord1)
-      filtered_list.should include(@submissionrecord2)
-      filtered_list.should include(@submissionrecord3)
-      filtered_list.should_not include(@submissionrecord4)
-    end
-  end
-
-  describe "Find Jobseekers who applied to the Job" do
-    it "should return a list of Jobseekers who have applied to the Job" do
-      filterer = JobSubmissionRecordFilterer.new(@job1)
-      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
-      jobseekerlist.should include(@jobseeker1)
-      jobseekerlist.should include(@jobseeker3)
-    end
-
-    it "should return a list that does not include Jobseekers who have only applied to the Job" do
-      filterer = JobSubmissionRecordFilterer.new(@job1)
-      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
-      jobseekerlist.should_not include(@jobseeker2)
-    end
-
-    it "should return a list with only one instance of each Jobseeker" do
-      filterer = JobSubmissionRecordFilterer.new(@job1)
-      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
-      jobseekers = jobseekerlist.to_array
-      jobseekers.size.should == 1
+      filtered_list.should_not include(@submissionrecord2)
+      filtered_list.should_not include(@submissionrecord3)
+      filtered_list.should include(@submissionrecord4)
     end
   end
 end
