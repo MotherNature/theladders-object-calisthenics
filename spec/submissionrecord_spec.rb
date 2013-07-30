@@ -162,5 +162,17 @@ describe RecruiterSubmissionRecordFilterer do
       jobseekers = jobseekerlist.to_array
       jobseekers.size.should == 1
     end
+
+    describe "And filter by date" do
+      before(:each) do
+        @filterer = RecruiterSubmissionRecordFilterer.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
+      end
+
+      it "should return a list of those Jobseekers that applied on a given month, day, and year" do
+        date = @datetime1.to_date
+        jobseekerlist = @filterer.jobseekers_who_applied_on(date)
+        jobseekerlist.should include(@jobseeker1)
+      end
+    end
   end
 end
