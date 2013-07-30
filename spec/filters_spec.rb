@@ -75,4 +75,34 @@ describe "Combine Filterers" do
       jobseekerlist.should_not include(@jobseeker2)
     end
   end
+
+  describe "Find just Jobseekers who applied to a given Job posted by a given Recruiter on a given Date" do
+    it "should return a list of Jobseekers who have applied to a given Job posted by a given Recruiter on the given Date" do
+      date = @datetime1.to_date
+
+      datefilterer = DateSubmissionRecordFilterer.new(date)
+      recruiterfilterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
+      jobsubmissionrecordfilterer = JobSubmissionRecordFilterer.new(@job1)
+
+      filterer = CompositeFilterer.new([datefilterer, recruiterfilterer, jobsubmissionrecordfilterer])
+
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
+
+      jobseekerlist.should include(@jobseeker1)
+    end
+
+    it "should return a list of only Jobseekers who have applied to a given Job posted by a given Recruiter on the given Date" do
+      date = @datetime1.to_date
+
+      datefilterer = DateSubmissionRecordFilterer.new(date)
+      recruiterfilterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
+      jobsubmissionrecordfilterer = JobSubmissionRecordFilterer.new(@job1)
+
+      filterer = CompositeFilterer.new([datefilterer, recruiterfilterer, jobsubmissionrecordfilterer])
+
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
+
+      jobseekerlist.should_not include(@jobseeker2)
+    end
+  end
 end
