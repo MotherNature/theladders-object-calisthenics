@@ -3,6 +3,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'spec'))
 
 require 'labels'
 require 'jobs'
+require 'jobapplicationsubmissionrecords'
 require 'jobseekers'
 require 'recruiters'
 require 'postings'
