@@ -1,3 +1,11 @@
+$:.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
+$:.unshift(File.join(File.dirname(__FILE__), '..', 'spec'))
+
+require 'jobseekers'
+require 'submissionrecords'
+require 'filters'
+require 'examples'
+
 describe "Combine Filterers" do
   before(:each) do
     examplefactory = ExampleFactory.new
@@ -43,15 +51,28 @@ describe "Combine Filterers" do
   describe "Find just Jobseekers who applied to Jobs posted by a given Recruiter on a given Date" do
     it "should return a list of Jobseekers who have applied to Jobs on the given Date" do
       date = @datetime1.to_date
+
       datefilterer = DateSubmissionRecordFilterer.new(date)
       recruiterfilterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
 
-      list1 = datefilterer.jobseekers_in(@submissionrecordlist)
-      list2 = recruiterfilterer.jobseekers_in(@submissionrecordlist)
+      filterer = CompositeFilterer.new([datefilterer, recruiterfilterer])
 
-      jobseekerlist = list1.to_array & list2.to_array
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
 
       jobseekerlist.should include(@jobseeker1)
+    end
+
+    it "should return a list of only Jobseekers who have applied to Jobs on the given Date" do
+      pending
+      date = @datetime1.to_date
+
+      datefilterer = DateSubmissionRecordFilterer.new(date)
+      recruiterfilterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
+
+      filterer = CompositeFilterer.new([datefilterer, recruiterfilterer])
+
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
+
       jobseekerlist.should_not include(@jobseeker2)
     end
   end
