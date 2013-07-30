@@ -69,5 +69,13 @@ class SubmissionRecordList < List
   end
 end
 
-class RecruiterSubmissionRecordFilter
+class RecruiterSubmissionRecordFilter # Rename to *Filterer
+  def initialize(recruiter: nil, submissionrecordlist: nil)
+    @recruiter = recruiter
+    @list = submissionrecordlist
+  end
+
+  def jobseekers
+    @list.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter)
+  end
 end

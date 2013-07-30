@@ -138,5 +138,15 @@ describe RecruiterSubmissionRecordFilter do
     @submissionrecord2 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime2)
     @submissionrecord3 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime3)
     @submissionrecord4 = SubmissionRecord.new(submission: @submission3, recorded_at_datetime: @datetime1_2)
+
+    @submissionrecordlist = SubmissionRecordList.new([@submissionrecord1, @submissionrecord2, @submissionrecord3, @submissionrecord4])
+  end
+
+  describe "Find Jobseekers who applied to the Recruiter's Jobs" do
+    it "should return a list of Jobseekers who have applied to Jobs posted by the Recruiter" do
+      filter = RecruiterSubmissionRecordFilter.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
+      jobseekerlist = filter.jobseekers
+      jobseekerlist.should include(@jobseeker1)
+    end
   end
 end
