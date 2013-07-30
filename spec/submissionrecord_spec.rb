@@ -204,15 +204,15 @@ describe DateSubmissionRecordFilterer do
   describe "Find Jobseekers who applied on a given Date" do
     it "should return a list of Jobseekers who have applied to Jobs on the given Date" do
       date = @datetime1.to_date
-      filterer = DateSubmissionRecordFilterer.new(date: date, submissionrecordlist: @submissionrecordlist)
-      jobseekerlist = filterer.jobseekers
+      filterer = DateSubmissionRecordFilterer.new(date)
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
       jobseekerlist.should include(@jobseeker1)
     end
 
     it "should return a list of Jobseekers that excludes those who have not applied to Jobs on the given Date" do
       date = @datetime1.to_date
-      filterer = DateSubmissionRecordFilterer.new(date: date, submissionrecordlist: @submissionrecordlist)
-      jobseekerlist = filterer.jobseekers
+      filterer = DateSubmissionRecordFilterer.new(date)
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
       jobseekerlist.should_not include(@jobseeker2)
     end
   end
