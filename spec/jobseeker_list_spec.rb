@@ -3,12 +3,15 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'spec'))
 
 require 'labels'
 require 'jobseekers'
+require 'idnumberservice'
 
 describe JobseekerList do
   before(:each) do
-    @jobseeker1 = Jobseeker.new(name: Name.new("Alice Green"))
-    @jobseeker2 = Jobseeker.new(name: Name.new("Betty Smith"))
-    @jobseeker3 = Jobseeker.new(name: Name.new("Candice Yarn"))
+    idnumberservice = IDNumberService.new
+
+    @jobseeker1 = Jobseeker.new(name: Name.new("Alice Green"), idnumber: idnumberservice.generate_idnumber)
+    @jobseeker2 = Jobseeker.new(name: Name.new("Betty Smith"), idnumber: idnumberservice.generate_idnumber)
+    @jobseeker3 = Jobseeker.new(name: Name.new("Candice Yarn"), idnumber: idnumberservice.generate_idnumber)
   end
 
   describe "List Jobseekers" do
@@ -23,3 +26,4 @@ describe JobseekerList do
     end
   end
 end
+
