@@ -162,17 +162,55 @@ describe RecruiterSubmissionRecordFilterer do
       jobseekers = jobseekerlist.to_array
       jobseekers.size.should == 1
     end
+  end
+end
 
-    describe "And filter by date" do
-      before(:each) do
-        @filterer = RecruiterSubmissionRecordFilterer.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
-      end
+describe DateSubmissionRecordFilterer do
+  before(:each) do
+    examplefactory = ExampleFactory.new
 
-      it "should return a list of those Jobseekers that applied on a given month, day, and year" do
-        date = @datetime1.to_date
-        jobseekerlist = @filterer.jobseekers_who_applied_on(date)
-        jobseekerlist.should include(@jobseeker1)
-      end
+    @submissionservice = SubmissionService.new
+
+    @jobseeker1 = examplefactory.build_jobseeker
+    @jobseeker2 = examplefactory.build_jobseeker
+
+    @recruiter = examplefactory.build_recruiter
+
+    @job1 = examplefactory.build_job
+    @job2 = examplefactory.build_job
+    @job3 = examplefactory.build_job
+
+    @posting1 = Posting.new(job: @job1, posted_by: @recruiter)
+    @posting2 = Posting.new(job: @job2, posted_by: @recruiter)
+    @posting3 = Posting.new(job: @job3, posted_by: @recruiter)
+
+    @application1 = Application.new(jobseeker: @jobseeker1)
+    @application2 = Application.new(jobseeker: @jobseeker1)
+    @application3 = Application.new(jobseeker: @jobseeker2)
+
+    @submission1 = @submissionservice.apply_application_to_posting(application: @application1, posting: @posting1)
+    @submission2 = @submissionservice.apply_application_to_posting(application: @application2, posting: @posting2)
+    @submission3 = @submissionservice.apply_application_to_posting(application: @application3, posting: @posting3)
+
+    @datetime1 = DateTime.new(2013, 7, 12, 0, 0, 0)
+    @datetime2 = DateTime.new(2013, 8, 13, 0, 0, 0)
+    @datetime3 = DateTime.new(2013, 9, 14, 0, 0, 0)
+    @datetime1_2 = DateTime.new(2013, 7, 12, 0, 0, 0)
+
+    @submissionrecord1 = SubmissionRecord.new(submission: @submission1, recorded_at_datetime: @datetime1)
+    @submissionrecord2 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime2)
+    @submissionrecord3 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime3)
+    @submissionrecord4 = SubmissionRecord.new(submission: @submission3, recorded_at_datetime: @datetime1_2)
+
+    @submissionrecordlist = SubmissionRecordList.new([@submissionrecord1, @submissionrecord2, @submissionrecord3, @submissionrecord4])
+  end
+
+  describe "Find Jobseekers who applied on a given Date" do
+    it "should return a list of Jobseekers who have applied to Jobs on the given Date" do
+      date = @datetime1.to_date
+      filterer = DateSubmissionRecordFilterer.new(date: date, submissionrecordlist: @submissionrecordlist)
+      jobseekerlist = filterer.jobseekers
+      jobseekerlist.should include(@jobseeker1)
     end
   end
 end
