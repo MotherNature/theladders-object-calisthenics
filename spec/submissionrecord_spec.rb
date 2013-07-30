@@ -142,6 +142,17 @@ describe RecruiterSubmissionRecordFilterer do
     @submissionrecordlist = SubmissionRecordList.new([@submissionrecord1, @submissionrecord2, @submissionrecord3, @submissionrecord4])
   end
 
+  describe "Filter SubmissionRecords" do
+    it "should return a list of only SubmissionRecords associated with the given Recruiter" do
+      filterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
+      filtered_list = filterer.as_filtered(@submissionrecordlist)
+      filtered_list.should include(@submissionrecord1)
+      filtered_list.should include(@submissionrecord2)
+      filtered_list.should include(@submissionrecord3)
+      filtered_list.should_not include(@submissionrecord4)
+    end
+  end
+
   describe "Find Jobseekers who applied to the Recruiter's Jobs" do
     it "should return a list of Jobseekers who have applied to Jobs posted by the Recruiter" do
       filterer = RecruiterSubmissionRecordFilterer.new(@recruiter1)
