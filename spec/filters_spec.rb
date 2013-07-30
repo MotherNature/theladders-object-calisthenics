@@ -63,7 +63,6 @@ describe "Combine Filterers" do
     end
 
     it "should return a list of only Jobseekers who have applied to Jobs on the given Date" do
-      pending
       date = @datetime1.to_date
 
       datefilterer = DateSubmissionRecordFilterer.new(date)
