@@ -111,4 +111,10 @@ class DateSubmissionRecordFilterer
   def jobseekers_in(submissionrecordlist)
     submissionrecordlist.jobseekers_applying_to_jobs_posted_on_date(@date)
   end
+
+  def as_filtered(submissionrecordlist)
+    submissionrecordlist.select do |submissionrecord|
+      submissionrecord.recorded_on_date?(@date)
+    end
+  end
 end
