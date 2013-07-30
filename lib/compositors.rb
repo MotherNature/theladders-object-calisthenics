@@ -16,14 +16,14 @@ class JobPoster
   end
 end
 
-class JobApplicationPreparer
+class ApplicationPreparer
   def initialize(jobseeker: nil, jobapplicationlist: nil)
     @jobseeker = jobseeker
     @jobapplicationlist = jobapplicationlist
   end
 
   def prepare_application(resume=nil)
-    jobapplication = JobApplication.new(jobseeker: @jobseeker, resume: resume)
+    jobapplication = Application.new(jobseeker: @jobseeker, resume: resume)
     @jobapplicationlist.add(jobapplication)
     jobapplication
   end

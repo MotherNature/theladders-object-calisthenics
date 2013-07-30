@@ -19,7 +19,7 @@ describe "Compositors" do
 
     @job = @examplefactory.build_job
 
-    @jobapplicationlist = JobApplicationList.new
+    @jobapplicationlist = ApplicationList.new
     @postinglist = PostingList.new
     @submissionrecordlist = SubmissionRecordList.new
 
@@ -38,21 +38,21 @@ describe "Compositors" do
     end
   end
 
-  describe JobApplicationPreparer do
+  describe ApplicationPreparer do
     describe "#prepare_application" do
-      it "should return a JobApplication" do
-        jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+      it "should return a Application" do
+        jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
 
         jobapplication = jobapplicationpreparer.prepare_application
 
-        [jobapplication.class, *jobapplication.class.ancestors].should include(JobApplication)
+        [jobapplication.class, *jobapplication.class.ancestors].should include(Application)
       end
     end
   end
 
   describe Submitter do
     before(:each) do
-      jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+      jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
 
       @jobapplication = jobapplicationpreparer.prepare_application
 
@@ -75,7 +75,7 @@ describe "Compositors" do
 
   describe SubmissionRecorder do
     before(:each) do
-      jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+      jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
 
       @jobapplication = jobapplicationpreparer.prepare_application
 
@@ -100,7 +100,7 @@ describe "Compositors" do
 
   describe "Full Run" do
     it "should compose in a complete chain without an error" do
-      jobapplicationpreparer = JobApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+      jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
 
       jobapplication = jobapplicationpreparer.prepare_application
 

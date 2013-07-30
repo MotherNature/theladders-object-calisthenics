@@ -90,8 +90,8 @@ describe JobsAppliedToReportGenerator do
       @posting3 = Posting.new(job: @job3, posted_by: recruiter)
       @other_posting = Posting.new(job: @other_job, posted_by: recruiter)
 
-      @jobapplication = JobApplication.new(jobseeker: @jobseeker)
-      @other_jobapplication = JobApplication.new(jobseeker: @other_jobseeker)
+      @jobapplication = Application.new(jobseeker: @jobseeker)
+      @other_jobapplication = Application.new(jobseeker: @other_jobseeker)
 
       @submission1 = Submission.new(jobapplication: @jobapplication, posting: @posting1)
       @submission2 = Submission.new(jobapplication: @jobapplication, posting: @posting2)

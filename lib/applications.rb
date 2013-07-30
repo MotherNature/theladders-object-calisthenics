@@ -1,9 +1,9 @@
-class JobApplication
+class Application
   include JobListAppender
 
   def initialize(jobseeker: nil, resume: nil)
     if(! resume.nil? && ! resume.belongs_to?(jobseeker))
-      raise InvalidJobApplicationError.new("The Resume does not belong to the Jobseeker")
+      raise InvalidApplicationError.new("The Resume does not belong to the Jobseeker")
     end
 
     @jobseeker = jobseeker
@@ -28,9 +28,9 @@ class JobApplication
   end
 end
 
-class JobApplicationList < List
+class ApplicationList < List
   def jobseeker_applies_to_job(jobseeker: nil, job: nil)
-    jobapplication = JobApplication.new(job: job, jobseeker: jobseeker)
+    jobapplication = Application.new(job: job, jobseeker: jobseeker)
     add(jobapplication)
   end
 

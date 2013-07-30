@@ -1,5 +1,5 @@
 class Submission
-  include JobApplicationListAppender
+  include ApplicationListAppender
   include PostingListAppender
 
   def initialize(jobapplication: nil, posting: nil)
@@ -42,7 +42,7 @@ class SubmissionList < List
   end
 
   def jobapplications_submitted_for_posting(posting)
-    jobapplicationlist = JobApplicationList.new
+    jobapplicationlist = ApplicationList.new
 
     each do |submission|
       submission.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
@@ -58,7 +58,7 @@ class SubmissionList < List
   end
 
   def jobapplications_submitted_by(jobseeker)
-    jobapplicationlist = JobApplicationList.new
+    jobapplicationlist = ApplicationList.new
 
     each do |submission|
       submission.add_jobapplication_to_jobapplicationlist(jobapplicationlist)
@@ -113,7 +113,7 @@ class SubmissionService
 
   def apply_jobapplication_to_posting(jobapplication: nil, posting: nil)
     if(! valid_jobapplication_for_posting?(jobapplication: jobapplication, posting: posting))
-      raise IncompatibleJobApplicationError.new("This JobApplication is incompatible with this Posting. JobType mismatch?")
+      raise IncompatibleApplicationError.new("This Application is incompatible with this Posting. JobType mismatch?")
     end
 
     submission = @submissionlist.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: posting)

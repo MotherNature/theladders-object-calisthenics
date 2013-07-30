@@ -36,7 +36,7 @@ describe Jobseeker do
 
   describe "Apply to Job" do
     it "should be able to apply to an ATS Job Posting without a resume" do
-      jobapplication = JobApplication.new(jobseeker: @jobseeker)
+      jobapplication = Application.new(jobseeker: @jobseeker)
 
       @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @ats_job_posting)
       
@@ -44,18 +44,18 @@ describe Jobseeker do
     end
 
     it "should not be able to apply to a JReq Job Posting without a resume" do
-      jobapplication = JobApplication.new(jobseeker: @jobseeker)
+      jobapplication = Application.new(jobseeker: @jobseeker)
 
       expect {
         @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @jreq_job_posting)
-      }.to raise_error(IncompatibleJobApplicationError)
+      }.to raise_error(IncompatibleApplicationError)
 
       @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should_not include jobapplication
     end
 
     it "should be able to apply to a JReq Job Posting with a resume" do
       resume = Resume.new(jobseeker: @jobseeker)
-      jobapplication = JobApplication.new(jobseeker: @jobseeker, resume: resume) 
+      jobapplication = Application.new(jobseeker: @jobseeker, resume: resume) 
 
       @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @jreq_job_posting)
       
@@ -66,8 +66,8 @@ describe Jobseeker do
       resume1 = Resume.new(jobseeker: @jobseeker)
       resume2 = Resume.new(jobseeker: @jobseeker)
       
-      jobapplication1 = JobApplication.new(jobseeker: @jobseeker, resume: resume1)
-      jobapplication2 = JobApplication.new(jobseeker: @jobseeker, resume: resume2)
+      jobapplication1 = Application.new(jobseeker: @jobseeker, resume: resume1)
+      jobapplication2 = Application.new(jobseeker: @jobseeker, resume: resume2)
 
       @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication1, posting: @ats_job_posting)
       @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication2, posting: @jreq_job_posting)
@@ -88,8 +88,8 @@ describe Jobseeker do
       resume2 = Resume.new(jobseeker: jobseeker2)
 
       expect {
-        jobapplication = JobApplication.new(jobseeker: @jobseeker, resume: resume2)
-      }.to raise_error(InvalidJobApplicationError)
+        jobapplication = Application.new(jobseeker: @jobseeker, resume: resume2)
+      }.to raise_error(InvalidApplicationError)
     end
   end
 end

@@ -15,7 +15,7 @@ describe SubmissionService do
     job = examplefactory.build_job
 
     @posting = Posting.new(job: job, posted_by: recruiter)
-    @jobapplication = JobApplication.new(jobseeker: jobseeker)
+    @jobapplication = Application.new(jobseeker: jobseeker)
 
     @submissionservice = SubmissionService.new
   end

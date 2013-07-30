@@ -21,7 +21,7 @@ describe SubmissionRecord do
 
     @job = examplefactory.build_job
     @posting = Posting.new(job: @job, posted_by: @recruiter)
-    @jobapplication = JobApplication.new(jobseeker: @jobseeker)
+    @jobapplication = Application.new(jobseeker: @jobseeker)
 
     @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication, posting: @posting)
 
@@ -59,9 +59,9 @@ describe SubmissionRecordList do
     @posting2 = Posting.new(job: @job2, posted_by: @recruiter1)
     @posting3 = Posting.new(job: @job3, posted_by: @recruiter2)
 
-    @jobapplication1 = JobApplication.new(jobseeker: @jobseeker1)
-    @jobapplication2 = JobApplication.new(jobseeker: @jobseeker1)
-    @jobapplication3 = JobApplication.new(jobseeker: @jobseeker2)
+    @jobapplication1 = Application.new(jobseeker: @jobseeker1)
+    @jobapplication2 = Application.new(jobseeker: @jobseeker1)
+    @jobapplication3 = Application.new(jobseeker: @jobseeker2)
 
     @submission1 = @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication1, posting: @posting1)
     @submission2 = @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication2, posting: @posting2)

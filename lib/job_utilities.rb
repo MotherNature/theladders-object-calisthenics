@@ -4,17 +4,17 @@ module JobListAppender
   end
 end
 
-module JobApplicationListAppender
+module ApplicationListAppender
   def add_jobapplication_to_jobapplicationlist(jobapplicationlist)
     jobapplicationlist.add(@jobapplication)
   end
 end
 
-class JobApplicationError < RuntimeError
+class ApplicationError < RuntimeError
 end
 
-class InvalidJobApplicationError < JobApplicationError
+class InvalidApplicationError < ApplicationError
 end
 
-class IncompatibleJobApplicationError < JobApplicationError
+class IncompatibleApplicationError < ApplicationError
 end
