@@ -4,7 +4,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'spec'))
 require 'labels'
 require 'jobs'
 require 'jobapplications'
-require 'jobapplicationsubmissions'
+require 'submissions'
 require 'examples'
 
 describe SubmissionList do
