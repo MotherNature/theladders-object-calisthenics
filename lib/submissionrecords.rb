@@ -88,13 +88,12 @@ class SubmissionRecordList < List
 end
 
 class RecruiterSubmissionRecordFilterer
-  def initialize(recruiter: nil, submissionrecordlist: nil)
+  def initialize(recruiter)
     @recruiter = recruiter
-    @list = submissionrecordlist
   end
 
-  def jobseekers
-    @list.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter)
+  def jobseekers_in(submissionrecordlist)
+    submissionrecordlist.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter)
   end
 end
 
