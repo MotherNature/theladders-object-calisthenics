@@ -8,6 +8,10 @@ class SubmissionRecord
     @recorded_at_datetime == datetime
   end
 
+  def recorded_on_date?(date)
+    @recorded_at_datetime.to_date == date
+  end
+
   def add_jobseeker_to_jobseekerlist(jobseekerlist)
     @submission.add_jobseeker_to_jobseekerlist(jobseekerlist)
   end
@@ -77,5 +81,9 @@ class RecruiterSubmissionRecordFilterer
 
   def jobseekers
     @list.jobseekers_applying_to_jobs_posted_by_recruiter(@recruiter)
+  end
+
+  def jobseekers_who_applied_on(date)
+    jobseekers
   end
 end
