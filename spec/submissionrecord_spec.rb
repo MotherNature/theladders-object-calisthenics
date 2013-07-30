@@ -239,3 +239,78 @@ describe DateSubmissionRecordFilterer do
     end
   end
 end
+
+describe JobSubmissionRecordFilterer do
+  before(:each) do
+    examplefactory = ExampleFactory.new
+
+    @submissionservice = SubmissionService.new
+
+    @jobseeker1 = examplefactory.build_jobseeker
+    @jobseeker2 = examplefactory.build_jobseeker
+
+    @recruiter1 = examplefactory.build_recruiter
+    @recruiter2 = examplefactory.build_recruiter
+
+    @job1 = examplefactory.build_job
+    @job2 = examplefactory.build_job
+
+    @posting1 = Posting.new(job: @job1, posted_by: @recruiter1)
+    @posting2 = Posting.new(job: @job2, posted_by: @recruiter1)
+    @posting3 = Posting.new(job: @job1, posted_by: @recruiter2)
+
+    @application1 = Application.new(jobseeker: @jobseeker1)
+    @application2 = Application.new(jobseeker: @jobseeker1)
+    @application3 = Application.new(jobseeker: @jobseeker2)
+
+    @submission1 = @submissionservice.apply_application_to_posting(application: @application1, posting: @posting1)
+    @submission2 = @submissionservice.apply_application_to_posting(application: @application2, posting: @posting2)
+    @submission3 = @submissionservice.apply_application_to_posting(application: @application3, posting: @posting3)
+
+    @datetime1 = DateTime.new(2013, 7, 12, 0, 0, 0)
+    @datetime2 = DateTime.new(2013, 8, 13, 0, 0, 0)
+    @datetime3 = DateTime.new(2013, 9, 14, 0, 0, 0)
+    @datetime1_2 = DateTime.new(2013, 7, 12, 0, 0, 0)
+
+    @submissionrecord1 = SubmissionRecord.new(submission: @submission1, recorded_at_datetime: @datetime1)
+    @submissionrecord2 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime2)
+    @submissionrecord3 = SubmissionRecord.new(submission: @submission2, recorded_at_datetime: @datetime3)
+    @submissionrecord4 = SubmissionRecord.new(submission: @submission3, recorded_at_datetime: @datetime1_2)
+
+    @submissionrecordlist = SubmissionRecordList.new([@submissionrecord1, @submissionrecord2, @submissionrecord3, @submissionrecord4])
+  end
+
+  describe "Filter SubmissionRecords" do
+    it "should return a list of only SubmissionRecords associated with the given Job" do
+      filterer = JobSubmissionRecordFilterer.new(@recruiter1)
+      filtered_list = filterer.as_filtered(@submissionrecordlist)
+      filtered_list.should include(@submissionrecord1)
+      filtered_list.should include(@submissionrecord2)
+      filtered_list.should include(@submissionrecord3)
+      filtered_list.should_not include(@submissionrecord4)
+    end
+  end
+
+  describe "Find Jobseekers who applied to the Job" do
+    it "should return a list of Jobseekers who have applied to the Job" do
+      filterer = JobSubmissionRecordFilterer.new(@job1)
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
+      jobseekerlist.should include(@jobseeker1)
+      jobseekerlist.should include(@jobseeker3)
+    end
+
+    it "should return a list that does not include Jobseekers who have only applied to the Job" do
+      filterer = JobSubmissionRecordFilterer.new(@job1)
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
+      jobseekerlist.should_not include(@jobseeker2)
+    end
+
+    it "should return a list with only one instance of each Jobseeker" do
+      filterer = JobSubmissionRecordFilterer.new(@job1)
+      jobseekerlist = filterer.jobseekers_in(@submissionrecordlist)
+      jobseekers = jobseekerlist.to_array
+      jobseekers.size.should == 1
+    end
+  end
+end
+
