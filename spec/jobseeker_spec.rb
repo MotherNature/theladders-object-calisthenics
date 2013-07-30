@@ -36,50 +36,50 @@ describe Jobseeker do
 
   describe "Apply to Job" do
     it "should be able to apply to an ATS Job Posting without a resume" do
-      jobapplication = Application.new(jobseeker: @jobseeker)
+      application = Application.new(jobseeker: @jobseeker)
 
-      @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @ats_job_posting)
+      @submissionservice.apply_application_to_posting(application: application, posting: @ats_job_posting)
       
-      @submissionservice.jobapplications_submitted_for_posting(@ats_job_posting).should include jobapplication
+      @submissionservice.applications_submitted_for_posting(@ats_job_posting).should include application
     end
 
     it "should not be able to apply to a JReq Job Posting without a resume" do
-      jobapplication = Application.new(jobseeker: @jobseeker)
+      application = Application.new(jobseeker: @jobseeker)
 
       expect {
-        @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @jreq_job_posting)
+        @submissionservice.apply_application_to_posting(application: application, posting: @jreq_job_posting)
       }.to raise_error(IncompatibleApplicationError)
 
-      @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should_not include jobapplication
+      @submissionservice.applications_submitted_for_posting(@jreq_job_posting).should_not include application
     end
 
     it "should be able to apply to a JReq Job Posting with a resume" do
       resume = Resume.new(jobseeker: @jobseeker)
-      jobapplication = Application.new(jobseeker: @jobseeker, resume: resume) 
+      application = Application.new(jobseeker: @jobseeker, resume: resume) 
 
-      @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication, posting: @jreq_job_posting)
+      @submissionservice.apply_application_to_posting(application: application, posting: @jreq_job_posting)
       
-      @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication
+      @submissionservice.applications_submitted_for_posting(@jreq_job_posting).should include application
     end
 
     it "should be able to apply to different Jobs Posting with different Resumes" do
       resume1 = Resume.new(jobseeker: @jobseeker)
       resume2 = Resume.new(jobseeker: @jobseeker)
       
-      jobapplication1 = Application.new(jobseeker: @jobseeker, resume: resume1)
-      jobapplication2 = Application.new(jobseeker: @jobseeker, resume: resume2)
+      application1 = Application.new(jobseeker: @jobseeker, resume: resume1)
+      application2 = Application.new(jobseeker: @jobseeker, resume: resume2)
 
-      @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication1, posting: @ats_job_posting)
-      @submissionservice.apply_jobapplication_to_posting(jobapplication: jobapplication2, posting: @jreq_job_posting)
+      @submissionservice.apply_application_to_posting(application: application1, posting: @ats_job_posting)
+      @submissionservice.apply_application_to_posting(application: application2, posting: @jreq_job_posting)
       
-      @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication1
-      @submissionservice.jobapplications_submitted_for_posting(@jreq_job_posting).should include jobapplication2
+      @submissionservice.applications_submitted_for_posting(@jreq_job_posting).should include application1
+      @submissionservice.applications_submitted_for_posting(@jreq_job_posting).should include application2
 
-      jobapplication1.has_this_resume?(resume1).should be_true
-      jobapplication1.has_this_resume?(resume2).should be_false
+      application1.has_this_resume?(resume1).should be_true
+      application1.has_this_resume?(resume2).should be_false
 
-      jobapplication2.has_this_resume?(resume2).should be_true
-      jobapplication2.has_this_resume?(resume1).should be_false
+      application2.has_this_resume?(resume2).should be_true
+      application2.has_this_resume?(resume1).should be_false
     end
 
     it "should not be able to apply to Jobs with another Jobseeker's Resume" do
@@ -88,7 +88,7 @@ describe Jobseeker do
       resume2 = Resume.new(jobseeker: jobseeker2)
 
       expect {
-        jobapplication = Application.new(jobseeker: @jobseeker, resume: resume2)
+        application = Application.new(jobseeker: @jobseeker, resume: resume2)
       }.to raise_error(InvalidApplicationError)
     end
   end

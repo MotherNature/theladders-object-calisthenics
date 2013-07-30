@@ -17,7 +17,7 @@ class SubmissionRecord
   end
 
   def applied_to_by_jobseeker?(jobseeker)
-    @submission.jobapplication_applied_to_by?(jobseeker)
+    @submission.application_applied_to_by?(jobseeker)
   end
 
   def posting_posted_by_recruiter?(recruiter)

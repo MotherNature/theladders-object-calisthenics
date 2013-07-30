@@ -21,11 +21,11 @@ describe SubmissionRecord do
 
     @job = examplefactory.build_job
     @posting = Posting.new(job: @job, posted_by: @recruiter)
-    @jobapplication = Application.new(jobseeker: @jobseeker)
+    @application = Application.new(jobseeker: @jobseeker)
 
-    @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication, posting: @posting)
+    @submissionservice.apply_application_to_posting(application: @application, posting: @posting)
 
-    submissionlist = @submissionservice.submissions_submitted_for_jobapplication(@jobapplication)
+    submissionlist = @submissionservice.submissions_submitted_for_application(@application)
     submissions = submissionlist.to_array
     @submission = submissions.first
   end
@@ -59,13 +59,13 @@ describe SubmissionRecordList do
     @posting2 = Posting.new(job: @job2, posted_by: @recruiter1)
     @posting3 = Posting.new(job: @job3, posted_by: @recruiter2)
 
-    @jobapplication1 = Application.new(jobseeker: @jobseeker1)
-    @jobapplication2 = Application.new(jobseeker: @jobseeker1)
-    @jobapplication3 = Application.new(jobseeker: @jobseeker2)
+    @application1 = Application.new(jobseeker: @jobseeker1)
+    @application2 = Application.new(jobseeker: @jobseeker1)
+    @application3 = Application.new(jobseeker: @jobseeker2)
 
-    @submission1 = @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication1, posting: @posting1)
-    @submission2 = @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication2, posting: @posting2)
-    @submission3 = @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication3, posting: @posting3)
+    @submission1 = @submissionservice.apply_application_to_posting(application: @application1, posting: @posting1)
+    @submission2 = @submissionservice.apply_application_to_posting(application: @application2, posting: @posting2)
+    @submission3 = @submissionservice.apply_application_to_posting(application: @application3, posting: @posting3)
 
     @datetime1 = DateTime.new(2013, 7, 12, 0, 0, 0)
     @datetime2 = DateTime.new(2013, 8, 13, 0, 0, 0)

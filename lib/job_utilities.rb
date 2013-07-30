@@ -5,8 +5,8 @@ module JobListAppender
 end
 
 module ApplicationListAppender
-  def add_jobapplication_to_jobapplicationlist(jobapplicationlist)
-    jobapplicationlist.add(@jobapplication)
+  def add_application_to_applicationlist(applicationlist)
+    applicationlist.add(@application)
   end
 end
 

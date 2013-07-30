@@ -20,17 +20,17 @@ describe "Searchers" do
 
     @job = @examplefactory.build_job
 
-    @jobapplicationlist = ApplicationList.new
+    @applicationlist = ApplicationList.new
     @postinglist = PostingList.new
     @submissionrecordlist = SubmissionRecordList.new
 
     @submissionservice = SubmissionService.new
 
-    jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+    applicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, applicationlist: @applicationlist)
 
-    @jobapplication = jobapplicationpreparer.prepare_application
+    @application = applicationpreparer.prepare_application
 
-    submitter = Submitter.new(jobapplication: @jobapplication, submissionservice: @submissionservice)
+    submitter = Submitter.new(application: @application, submissionservice: @submissionservice)
 
     submissionrecorder = SubmissionRecorder.new(submitter: submitter, submissionrecordlist: @submissionrecordlist)
 

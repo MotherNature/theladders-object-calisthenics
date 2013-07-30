@@ -17,26 +17,26 @@ class JobPoster
 end
 
 class ApplicationPreparer
-  def initialize(jobseeker: nil, jobapplicationlist: nil)
+  def initialize(jobseeker: nil, applicationlist: nil)
     @jobseeker = jobseeker
-    @jobapplicationlist = jobapplicationlist
+    @applicationlist = applicationlist
   end
 
   def prepare_application(resume=nil)
-    jobapplication = Application.new(jobseeker: @jobseeker, resume: resume)
-    @jobapplicationlist.add(jobapplication)
-    jobapplication
+    application = Application.new(jobseeker: @jobseeker, resume: resume)
+    @applicationlist.add(application)
+    application
   end
 end
 
 class Submitter
-  def initialize(jobapplication: nil, submissionservice: nil)
-    @jobapplication = jobapplication
+  def initialize(application: nil, submissionservice: nil)
+    @application = application
     @submissionservice = submissionservice
   end
 
   def submit_application(posting)
-    submission = @submissionservice.apply_jobapplication_to_posting(jobapplication: @jobapplication, posting: posting)
+    submission = @submissionservice.apply_application_to_posting(application: @application, posting: posting)
     submission
   end
 end

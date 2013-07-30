@@ -19,7 +19,7 @@ describe "Compositors" do
 
     @job = @examplefactory.build_job
 
-    @jobapplicationlist = ApplicationList.new
+    @applicationlist = ApplicationList.new
     @postinglist = PostingList.new
     @submissionrecordlist = SubmissionRecordList.new
 
@@ -41,20 +41,20 @@ describe "Compositors" do
   describe ApplicationPreparer do
     describe "#prepare_application" do
       it "should return a Application" do
-        jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+        applicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, applicationlist: @applicationlist)
 
-        jobapplication = jobapplicationpreparer.prepare_application
+        application = applicationpreparer.prepare_application
 
-        [jobapplication.class, *jobapplication.class.ancestors].should include(Application)
+        [application.class, *application.class.ancestors].should include(Application)
       end
     end
   end
 
   describe Submitter do
     before(:each) do
-      jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+      applicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, applicationlist: @applicationlist)
 
-      @jobapplication = jobapplicationpreparer.prepare_application
+      @application = applicationpreparer.prepare_application
 
       jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
 
@@ -63,7 +63,7 @@ describe "Compositors" do
 
     describe "#submit_application" do
       it "should return a Submission" do
-        submitter = Submitter.new(jobapplication: @jobapplication, submissionservice: @submissionservice)
+        submitter = Submitter.new(application: @application, submissionservice: @submissionservice)
 
 
         submission = submitter.submit_application(@posting)
@@ -75,15 +75,15 @@ describe "Compositors" do
 
   describe SubmissionRecorder do
     before(:each) do
-      jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+      applicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, applicationlist: @applicationlist)
 
-      @jobapplication = jobapplicationpreparer.prepare_application
+      @application = applicationpreparer.prepare_application
 
       jobposter = JobPoster.new(recruiter: @recruiter, postinglist: @postinglist)
 
       @posting = jobposter.post_job(@job)
 
-      @submitter = Submitter.new(jobapplication: @jobapplication, submissionservice: @submissionservice)
+      @submitter = Submitter.new(application: @application, submissionservice: @submissionservice)
     end
 
     describe "#submit_application" do
@@ -100,11 +100,11 @@ describe "Compositors" do
 
   describe "Full Run" do
     it "should compose in a complete chain without an error" do
-      jobapplicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, jobapplicationlist: @jobapplicationlist)
+      applicationpreparer = ApplicationPreparer.new(jobseeker: @jobseeker, applicationlist: @applicationlist)
 
-      jobapplication = jobapplicationpreparer.prepare_application
+      application = applicationpreparer.prepare_application
 
-      submitter = Submitter.new(jobapplication: jobapplication, submissionservice: @submissionservice)
+      submitter = Submitter.new(application: application, submissionservice: @submissionservice)
 
       submissionrecorder = SubmissionRecorder.new(submitter: submitter, submissionrecordlist: @submissionrecordlist)
 

@@ -17,16 +17,16 @@ describe SubmissionList do
     job = examplefactory.build_job
 
     @posting = Posting.new(job: job, posted_by: recruiter)
-    @jobapplication = Application.new(jobseeker: jobseeker)
+    @application = Application.new(jobseeker: jobseeker)
 
     @submissionlist = SubmissionList.new
   end
 
   # TODO: Ask whether this implicit return is a bad idea and, if so, for alternative approaches.
-  describe "#apply_jobapplication_to_posting" do
+  describe "#apply_application_to_posting" do
     it "should return the Submission created to record the posting activity" do
-      submission = @submissionlist.apply_jobapplication_to_posting(jobapplication: @jobapplication, posting: @posting)
-      submission.submitted_for_jobapplication?(@jobapplication).should be_true
+      submission = @submissionlist.apply_application_to_posting(application: @application, posting: @posting)
+      submission.submitted_for_application?(@application).should be_true
       submission.submitted_for_posting?(@posting).should be_true
     end
   end

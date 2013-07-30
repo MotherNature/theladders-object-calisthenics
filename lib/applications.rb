@@ -30,19 +30,19 @@ end
 
 class ApplicationList < List
   def jobseeker_applies_to_job(jobseeker: nil, job: nil)
-    jobapplication = Application.new(job: job, jobseeker: jobseeker)
-    add(jobapplication)
+    application = Application.new(job: job, jobseeker: jobseeker)
+    add(application)
   end
 
-  def jobapplications_submitted_by(jobseeker)
-    select do |jobapplication|
-      jobapplication.applied_to_by?(jobseeker)
+  def applications_submitted_by(jobseeker)
+    select do |application|
+      application.applied_to_by?(jobseeker)
     end
   end
 
   def jobs_applied_to_by(jobseeker)
-    select do |jobapplication|
-      jobapplication.add_job_to_joblist(joblist)
+    select do |application|
+      application.add_job_to_joblist(joblist)
     end
   end
 
