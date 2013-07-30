@@ -26,6 +26,10 @@ class Submission
   def add_jobseeker_to_jobseekerlist(jobseekerlist)
     @application.add_jobseeker_to_jobseekerlist(jobseekerlist)
   end
+
+  def for_job?(job)
+    @posting.for_job?(job)
+  end
 end
 
 class SubmissionList < List

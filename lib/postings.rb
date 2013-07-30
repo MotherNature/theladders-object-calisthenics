@@ -30,6 +30,10 @@ class Posting
   def job_requires_resume?
     @job.requires_resume?
   end
+
+  def for_job?(job)
+    @job == job
+  end
 end
 
 class PostingList < List

@@ -27,6 +27,10 @@ class SubmissionRecord
   def posting_posted_by_recruiter?(recruiter)
     @submission.posting_posted_by_recruiter?(recruiter)
   end
+
+  def for_job?(job)
+    @submission.for_job?(job)
+  end
 end
 
 class SubmissionRecordList < List
@@ -115,6 +119,18 @@ class DateSubmissionRecordFilterer
   def as_filtered(submissionrecordlist)
     submissionrecordlist.select do |submissionrecord|
       submissionrecord.recorded_on_date?(@date)
+    end
+  end
+end
+
+class JobSubmissionRecordFilterer
+  def initialize(job)
+    @job = job
+  end
+
+  def as_filtered(submissionrecordlist)
+    submissionrecordlist.select do |submissionrecord|
+      submissionrecord.for_job?(@job)
     end
   end
 end
