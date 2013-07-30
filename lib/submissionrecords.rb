@@ -69,7 +69,7 @@ class SubmissionRecordList < List
   end
 end
 
-class RecruiterSubmissionRecordFilter # Rename to *Filterer
+class RecruiterSubmissionRecordFilterer
   def initialize(recruiter: nil, submissionrecordlist: nil)
     @recruiter = recruiter
     @list = submissionrecordlist

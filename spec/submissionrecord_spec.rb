@@ -101,7 +101,7 @@ describe SubmissionRecordList do
   end
 end
 
-describe RecruiterSubmissionRecordFilter do
+describe RecruiterSubmissionRecordFilterer do
   before(:each) do
     examplefactory = ExampleFactory.new
 
@@ -144,8 +144,8 @@ describe RecruiterSubmissionRecordFilter do
 
   describe "Find Jobseekers who applied to the Recruiter's Jobs" do
     it "should return a list of Jobseekers who have applied to Jobs posted by the Recruiter" do
-      filter = RecruiterSubmissionRecordFilter.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
-      jobseekerlist = filter.jobseekers
+      filterer = RecruiterSubmissionRecordFilterer.new(recruiter: @recruiter1, submissionrecordlist: @submissionrecordlist)
+      jobseekerlist = filterer.jobseekers
       jobseekerlist.should include(@jobseeker1)
     end
   end
