@@ -79,7 +79,34 @@ end
 class AggregateReportGenerator < ListReportGenerator
 end
 
+class JobAggregateReport < ListReport
+  def initialize(joblist: nil)
+    @joblist = joblist
+  end
+
+  def to_string
+    jobs = @joblist.to_array
+    report_strings = jobs.map do |job|
+      "#{job.title_to_string}: 1"
+    end
+    report_strings.join("\n")
+  end
+end
+
 class JobAggregateReportGenerator < AggregateReportGenerator 
+  def initialize(job)
+    @job = job
+  end
+
+  def generate_from(submissionrecordlist)
+    joblist = JobList.new
+
+    submissionrecordlist.each do |submissionrecord|
+      submissionrecord.add_job_to_joblist(joblist)
+    end
+
+    JobAggregateReport.new(joblist: joblist)
+  end
 end
 
 class RecruiterAggregateReportGenerator < AggregateReportGenerator 
