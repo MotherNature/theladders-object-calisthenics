@@ -49,9 +49,15 @@ class JobseekersByDateReportGenerator < ListReportGenerator
 
   def generate_from(submissionrecordlist)
     jobseekerlist = JobseekerList.new
-    submissionrecordlist.each do |submissionrecord|
+
+    filtered_list = submissionrecordlist.select do |submissionrecord|
+      submissionrecord.recorded_on_date?(@date)
+    end
+
+    filtered_list.each do |submissionrecord|
       submissionrecord.add_jobseeker_to_jobseekerlist(jobseekerlist)
     end
+
     JobseekersByDateReport.new(jobseekerlist: jobseekerlist)
   end
 end
