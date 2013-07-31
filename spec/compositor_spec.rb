@@ -107,6 +107,16 @@ describe "Compositors" do
 
         submissionrecord.recorded_on_date?(date).should be_true
       end
+
+      it "should return a SubmissionRecord with the given Date" do
+        submissionrecorder = SubmissionRecorder.new(submitter: @submitter, submissionrecordlist: @submissionrecordlist)
+
+        date = Date.new(2013, 12, 21)
+
+        submissionrecord = submissionrecorder.submit_application(posting: @posting, date: date)
+
+        submissionrecord.recorded_on_date?(date).should be_true
+      end
     end
   end
 
