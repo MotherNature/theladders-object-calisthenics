@@ -65,7 +65,6 @@ describe "Compositors" do
       it "should return a Submission" do
         submitter = Submitter.new(application: @application, submissionservice: @submissionservice)
 
-
         submission = submitter.submit_application(posting: @posting)
 
         [submission.class, *submission.class.ancestors].should include(Submission)
@@ -94,6 +93,19 @@ describe "Compositors" do
         submissionrecord = submissionrecorder.submit_application(posting: @posting)
 
         [submissionrecord.class, *submissionrecord.class.ancestors].should include(SubmissionRecord)
+      end
+
+      it "should return a SubmissionRecord with the current Date by default" do
+        submissionrecorder = SubmissionRecorder.new(submitter: @submitter, submissionrecordlist: @submissionrecordlist)
+
+        now = DateTime.now
+        date = now.to_date
+
+        DateTime.stub(:now).and_return now
+
+        submissionrecord = submissionrecorder.submit_application(posting: @posting)
+
+        submissionrecord.recorded_on_date?(date).should be_true
       end
     end
   end
