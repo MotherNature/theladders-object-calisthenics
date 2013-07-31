@@ -49,7 +49,7 @@ class SubmissionRecorder
   
   def submit_application(posting: nil)
     submission = @submitter.submit_application(posting: posting)
-    submissionrecord = SubmissionRecord.new(submission: submission, recorded_at_datetime: DateTime.new)
+    submissionrecord = SubmissionRecord.new(submission: submission, recorded_at_datetime: DateTime.now)
     @submissionrecordlist.add(submissionrecord)
     submissionrecord
   end
