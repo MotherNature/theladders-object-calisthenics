@@ -6,7 +6,6 @@
 
 # In Progress
 
-+ TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day.
 
 # Completed
 
@@ -28,6 +27,7 @@
 + TheLadders wants the system to be able to handle more than one job with the same title.
 + TheLadders wants the system to be able to handle more than one jobseeker with the same name.
 + TheLadders wants the system to be able to handle more than one recruiter with the same name.
++ TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day.
 
 # Local TODO
 
