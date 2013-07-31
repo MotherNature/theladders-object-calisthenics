@@ -78,3 +78,9 @@ end
 
 class AggregateReportGenerator < ListReportGenerator
 end
+
+class JobAggregateReportGenerator < AggregateReportGenerator 
+end
+
+class RecruiterAggregateReportGenerator < AggregateReportGenerator 
+end
