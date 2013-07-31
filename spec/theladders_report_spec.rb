@@ -58,3 +58,14 @@ describe JobseekersByDateReportGenerator do
     end
   end
 end
+
+describe AggregateReportGenerator do
+  before(:each) do
+  end
+
+  describe "Generate Job/Recruiter Application  Report" do
+    it "should initialize" do
+      reportgenerator = AggregateReportGenerator.new()
+    end
+  end
+end
