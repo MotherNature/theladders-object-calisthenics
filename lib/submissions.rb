@@ -23,6 +23,10 @@ class Submission
     @posting.posted_by_recruiter?(recruiter)
   end
 
+  def add_job_to_joblist(joblist)
+    @posting.add_job_to_joblist(joblist)
+  end
+
   def add_jobseeker_to_jobseekerlist(jobseekerlist)
     @application.add_jobseeker_to_jobseekerlist(jobseekerlist)
   end
