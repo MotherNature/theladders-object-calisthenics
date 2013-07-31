@@ -75,3 +75,6 @@ class JobseekersByDateReport < ListReport
     report_strings.join("\n")
   end
 end
+
+class AggregateReportGenerator < ListReportGenerator
+end
