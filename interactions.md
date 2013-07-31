@@ -32,3 +32,4 @@
 # Local TODO
 
 + Consider moving the Jobseeker/Recruiter sorting code out of the Lists.
++ Rename JobApplicationAggregateReport to just ApplicationReport, in anticipation of having ApplicationAggregateReport report on lists of JobReports.
