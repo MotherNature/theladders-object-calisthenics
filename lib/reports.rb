@@ -101,7 +101,11 @@ class JobAggregateReportGenerator < AggregateReportGenerator
   def generate_from(submissionrecordlist)
     joblist = JobList.new
 
-    submissionrecordlist.each do |submissionrecord|
+    filtered_list = submissionrecordlist.select do |submissionrecord|
+      submissionrecord.for_job?(@job)
+    end
+
+    filtered_list.each do |submissionrecord|
       submissionrecord.add_job_to_joblist(joblist)
     end
 
