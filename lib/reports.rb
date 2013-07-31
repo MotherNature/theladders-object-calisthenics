@@ -41,3 +41,27 @@ class JobsAppliedToReportGenerator
     return JobsAppliedToReport.new(joblist)
   end
 end
+
+class JobseekersByDateReportGenerator < ListReportGenerator
+  def generate_from(submissionrecordlist)
+    jobseekerlist = JobseekerList.new
+    submissionrecordlist.each do |submissionrecord|
+      submissionrecord.add_jobseeker_to_jobseekerlist(jobseekerlist)
+    end
+    JobseekersByDateReport.new(jobseekerlist: jobseekerlist)
+  end
+end
+
+class JobseekersByDateReport < ListReport
+  def initialize(jobseekerlist: nil)
+    @jobseekerlist = jobseekerlist
+  end
+
+  def to_string
+    jobseekers = @jobseekerlist.to_array
+    report_strings = jobseekers.map do |jobseeker|
+      jobseeker.name_to_string
+    end
+    report_strings.join("\n")
+  end
+end
