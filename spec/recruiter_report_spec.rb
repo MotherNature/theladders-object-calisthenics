@@ -6,9 +6,11 @@ require 'recruiters'
 
 describe RecruiterListReportGenerator do
   before(:each) do
-    @recruiter1 = Recruiter.new(name: Name.new("Alice Green"))
-    @recruiter2 = Recruiter.new(name: Name.new("Betty Smith"))
-    @recruiter3 = Recruiter.new(name: Name.new("Candice Yarn"))
+    idnumberservice = IDNumberService.new
+
+    @recruiter1 = Recruiter.new(name: Name.new("Alice Green"), idnumber: idnumberservice.generate_idnumber)
+    @recruiter2 = Recruiter.new(name: Name.new("Betty Smith"), idnumber: idnumberservice.generate_idnumber)
+    @recruiter3 = Recruiter.new(name: Name.new("Candice Yarn"), idnumber: idnumberservice.generate_idnumber)
 
     @recruiterlistreportgenerator = RecruiterListReportGenerator.new
   end
