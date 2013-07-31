@@ -115,6 +115,9 @@ describe AggregateReportGenerator do
     submissionrecorder2.submit_application(posting: posting2, date: date)
     submissionrecorder3.submit_application(posting: posting3, date: date)
 
+    @repost = Proc.new do
+      submissionrecorder1.submit_application(posting: posting1, date: date)
+    end
   end
 
   describe "Generate Job Aggregate Application Report" do
@@ -124,6 +127,17 @@ describe AggregateReportGenerator do
       report = reportgenerator.generate_from(@submissionrecordlist)
 
       report.to_string.should == "Applied Technologist: 1"
+    end
+
+    it "should show the number of times that Jobseekers replied to only the given Job after multiple submissions" do
+      @repost.call
+      @repost.call
+      
+      reportgenerator = JobAggregateReportGenerator.new(@job1)
+
+      report = reportgenerator.generate_from(@submissionrecordlist)
+
+      report.to_string.should == "Applied Technologist: 3"
     end
   end
 
