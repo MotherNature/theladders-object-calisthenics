@@ -12,6 +12,10 @@ class SubmissionRecord
     @recorded_at_datetime.to_date == date
   end
 
+  def add_job_to_joblist(joblist)
+    @submission.add_job_to_joblist(joblist)
+  end
+
   def add_jobseeker_to_jobseekerlist(jobseekerlist)
     @submission.add_jobseeker_to_jobseekerlist(jobseekerlist)
   end
