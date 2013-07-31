@@ -35,7 +35,7 @@ class Submitter
     @submissionservice = submissionservice
   end
 
-  def submit_application(posting)
+  def submit_application(posting: posting)
     submission = @submissionservice.apply_application_to_posting(application: @application, posting: posting)
     submission
   end
@@ -47,8 +47,8 @@ class SubmissionRecorder
     @submissionrecordlist = submissionrecordlist
   end
   
-  def submit_application(posting)
-    submission = @submitter.submit_application(posting)
+  def submit_application(posting: nil)
+    submission = @submitter.submit_application(posting: posting)
     submissionrecord = SubmissionRecord.new(submission: submission, recorded_at_datetime: DateTime.new)
     @submissionrecordlist.add(submissionrecord)
     submissionrecord

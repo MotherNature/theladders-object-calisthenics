@@ -38,7 +38,7 @@ describe "Searchers" do
 
     @posting = jobposter.post_job(@job)
 
-    submissionrecorder.submit_application(@posting)
+    submissionrecorder.submit_application(posting: @posting)
 
     @toplist = @submissionrecordlist
   end

@@ -39,17 +39,17 @@ describe JobseekersByDateReportGenerator do
     @submissionrecorder1 = SubmissionRecorder.new(submitter: submitter1, submissionrecordlist: @submissionrecordlist)
     @submissionrecorder2 = SubmissionRecorder.new(submitter: submitter2, submissionrecordlist: @submissionrecordlist)
     @submissionrecorder3 = SubmissionRecorder.new(submitter: submitter3, submissionrecordlist: @submissionrecordlist)
-
-    @reportgenerator = JobseekersByDateReportGenerator.new
   end
 
   describe "Generate Jobseeker Report" do
     it "should list all Jobseekers by default" do
-      @submissionrecorder1.submit_application(@posting)
-      @submissionrecorder2.submit_application(@posting)
-      @submissionrecorder3.submit_application(@posting)
+      @submissionrecorder1.submit_application(posting: @posting)
+      @submissionrecorder2.submit_application(posting: @posting)
+      @submissionrecorder3.submit_application(posting: @posting)
 
-      report = @reportgenerator.generate_from(@submissionrecordlist)
+      reportgenerator = JobseekersByDateReportGenerator.new(Date.new(2012, 12, 21))
+
+      report = reportgenerator.generate_from(@submissionrecordlist)
       report.to_string.should == "Alice Green\nBetty Smith\nCandice Yarn"
     end
   end

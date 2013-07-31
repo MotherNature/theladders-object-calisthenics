@@ -66,7 +66,7 @@ describe "Compositors" do
         submitter = Submitter.new(application: @application, submissionservice: @submissionservice)
 
 
-        submission = submitter.submit_application(@posting)
+        submission = submitter.submit_application(posting: @posting)
 
         [submission.class, *submission.class.ancestors].should include(Submission)
       end
@@ -91,7 +91,7 @@ describe "Compositors" do
         submissionrecorder = SubmissionRecorder.new(submitter: @submitter, submissionrecordlist: @submissionrecordlist)
 
 
-        submissionrecord = submissionrecorder.submit_application(@posting)
+        submissionrecord = submissionrecorder.submit_application(posting: @posting)
 
         [submissionrecord.class, *submissionrecord.class.ancestors].should include(SubmissionRecord)
       end
@@ -112,7 +112,7 @@ describe "Compositors" do
 
       posting = jobposter.post_job(@job)
 
-      submissionrecorder.submit_application(posting)
+      submissionrecorder.submit_application(posting: posting)
     end
   end
 end

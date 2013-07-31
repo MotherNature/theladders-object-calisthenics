@@ -43,6 +43,10 @@ class JobsAppliedToReportGenerator
 end
 
 class JobseekersByDateReportGenerator < ListReportGenerator
+  def initialize(date)
+    @date = date
+  end
+
   def generate_from(submissionrecordlist)
     jobseekerlist = JobseekerList.new
     submissionrecordlist.each do |submissionrecord|
