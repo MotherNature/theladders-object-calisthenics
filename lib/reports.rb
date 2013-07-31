@@ -80,16 +80,13 @@ class AggregateReportGenerator < ListReportGenerator
 end
 
 class JobAggregateReport < ListReport
-  def initialize(joblist: nil)
-    @joblist = joblist
+  def initialize(job: nil, submission_count: nil)
+    @job = job
+    @submission_count = submission_count
   end
 
   def to_string
-    jobs = @joblist.to_array
-    report_strings = jobs.map do |job|
-      "#{job.title_to_string}: 1"
-    end
-    report_strings.join("\n")
+    "#{@job.title_to_string}: #{@submission_count}"
   end
 end
 
@@ -99,17 +96,13 @@ class JobAggregateReportGenerator < AggregateReportGenerator
   end
 
   def generate_from(submissionrecordlist)
-    joblist = JobList.new
-
     filtered_list = submissionrecordlist.select do |submissionrecord|
       submissionrecord.for_job?(@job)
     end
 
-    filtered_list.each do |submissionrecord|
-      submissionrecord.add_job_to_joblist(joblist)
-    end
+    submissionrecords = filtered_list.to_array
 
-    JobAggregateReport.new(joblist: joblist)
+    JobAggregateReport.new(job: @job, submission_count: submissionrecords.size)
   end
 end
 
