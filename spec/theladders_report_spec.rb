@@ -42,15 +42,19 @@ describe JobseekersByDateReportGenerator do
   end
 
   describe "Generate Jobseeker Report" do
-    it "should list all Jobseekers by default" do
-      @submissionrecorder1.submit_application(posting: @posting)
-      @submissionrecorder2.submit_application(posting: @posting)
-      @submissionrecorder3.submit_application(posting: @posting)
+    it "should list Jobseekers who applied on a given date" do
+      checked_date = Date.new(2012, 12, 21)
+      not_checked_date = Date.new(2010, 9, 5)
 
-      reportgenerator = JobseekersByDateReportGenerator.new(Date.new(2012, 12, 21))
+      @submissionrecorder1.submit_application(posting: @posting, date: checked_date)
+      @submissionrecorder2.submit_application(posting: @posting, date: not_checked_date)
+      @submissionrecorder3.submit_application(posting: @posting, date: checked_date)
+
+      reportgenerator = JobseekersByDateReportGenerator.new(checked_date)
 
       report = reportgenerator.generate_from(@submissionrecordlist)
-      report.to_string.should == "Alice Green\nBetty Smith\nCandice Yarn"
+
+      report.to_string.should == "Alice Green\nCandice Yarn"
     end
   end
 end
