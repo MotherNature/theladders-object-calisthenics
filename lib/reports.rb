@@ -107,4 +107,29 @@ class JobAggregateReportGenerator < AggregateReportGenerator
 end
 
 class RecruiterAggregateReportGenerator < AggregateReportGenerator 
+  def initialize(recruiter)
+    @recruiter = recruiter
+  end
+
+  def generate_from(submissionrecordlist)
+    filtered_list = submissionrecordlist.select do |submissionrecord|
+      submissionrecord.posting_posted_by_recruiter?(@recruiter)
+    end
+
+    submissionrecords = filtered_list.to_array
+
+    RecruiterAggregateReport.new(recruiter: @recruiter, submission_count: submissionrecords.size)
+  end
 end
+
+class RecruiterAggregateReport < ListReport
+  def initialize(recruiter: nil, submission_count: nil)
+    @recruiter = recruiter
+    @submission_count = submission_count
+  end
+
+  def to_string
+    "#{@recruiter.name_to_string}: #{@submission_count}"
+  end
+end
+
