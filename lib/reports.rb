@@ -95,10 +95,8 @@ class JobseekersByDateReport < ListReport
   end
 
   def to_string
-    name_strings = @names.map do |name|
-      name.to_string
-    end
-    name_strings.sort.join("\n")
+    alphabetical_names = @names.sort
+    alphabetical_names.join("\n")
   end
 end
 
