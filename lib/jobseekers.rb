@@ -15,11 +15,28 @@ class JobseekerList < List
 end
 
 class JobseekerListReport < ListReport
-  include GeneratesReportsOfNames
+  def initialize
+    @names = []
+  end
+
+  def display_jobseeker_name(name)
+    @names.push(name)
+  end
+
+  def to_string
+    alphabetical_names = @names.sort
+    alphabetical_names.join("\n")
+  end
 end
 
 class JobseekerListReportGenerator < ListReportGenerator
   def generate_from(list)
-    JobseekerListReport.new(list)
+    report = JobseekerListReport.new
+
+    list.each do |jobseeker|
+      jobseeker.display_on(report)
+    end
+
+    report
   end
 end
