@@ -163,8 +163,12 @@ describe AggregateReportGenerator do
   end
 
   describe "Generate Overall Application Report" do
-    it "should initialize" do
+    it "should show just the headers when given an empty SubmissionRecordList" do
       reportgenerator = ApplicationReportGenerator.new
+
+      report = reportgenerator.generate_from(SubmissionRecordList.new)
+
+      report.to_string.should == "| Jobseeker | Recruiter | Job Title | Date |"
     end
   end
 end
