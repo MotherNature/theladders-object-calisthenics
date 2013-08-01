@@ -142,8 +142,13 @@ describe AggregateReportGenerator do
   end
 
   describe "Generate Recruiter Aggregate Application Report" do
-    it "should initialize" do
-      reportgenerator = RecruiterAggregateReportGenerator.new()
+    it "should show the number of times that Jobseekers applied to Jobs posted by the given Recruiter" do
+      reportgenerator = RecruiterAggregateReportGenerator.new(@recruiter1)
+
+      report = reportgenerator.generate_from(@submissionrecordlist)
+
+      report.to_string.should == "Rudy Allen: 1"
     end
+
   end
 end
