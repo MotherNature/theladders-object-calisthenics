@@ -2,6 +2,11 @@ require 'people'
 require 'reports'
 
 class Recruiter < Person
+  def display_on(displayable)
+    if(displayable.respond_to?(:display_recruiter_name))
+      displayable.display_recruiter_name(@name)
+    end
+  end
 end
 
 class RecruiterList < List

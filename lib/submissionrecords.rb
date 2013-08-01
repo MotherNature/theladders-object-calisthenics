@@ -4,6 +4,13 @@ class SubmissionRecord
     @recorded_at_datetime = recorded_at_datetime
   end
 
+  def display_on(displayable)
+    if(displayable.respond_to?(:display_date))
+      displayable.display_date(@recorded_at_datetime.to_date)
+    end
+    @submission.display_on(displayable)
+  end
+
   def recorded_at_datetime?(datetime)
     @recorded_at_datetime == datetime
   end

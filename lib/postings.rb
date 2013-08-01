@@ -10,6 +10,11 @@ class Posting
     @posted_by = posted_by
   end
 
+  def display_on(displayable)
+    @job.display_on(displayable)
+    @posted_by.display_on(displayable)
+  end
+
   # TODO: refactor to use posted_by_recruiter? everywhere
   def posted_by?(recruiter)
     @posted_by == recruiter

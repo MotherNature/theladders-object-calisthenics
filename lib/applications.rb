@@ -10,6 +10,13 @@ class Application
     @resume = resume
   end
 
+  def display_on(displayable)
+    @jobseeker.display_on(displayable)
+    if(! @resume.nil?)
+      @resume.display_on(displayable)
+    end
+  end
+
   # TODO: rename to applied_to_by_jobseeker?
   def applied_to_by?(jobseeker)
     @jobseeker == jobseeker

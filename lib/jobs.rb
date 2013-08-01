@@ -11,6 +11,11 @@ class Job
     @jobtype = jobtype
   end
 
+  def display_on(displayable)
+    @jobidentity.display_on(displayable)
+    @jobtype.display_on(displayable)
+  end
+
   def requires_resume?
     @jobtype.requires_resume?
   end

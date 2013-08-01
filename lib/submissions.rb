@@ -7,6 +7,11 @@ class Submission
     @posting = posting
   end
 
+  def display_on(displayable)
+    @application.display_on(displayable)
+    @posting.display_on(displayable)
+  end
+
   def submitted_for_posting?(posting)
     @posting == posting
   end

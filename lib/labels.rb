@@ -21,6 +21,12 @@ class JobIdentity
   def title_to_string
     @title.to_string
   end
+
+  def display_on(displayable)
+    if(displayable.respond_to?(:display_job_title))
+      displayable.display_job_title(@title)
+    end
+  end
 end
 
 class Name
@@ -39,6 +45,10 @@ class Name
   def same_name?(other_name)
     self.to_s == other_name.to_s
   end
+
+  def display_on(displayable)
+    displayable.display_name(@name_string)
+  end
 end
 
 class Title
@@ -48,6 +58,10 @@ class Title
 
   def to_string
     @title_string
+  end
+
+  def display_on(displayable)
+    displayable.display_title(@name_string)
   end
 end
 
@@ -63,6 +77,12 @@ class JobType
 
   def to_string
     @jobtype_string
+  end
+
+  def display_on(displayable)
+    if(displayable.respond_to?(:display_job_type))
+      displayable.display_job_type(@jobtype_string)
+    end
   end
 end
 

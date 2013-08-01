@@ -3,6 +3,11 @@ require 'utilities'
 require 'reports'
 
 class Jobseeker < Person
+  def display_on(displayable)
+    if(displayable.respond_to?(:display_jobseeker_name))
+      displayable.display_jobseeker_name(@name)
+    end
+  end
 end
 
 class JobseekerList < List
