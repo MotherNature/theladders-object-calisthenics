@@ -95,9 +95,9 @@ describe AggregateReportGenerator do
     jobposter2.post_job(@job2)
     jobposter3.post_job(@job3)
 
-    applicationpreparer1 = ApplicationPreparer.new(jobseeker: @jobseeker1, applicationlist: applicationlist)
-    applicationpreparer2 = ApplicationPreparer.new(jobseeker: @jobseeker2, applicationlist: applicationlist)
-    applicationpreparer3 = ApplicationPreparer.new(jobseeker: @jobseeker3, applicationlist: applicationlist)
+    applicationpreparer1 = ApplicationPreparer.new(jobseeker: jobseeker1, applicationlist: applicationlist)
+    applicationpreparer2 = ApplicationPreparer.new(jobseeker: jobseeker2, applicationlist: applicationlist)
+    applicationpreparer3 = ApplicationPreparer.new(jobseeker: jobseeker3, applicationlist: applicationlist)
 
     submitter1 = Submitter.new(application: applicationpreparer1.prepare_application, submissionservice: submissionservice)
     submitter2 = Submitter.new(application: applicationpreparer2.prepare_application, submissionservice: submissionservice)
