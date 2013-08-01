@@ -5,7 +5,6 @@
 
 # In Progress
 
-+ TheLadders should be able to see aggregate job application numbers by job and recruiter.
 
 # Completed
 
@@ -28,6 +27,7 @@
 + TheLadders wants the system to be able to handle more than one jobseeker with the same name.
 + TheLadders wants the system to be able to handle more than one recruiter with the same name.
 + TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day.
++ TheLadders should be able to see aggregate job application numbers by job and recruiter.
 
 # Local TODO
 
