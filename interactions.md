@@ -1,10 +1,10 @@
 # Pending
 
 + TheLadders should be able to get the job application report in either csv or html format.
-+ TheLadders should be able to ascertain jobseeker, job, recruiter and job application date from the job application report.
 
 # In Progress
 
++ TheLadders should be able to ascertain jobseeker, job, recruiter and job application date from the job application report.
 
 # Completed
 
