@@ -66,10 +66,17 @@ class JobListReport < ListReport
 end
 
 class JobListTitleReport < ListReport
+  def initialize
+    @titles = []
+  end
+
+  def display_jobtitle(title)
+    @titles.push(title)
+  end
+
   def to_string
-    jobs = @list.to_array
-    title_strings = jobs.map do |job|
-      "Title: #{job.title_to_string}"
+    title_strings = @titles.map do |title|
+      "Title: #{title}"
     end
     title_strings.join("\n")
   end

@@ -16,7 +16,11 @@ class JobListReportGenerator < ListReportGenerator
     JobListReport.new(joblist)
   end
   def generate_titles_from(joblist)
-    JobListTitleReport.new(joblist)
+    report = JobListTitleReport.new
+    joblist.each do |job|
+      job.display_on(report)
+    end
+    report
   end
 end
 
