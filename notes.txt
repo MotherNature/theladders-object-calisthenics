@@ -1,0 +1,7 @@
+job.displayOn(aDisplayer)
+
+def displayOn(aDisplayer)
+  aDisplay.display(name: @name, post_date: @date)
+end
+
+TODO: Refactor to use Visitor pattern instead of #name_to_string et al.
