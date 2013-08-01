@@ -1,3 +1,5 @@
+require 'csv'
+
 class ListReport
   def initialize(list)
     @list = list
@@ -160,6 +162,8 @@ end
 
 class ApplicationReport < ListReport
   def initialize
+    @headers = ["Jobseeker", "Recruiter", "Job Title", "Date"]
+
     @jobseeker_names = []
     @recruiter_names = []
     @job_titles = []
@@ -188,7 +192,6 @@ class ApplicationReport < ListReport
     job_max_width = 0
     date_max_width = 0
 
-    headers = ["Jobseeker", "Recruiter", "Job Title", "Date"]
     rows = [ ]
     for i in 0...@jobseeker_names.size
       jobseeker_name = @jobseeker_names[i]
@@ -216,9 +219,25 @@ class ApplicationReport < ListReport
 
     format = "| %-#{jobseeker_max_width}s | %-#{recruiter_max_width}s | %-#{job_max_width}s | %-#{date_max_width}s |"
 
-    header_and_rows = [headers, *rows]
+    header_and_rows = [@headers, *rows]
 
     report_strings = header_and_rows.map {|row| sprintf(format, *row) }
     report_strings.join("\n")
+  end
+
+  def to_csv
+    rows = [@headers]
+    for i in 0...@jobseeker_names.size
+      jobseeker_name = @jobseeker_names[i]
+      recruiter_name = @recruiter_names[i]
+      job_title = @job_titles[i]
+      date = @dates[i]
+      row = [jobseeker_name, recruiter_name, job_title, date]
+      rows.push(row)
+    end
+    row_strings = rows.map do |row|
+      CSV.generate_line(row)
+    end
+    row_strings.join
   end
 end
