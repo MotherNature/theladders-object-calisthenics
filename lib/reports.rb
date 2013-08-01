@@ -133,3 +133,5 @@ class RecruiterAggregateReport < ListReport
   end
 end
 
+class ApplicationReportGenerator < ListReportGenerator 
+end
