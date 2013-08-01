@@ -1,13 +1,3 @@
-module GeneratesReportsOfNames
-  # TODO: Refactor to implement Visitor
-  def to_string
-    name_strings = @list.to_array.map do |list_item|
-      list_item.name_to_string
-    end
-    name_strings.join("\n")
-  end
-end
-
 class ListReport
   def initialize(list)
     @list = list
