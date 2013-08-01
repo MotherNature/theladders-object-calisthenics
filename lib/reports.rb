@@ -134,4 +134,13 @@ class RecruiterAggregateReport < ListReport
 end
 
 class ApplicationReportGenerator < ListReportGenerator 
+  def generate_from(submissionrecordlist)
+    ApplicationReport.new(submissionrecordlist)
+  end
+end
+
+class ApplicationReport < ListReport
+  def to_string
+    "| Jobseeker | Recruiter | Job Title | Date |"
+  end
 end

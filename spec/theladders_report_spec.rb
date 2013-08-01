@@ -170,5 +170,17 @@ describe AggregateReportGenerator do
 
       report.to_string.should == "| Jobseeker | Recruiter | Job Title | Date |"
     end
+
+    it "should, for each SubmissionRecord, show the Jobseeker's name, Job title, Recruiter name, and submission Date" do
+      reportgenerator = ApplicationReportGenerator.new
+
+      report = reportgenerator.generate_from(@submissionrecordlist)
+
+      report.to_string.should ==
+        "| Jobseeker    | Recruiter       | Job Title            | Date       |\n" +
+        "| Alice Green  | Rudy Allen      | Applied Technologist | 12/21/2012 |\n" +
+        "| Betty Smith  | Rachel Breecher | Bench Warmer         | 12/21/2012 |\n" +
+        "| Candice Yarn | Ralph Colbert   | Candy Tester         | 12/21/2012 |"
+    end
   end
 end
