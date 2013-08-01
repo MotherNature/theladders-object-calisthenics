@@ -182,5 +182,18 @@ describe AggregateReportGenerator do
         "| Betty Smith  | Rachel Breecher | Bench Warmer         | 12/21/2012 |\n" +
         "| Candice Yarn | Ralph Colbert   | Candy Tester         | 12/21/2012 |"
     end
+
+    it "should generate a report in CSV format" do
+      reportgenerator = ApplicationReportGenerator.new
+
+      report = reportgenerator.generate_from(@submissionrecordlist)
+
+      report.to_csv.should ==
+        "Jobseeker,Recruiter,Job Title,Date\n" + 
+        "Alice Green,Rudy Allen,Applied Technologist,12/21/2012\n" +
+        "Betty Smith,Rachel Breecher,Bench Warmer,12/21/2012\n" +
+        "Candice Yarn,Ralph Colbert,Candy Tester,12/21/2012\n"
+    end
+
   end
 end
