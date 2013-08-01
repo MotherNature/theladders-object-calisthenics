@@ -24,21 +24,44 @@ class ListReportGenerator
 end
 
 class JobsAppliedToReport
-  def initialize(joblist=nil)
-    @joblist = joblist
+  def initialize
+    @jobtitles = []
+    @jobtypes = []
+  end
+
+  def display_jobtitle(jobtitle)
+    @jobtitles.push(jobtitle)
+  end
+
+  def display_jobtype(jobtype)
+    @jobtypes.push(jobtype)
   end
 
   def to_string
-    joblistreport = JobListReport.new(@joblist)
-    joblistreport.to_string
+    report_strings = []
+    # TODO: Refactor to avoid assumption of equal-sized lists
+    for i in 0...@jobtitles.size
+      title = @jobtitles[i]
+      type = @jobtypes[i]
+      report_strings.push("Title: #{title}\nType: #{type}")
+    end
+    report_strings.join("\n---\n")
   end
 end
 
 class JobsAppliedToReportGenerator
   def generate_for_jobseeker_from_submissionlist(jobseeker: nil, submissionlist: nil)
-    joblist = submissionlist.jobs_submitted_to_by_jobseeker(jobseeker)
+    report = JobsAppliedToReport.new
+
+    filtered_list = submissionlist.select do |submission|
+      submission.application_applied_to_by?(jobseeker)
+    end
+
+    filtered_list.each do |submission|
+      submission.display_on(report)
+    end
     
-    return JobsAppliedToReport.new(joblist)
+    report
   end
 end
 

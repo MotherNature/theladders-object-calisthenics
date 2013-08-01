@@ -23,8 +23,8 @@ class JobIdentity
   end
 
   def display_on(displayable)
-    if(displayable.respond_to?(:display_job_title))
-      displayable.display_job_title(@title)
+    if(displayable.respond_to?(:display_jobtitle))
+      @title.display_on(displayable)
     end
   end
 end
@@ -61,7 +61,8 @@ class Title
   end
 
   def display_on(displayable)
-    displayable.display_title(@name_string)
+    # TODO: Is this too specific? May need to refactor method names
+    displayable.display_jobtitle(@title_string)
   end
 end
 
@@ -80,8 +81,8 @@ class JobType
   end
 
   def display_on(displayable)
-    if(displayable.respond_to?(:display_job_type))
-      displayable.display_job_type(@jobtype_string)
+    if(displayable.respond_to?(:display_jobtype))
+      displayable.display_jobtype(@jobtype_string)
     end
   end
 end
