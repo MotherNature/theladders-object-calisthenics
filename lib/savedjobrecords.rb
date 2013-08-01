@@ -9,10 +9,6 @@ class SavedJobRecord
   def saved_by?(jobseeker)
     @jobseeker == jobseeker
   end
-
-  def job_title_to_string
-    @job.title_to_string
-  end
 end
 
 class JobListReportGenerator < ListReportGenerator
