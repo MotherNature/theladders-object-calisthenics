@@ -4,7 +4,7 @@ require 'reports'
 class Recruiter < Person
   def display_on(displayable)
     if(displayable.respond_to?(:display_recruiter_name))
-      displayable.display_recruiter_name(@name)
+      @name.display_on(displayable)
     end
   end
 end
@@ -14,11 +14,28 @@ class RecruiterList < List
 end
 
 class RecruiterListReport < ListReport
-  include GeneratesReportsOfNames
+  def initialize
+    @names = []
+  end
+
+  def display_recruiter_name(name)
+    @names.push(name)
+  end
+
+  def to_string
+    alphabetical_names = @names.sort
+    alphabetical_names.join("\n")
+  end
 end
 
 class RecruiterListReportGenerator < ListReportGenerator
   def generate_from(list)
-    RecruiterListReport.new(list)
+    report = RecruiterListReport.new
+
+    list.each do |recruiter|
+      recruiter.display_on(report)
+    end
+
+    report
   end
 end
