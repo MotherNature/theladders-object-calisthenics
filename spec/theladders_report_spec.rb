@@ -121,7 +121,7 @@ describe AggregateReportGenerator do
   end
 
   describe "Generate Job Aggregate Application Report" do
-    it "should show the number of times that Jobseekers replied to only the given Job" do
+    it "should show the number of times that Jobseekers applied to only the given Job" do
       reportgenerator = JobAggregateReportGenerator.new(@job1)
 
       report = reportgenerator.generate_from(@submissionrecordlist)
@@ -129,7 +129,7 @@ describe AggregateReportGenerator do
       report.to_string.should == "Applied Technologist: 1"
     end
 
-    it "should show the number of times that Jobseekers replied to only the given Job after multiple submissions" do
+    it "should show the number of times that Jobseekers applied to only the given Job after multiple submissions" do
       @repost.call
       @repost.call
       
