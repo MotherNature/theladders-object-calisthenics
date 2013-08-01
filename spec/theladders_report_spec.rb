@@ -161,4 +161,10 @@ describe AggregateReportGenerator do
       report.to_string.should == "Rudy Allen: 3"
     end
   end
+
+  describe "Generate Overall Application Report" do
+    it "should initialize" do
+      reportgenerator = ApplicationReportGenerator.new
+    end
+  end
 end
