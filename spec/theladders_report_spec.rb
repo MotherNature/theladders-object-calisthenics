@@ -150,5 +150,15 @@ describe AggregateReportGenerator do
       report.to_string.should == "Rudy Allen: 1"
     end
 
+    it "should show the number of times that Jobseekers applied to Jobs posted by the given Recruiter after multiple submissions" do
+      @repost.call
+      @repost.call
+      
+      reportgenerator = RecruiterAggregateReportGenerator.new(@recruiter1)
+
+      report = reportgenerator.generate_from(@submissionrecordlist)
+
+      report.to_string.should == "Rudy Allen: 3"
+    end
   end
 end
