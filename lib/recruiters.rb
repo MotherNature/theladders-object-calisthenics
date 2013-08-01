@@ -4,7 +4,7 @@ require 'reports'
 class Recruiter < Person
   def display_on(displayable)
     if(displayable.respond_to?(:display_recruiter_name))
-      @name.display_on(displayable)
+      displayable.display_recruiter_name(@name.to_string)
     end
   end
 end

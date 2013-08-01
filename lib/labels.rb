@@ -45,16 +45,6 @@ class Name
   def same_name?(other_name)
     self.to_s == other_name.to_s
   end
-
-  def display_on(displayable)
-    if(displayable.respond_to?(:display_jobseeker_name))
-      displayable.display_jobseeker_name(@name_string)
-    end
-
-    if(displayable.respond_to?(:display_recruiter_name))
-      displayable.display_recruiter_name(@name_string)
-    end
-  end
 end
 
 class Title

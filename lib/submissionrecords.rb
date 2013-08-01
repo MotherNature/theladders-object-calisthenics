@@ -6,7 +6,10 @@ class SubmissionRecord
 
   def display_on(displayable)
     if(displayable.respond_to?(:display_date))
-      displayable.display_date(@recorded_at_datetime.to_date)
+      # TODO: Make a RecordDate wrapper for Date
+      date = @recorded_at_datetime.to_date
+      date_string = "#{date.month}/#{date.day}/#{date.year}"
+      displayable.display_date(date_string)
     end
     @submission.display_on(displayable)
   end

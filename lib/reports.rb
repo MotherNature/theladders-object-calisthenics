@@ -150,13 +150,36 @@ end
 
 class ApplicationReportGenerator < ListReportGenerator 
   def generate_from(submissionrecordlist)
-    ApplicationReport.new(submissionrecordlist)
+    report = ApplicationReport.new
+    submissionrecordlist.each do |submissionrecord|
+      submissionrecord.display_on(report)
+    end
+    report
   end
 end
 
 class ApplicationReport < ListReport
-  def initialize(submissionrecordlist)
-    @submissionrecordlist = submissionrecordlist
+  def initialize
+    @jobseeker_names = []
+    @recruiter_names = []
+    @job_titles = []
+    @dates = []
+  end
+
+  def display_jobseeker_name(name)
+    @jobseeker_names.push(name)
+  end
+
+  def display_recruiter_name(name)
+    @recruiter_names.push(name)
+  end
+
+  def display_jobtitle(title)
+    @job_titles.push(title)
+  end
+
+  def display_date(date)
+    @dates.push(date)
   end
 
   def to_string
@@ -167,23 +190,23 @@ class ApplicationReport < ListReport
 
     headers = ["Jobseeker", "Recruiter", "Job Title", "Date"]
     rows = [ ]
-    @submissionrecordlist.each do |submissionrecord|
-      jobseeker_name = "Judy Jobseeker" # submissionrecord.jobseeker_name_to_string
+    for i in 0...@jobseeker_names.size
+      jobseeker_name = @jobseeker_names[i]
       if(jobseeker_name.size > jobseeker_max_width)
         jobseeker_max_width = jobseeker_name.size
       end
 
-      recruiter_name = "Rudy Recruiter" # submissionrecord.recruiter_name_to_string
+      recruiter_name = @recruiter_names[i]
       if(recruiter_name.size > recruiter_max_width)
         recruiter_max_width = recruiter_name.size
       end
 
-      job_title = "Lion Tamer" # submissionrecord.job_title_to_string
-      if(job_title.size > recruiter_max_width)
+      job_title = @job_titles[i]
+      if(job_title.size > job_max_width)
         job_max_width = job_title.size
       end
 
-      date = "12/21/2013" # submissionrecord.date_to_string
+      date = @dates[i]
       if(date.size > date_max_width)
         date_max_width = date.size
       end
@@ -191,8 +214,11 @@ class ApplicationReport < ListReport
       rows.push([jobseeker_name, recruiter_name, job_title, date])
     end
 
-    format = "| %#{jobseeker_max_width}s | %#{recruiter_max_width}s | %#{job_max_width}s | %#{date_max_width}s |"
+    format = "| %-#{jobseeker_max_width}s | %-#{recruiter_max_width}s | %-#{job_max_width}s | %-#{date_max_width}s |"
 
-    rows.map {|row| sprintf(format, *row) }.join("\n")
+    header_and_rows = [headers, *rows]
+
+    report_strings = header_and_rows.map {|row| sprintf(format, *row) }
+    report_strings.join("\n")
   end
 end

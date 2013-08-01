@@ -12,7 +12,7 @@ class Application
 
   def display_on(displayable)
     @jobseeker.display_on(displayable)
-    if(! @resume.nil?)
+    if(has_resume?)
       @resume.display_on(displayable)
     end
   end
