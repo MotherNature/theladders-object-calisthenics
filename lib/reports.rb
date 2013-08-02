@@ -32,7 +32,6 @@ class JobsAppliedToReport
 
   def to_string
     report_strings = []
-    # TODO: Refactor to avoid assumption of equal-sized lists
     for i in 0...@jobtitles.size
       title = @jobtitles[i]
       type = @jobtypes[i]

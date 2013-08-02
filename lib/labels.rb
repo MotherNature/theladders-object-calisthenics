@@ -57,7 +57,6 @@ class Title
   end
 
   def display_on(displayable)
-    # TODO: Is this too specific? May need to refactor method names
     displayable.display_jobtitle(@title_string)
   end
 end
