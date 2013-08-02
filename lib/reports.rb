@@ -10,12 +10,6 @@ class ListReport
   end
 end
 
-class ListReportGenerator
-  def generate_from(list)
-    ListReport.new(list)
-  end
-end
-
 class JobsAppliedToReport
   def initialize
     @jobtitles = []
@@ -57,7 +51,7 @@ class JobsAppliedToReportGenerator
   end
 end
 
-class JobseekersByDateReportGenerator < ListReportGenerator
+class JobseekersByDateReportGenerator
   def initialize(date)
     @date = date
   end
@@ -92,7 +86,7 @@ class JobseekersByDateReport
   end
 end
 
-class AggregateReportGenerator < ListReportGenerator
+class AggregateReportGenerator
 end
 
 class JobAggregateReport < ListReport
@@ -149,7 +143,7 @@ class RecruiterAggregateReport < ListReport
   end
 end
 
-class ApplicationReportGenerator < ListReportGenerator 
+class ApplicationReportGenerator
   def generate_from(submissionrecordlist)
     report = ApplicationReport.new
     submissionrecordlist.each do |submissionrecord|

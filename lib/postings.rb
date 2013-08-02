@@ -80,7 +80,7 @@ class PostingListReport < ListReport
   end
 end
 
-class PostingListReportGenerator < ListReportGenerator
+class PostingListReportGenerator
   def generate_from(list)
     PostingListReport.new(list)
   end

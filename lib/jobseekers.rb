@@ -29,7 +29,7 @@ class JobseekerListReport < ListReport
   end
 end
 
-class JobseekerListReportGenerator < ListReportGenerator
+class JobseekerListReportGenerator
   def generate_from(list)
     report = JobseekerListReport.new
 

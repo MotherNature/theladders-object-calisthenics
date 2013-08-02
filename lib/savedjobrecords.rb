@@ -11,7 +11,7 @@ class SavedJobRecord
   end
 end
 
-class JobListReportGenerator < ListReportGenerator
+class JobListReportGenerator
   def generate_from(joblist)
     JobListReport.new(joblist)
   end
@@ -64,7 +64,7 @@ class SavedJobListReport < ListReport
   end
 end
 
-class SavedJobListReportGenerator < ListReportGenerator
+class SavedJobListReportGenerator
   def generate_from(savedjoblist)
     report = SavedJobListReport.new
     savedjoblist.each do |job|

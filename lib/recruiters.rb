@@ -28,7 +28,7 @@ class RecruiterListReport < ListReport
   end
 end
 
-class RecruiterListReportGenerator < ListReportGenerator
+class RecruiterListReportGenerator
   def generate_from(list)
     report = RecruiterListReport.new
 
