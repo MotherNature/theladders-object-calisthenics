@@ -240,4 +240,41 @@ class ApplicationReport < ListReport
     end
     row_strings.join
   end
+
+  def to_html
+    rows = []
+
+    for i in 0...@jobseeker_names.size
+      jobseeker_name = @jobseeker_names[i]
+      recruiter_name = @recruiter_names[i]
+      job_title = @job_titles[i]
+      date = @dates[i]
+      row = [jobseeker_name, recruiter_name, job_title, date]
+      rows.push(row)
+    end
+
+    header_strings = @headers.map do |header|
+      "<th>#{header}</th>"
+    end
+
+    header_string = header_strings.join
+
+    row_strings = rows.map do |row|
+      row_to_cells(row).join
+    end
+
+    table_rows = [header_string, *row_strings].map do |row|
+      "<tr>#{row}</tr>"
+    end
+
+    html = ["<table>", table_rows, "</table>"].join("\n")
+
+    html
+  end
+
+  def row_to_cells(row)
+    row.map do |cell|
+      "<td>#{cell}</td>"
+    end
+  end
 end
