@@ -195,5 +195,18 @@ describe AggregateReportGenerator do
         "Candice Yarn,Ralph Colbert,Candy Tester,12/21/2012\n"
     end
 
+    it "should generate a report in HTML format" do
+      reportgenerator = ApplicationReportGenerator.new
+
+      report = reportgenerator.generate_from(@submissionrecordlist)
+
+      report.to_html.should ==
+        "<table>\n" +
+        "<tr><th>Jobseeker</th><th>Recruiter</th><th>Job Title</th><th>Date</th></tr>\n" + 
+        "<tr><td>Alice Green</td><td>Rudy Allen</td><td>Applied Technologist</td><td>12/21/2012</td></tr>\n" +
+        "<tr><td>Betty Smith</td><td>Rachel Breecher</td><td>Bench Warmer</td><td>12/21/2012</td></tr>\n" +
+        "<tr><td>Candice Yarn</td><td>Ralph Colbert</td><td>Candy Tester</td><td>12/21/2012</td></tr>\n" +
+        "</table>"
+    end
   end
 end
