@@ -1,5 +1,5 @@
-class JobseekersByDateReportGenerator 
+class JobseekerApplicationsReportGenerator 
 end
 
-class AggregateReportGenerator 
+class JobseekerApplicationsReport
 end
