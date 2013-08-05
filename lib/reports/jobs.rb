@@ -1,6 +1,14 @@
 require 'jobs'
 
+module JobStringFormatter
+  def job_properties_as_string(job_title: nil, recruiter_name: nil)
+    "Job[Title: #{job_title}][Recruiter: #{recruiter_name}]"
+  end
+end
+
 class JobListReport
+  include JobStringFormatter
+
   def initialize(list)
     @list = list
     @job_titles = []
@@ -22,17 +30,19 @@ class JobListReport
 
     job_count = @job_titles.size
     job_strings = (0...job_count).map do |index|
-      "Job[Title: #{@job_titles[index]}][Recruiter: #{@recruiter_names[index]}]"
+      job_properties_as_string(job_title: @job_titles[index], recruiter_name: @recruiter_names[index])
     end
     job_strings.join("\n")
   end
 end
 
 class JobReport
+  include JobStringFormatter
+
   def initialize(job)
     @job = job
     @title = nil
-    @recruiter = nil
+    @name = nil
   end
 
   def display_job_title(title)
@@ -45,6 +55,7 @@ class JobReport
 
   def to_string
     @job.display_on(self)
-    "Job[Title: #{@title}][Recruiter: #{@name}]"
+
+    job_properties_as_string(job_title: @title, recruiter_name: @name)
   end
 end
