@@ -12,7 +12,6 @@
 + Jobseekers, when displayed, should be displayed by their name.
 + Recruiters, when displayed, should be displayed by their name.
 + Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
-+ Jobseekers should be able to see a listing of the jobs for which they have applied.
 + Jobseekers should be able to see a listing of jobs they have saved for later viewing.
 + Recruiters should be able to see jobseekers who have applied to their jobs by both job and day. If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day.
 + TheLadders wants the system to be able to handle more than one job with the same title.
@@ -26,6 +25,8 @@
 # In Progress
 
 # Completed
+
++ Jobseekers should be able to see a listing of the jobs for which they have applied.
 
 # Local TODO
 
