@@ -23,11 +23,10 @@
 
 # In Progress
 
-+ Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
-
 # Completed
 
 + Jobseekers should be able to see a listing of the jobs for which they have applied.
++ Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
 
 # Local TODO
 
