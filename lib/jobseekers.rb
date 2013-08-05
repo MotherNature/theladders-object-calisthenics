@@ -1,16 +1,14 @@
 class Jobseeker
   def initialize
-    @jobs = []
+    @joblist = JobList.new
   end
 
   def apply_to(job: nil)
-    @jobs.push(job)
+    @joblist = @joblist.with(job)
   end
 
   def display_on(displayable)
-    @jobs.each do |job|
-      job.display_on(displayable)
-    end
+    @joblist.display_on(displayable)
   end
 end
 

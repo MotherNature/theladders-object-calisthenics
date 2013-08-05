@@ -1,3 +1,5 @@
+require 'jobs'
+
 class JobseekerApplicationsReportGenerator 
   def initialize(jobseeker)
     @jobseeker = jobseeker
@@ -14,17 +16,10 @@ end
 class JobseekerApplicationsReport
   def initialize(list)
     @list = list
-    @titles = []
-  end
-
-  def display_job_title(title)
-    @titles.push(title)
   end
 
   def to_string
-    @list.each do |displayer|
-      displayer.display_on(self)
-    end
-    @titles.join("\n")
+    report = JobListReport.new(@list)
+    report.to_string
   end
 end
