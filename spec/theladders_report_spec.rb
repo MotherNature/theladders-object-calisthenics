@@ -15,12 +15,14 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
   before(:each) do
     @jobseeker = Jobseeker.new
     @other_jobseeker = Jobseeker.new
+
+    @recruiter = Recruiter.new(name: "Robert Recruit")
   end
 
   describe JobseekerApplicationsReport do
     it "should list the jobs to which a given jobseeker has applied" do
-      job1 = Job.new(title: "Valid Job 1")
-      job2 = Job.new(title: "Valid Job 2")
+      job1 = @recruiter.post_job(title: "Valid Job 1")
+      job2 = @recruiter.post_job(title: "Valid Job 2")
 
       @jobseeker.apply_to(job: job1)
       @jobseeker.apply_to(job: job2)
@@ -31,14 +33,14 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
       report = reportgenerator.generate_from(list)
 
-      report.to_string.should == "Valid Job 1\nValid Job 2"
+      report.to_string.should == "Job[Title: Valid Job 1][Recruiter: Robert Recruit]\nJob[Title: Valid Job 2][Recruiter: Robert Recruit]"
     end
 
     it "should only list the jobs to which a given jobseeker has applied" do
-      valid_job = Job.new(title: "Valid Job")
+      valid_job = @recruiter.post_job(title: "Valid Job")
       @jobseeker.apply_to(job: valid_job)
 
-      invalid_job = Job.new(title: "Invalid Job")
+      invalid_job = @recruiter.post_job(title: "Invalid Job")
       @other_jobseeker.apply_to(job: invalid_job)
 
       list = JobseekerList.new([@jobseeker, @other_jobseeker]) 
@@ -47,13 +49,23 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
       report = reportgenerator.generate_from(list)
 
-      report.to_string.should == "Valid Job"
+      report.to_string.should == "Job[Title: Valid Job][Recruiter: Robert Recruit]"
     end
   end
 end
 
 describe "Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it" do
   describe JobReport do
+    it "should list the job title and the name of the recruiter that posted it" do
+      recruiter = Recruiter.new(name: "Robert Recruit")
+
+      job = recruiter.post_job(title: "Example Job")
+
+      report = JobReport.new(job)
+
+      report.to_string.should == "Job[Title: Example Job][Recruiter: Robert Recruit]"
+    end
+
     it "should list the job title and the name of the recruiter that posted it" do
       recruiter = Recruiter.new(name: "Robert Recruit")
 
