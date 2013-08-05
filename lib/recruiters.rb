@@ -2,7 +2,7 @@ class Recruiter
   def initialize(name: nil)
   end
 
-  def post(job: nil)
+  def post_job(title: nil)
   end
 end
 

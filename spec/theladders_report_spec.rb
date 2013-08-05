@@ -55,10 +55,9 @@ end
 describe "Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it" do
   describe JobReport do
     it "should list the job title and the name of the recruiter that posted it" do
-      job = Job.new(title: "Example Job")
       recruiter = Recruiter.new(name: "Robert Recruit")
 
-      recruiter.post(job: job)
+      job = recruiter.post_job(title: "Example Job")
 
       report = JobReport.new(job)
 
