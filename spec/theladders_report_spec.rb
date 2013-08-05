@@ -77,3 +77,23 @@ describe "Jobs, when displayed, should be displayed with a title and the name of
     end
   end
 end
+
+describe "Jobseekers can apply to jobs posted by recruiters" do
+  it "There are 2 different kinds of Jobs posted by recruiters: JReq and ATS." do
+  end
+
+  before(:each) do
+    @jobseeker = Jobseeker.new
+    @recruiter = Recruiter.new(name: "Robert Recruit")
+  end
+
+  describe "ATS jobs do not require a resume to apply to them" do
+    it "jobseekers should be able to apply to ATS jobs without a resume" do
+      job = @recruiter.post_job(title: "Example Job", type: "ATS")
+
+      submission = @jobseeker.apply_to(job: job, resume: NoResume.new)
+
+      submission.valid?.should be_true
+    end
+  end
+end
