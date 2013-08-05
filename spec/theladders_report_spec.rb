@@ -9,6 +9,7 @@ end
 
 require 'jobs'
 require 'jobseekers'
+require 'recruiters'
 
 describe "Jobseekers should be able to see a listing of the jobs for which they have applied" do
   before(:each) do
