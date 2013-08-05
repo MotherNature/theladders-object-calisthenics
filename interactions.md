@@ -1,6 +1,5 @@
 # Pending
 
-+ Recruiters can post jobs.
 + Recruiters should be able to see a listing of the jobs they have posted.
 + Jobseekers can save jobs onsite for later viewing.
 + Jobseekers can apply to jobs posted by recruiters.
@@ -27,6 +26,7 @@
 
 + Jobseekers should be able to see a listing of the jobs for which they have applied.
 + Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it.
++ Recruiters can post jobs.
 
 # Local TODO
 
