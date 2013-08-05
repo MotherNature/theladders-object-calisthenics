@@ -2,12 +2,6 @@
 
 + Recruiters should be able to see a listing of the jobs they have posted.
 + Jobseekers can save jobs onsite for later viewing.
-+ Jobseekers can apply to jobs posted by recruiters.
-    + There are 2 different kinds of Jobs posted by recruiters: JReq and ATS.
-    + ATS jobs do not require a resume to apply to them.
-    + JReq jobs require a resume to apply to them.
-    + Jobseekers should be able to apply to different jobs with different resumes.
-    + Jobseekers can not apply to a job with someone else’s resume.
 + Jobseekers, when displayed, should be displayed by their name.
 + Recruiters, when displayed, should be displayed by their name.
 + Jobseekers should be able to see a listing of jobs they have saved for later viewing.
@@ -21,6 +15,13 @@
 + TheLadders should be able to get the job application report in either csv or html format.
 
 # In Progress
+
++ Jobseekers can apply to jobs posted by recruiters.
+    + There are 2 different kinds of Jobs posted by recruiters: JReq and ATS.
+    + ATS jobs do not require a resume to apply to them.
+    + JReq jobs require a resume to apply to them.
+    + Jobseekers should be able to apply to different jobs with different resumes.
+    + Jobseekers can not apply to a job with someone else’s resume.
 
 # Completed
 
