@@ -21,23 +21,23 @@ class ExampleFactory
       "ATS"
     ]
 
-    @jobfactory = JobFactory.new
-    @idnumberservice = IDNumberService.new
+    #@jobfactory = JobFactory.new
+    #@idnumberservice = IDNumberService.new
   end
 
   def build_jobseeker
-    Jobseeker.new(name: Name.new(@jobseeker_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
+    #Jobseeker.new(name: Name.new(@jobseeker_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
   end
 
   def build_recruiter
-    Recruiter.new(name: Name.new(@recruiter_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
+    #Recruiter.new(name: Name.new(@recruiter_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
   end
 
   def build_job
-    @jobfactory.build_job(title_string: @job_title_strings.shift, jobtype_string: @jobtype_strings.shift)
+    #@jobfactory.build_job(title_string: @job_title_strings.shift, jobtype_string: @jobtype_strings.shift)
   end
 
   def build_resume_for_jobseeker(jobseeker)
-    Resume.new(jobseeker: jobseeker)
+    #Resume.new(jobseeker: jobseeker)
   end
 end
