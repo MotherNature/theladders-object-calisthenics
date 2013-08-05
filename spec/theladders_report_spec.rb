@@ -12,7 +12,7 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
   end
 
   describe JobseekerApplicationsReport do
-    it "should list the jobs to which a given jobseerk has applied" do
+    it "should list the jobs to which a given jobseeker has applied" do
       reportgenerator = JobseekerApplicationsReportGenerator.new
 
       report = reportgenerator.generate_from(nil)
