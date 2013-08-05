@@ -1,9 +1,5 @@
 # Pending
 
-# In Progress
-
-# Completed
-
 + Recruiters can post jobs.
 + Recruiters should be able to see a listing of the jobs they have posted.
 + Jobseekers can save jobs onsite for later viewing.
@@ -26,6 +22,10 @@
 + TheLadders should be able to see aggregate job application numbers by job and recruiter.
 + TheLadders should be able to ascertain jobseeker, job, recruiter and job application date from the job application report.
 + TheLadders should be able to get the job application report in either csv or html format.
+
+# In Progress
+
+# Completed
 
 # Local TODO
 
