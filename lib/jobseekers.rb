@@ -1,23 +1,39 @@
 require 'submissions'
 require 'resumes'
 
-class Jobseeker
+class JobApplier
   def initialize
     @applied_to = JobList.new
   end
 
-  def apply_to(job: nil, resume: nil)
-    @applied_to = @applied_to.with(job)
-    Submission.new(with_resume: resume, submitted_to: job)
-    #Submission.new(submitted_by: self, submitted_to: job, with_resume: resume)
+  def apply_to(job: nil, with_resume: nil)
+    submission = Submission.new(with_resume: with_resume, submitted_to: job)
+    if(submission.valid?)
+      @applied_to = @applied_to.with(job)
+    end
+    submission
+  end
+
+  def display_on(displayable)
+    @applied_to.display_on(displayable)
+  end
+end
+
+class Jobseeker
+  def initialize
+    @applier = JobApplier.new
   end
 
   def draft_resume
     Resume.new
   end
 
+  def apply_to(job: nil, with_resume: nil)
+    @applier.apply_to(job: job, with_resume: with_resume)
+  end
+
   def display_on(displayable)
-    @applied_to.display_on(displayable)
+    @applier.display_on(displayable)
   end
 end
 
