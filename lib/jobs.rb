@@ -1,7 +1,8 @@
 class Job
-  def initialize(title: nil, posted_by: nil)
+  def initialize(title: nil, posted_by: nil, type: nil)
     @title = title
     @posted_by = posted_by
+    @type = type
   end
 
   def display_on(displayable)

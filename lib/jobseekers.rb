@@ -1,14 +1,18 @@
+require 'submissions'
+
 class Jobseeker
   def initialize
-    @joblist = JobList.new
+    @applied_to = JobList.new
   end
 
-  def apply_to(job: nil)
-    @joblist = @joblist.with(job)
+  def apply_to(job: nil, resume: nil)
+    @applied_to = @applied_to.with(job)
+    Submission.new
+    #Submission.new(submitted_by: self, submitted_to: job, with_resume: resume)
   end
 
   def display_on(displayable)
-    @joblist.display_on(displayable)
+    @applied_to.display_on(displayable)
   end
 end
 
