@@ -87,30 +87,34 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
   end
 
   describe "ATS jobs do not require a resume to apply to them" do
-    it "jobseekers should be able to apply to ATS jobs without a resume" do
-      submission = @jobseeker.apply_to(job: @ats_job, resume: NoResume)
+    describe Jobseeker do
+      it "should be able to apply to ATS jobs without a resume" do
+        submission = @jobseeker.apply_to(job: @ats_job, resume: NoResume)
 
-      submission.valid?.should be_true
-    end
+        submission.valid?.should be_true
+      end
 
-    it "jobseekers should not be able to apply to ATS jobs with a resume (missing from original spec)" do
-      submission = @jobseeker.apply_to(job: @ats_job, resume: @resume)
+      it "should not be able to apply to ATS jobs with a resume (missing from original spec)" do
+        submission = @jobseeker.apply_to(job: @ats_job, resume: @resume)
 
-      submission.valid?.should be_false
+        submission.valid?.should be_false
+      end
     end
   end
 
   describe "JReq jobs require a resume to apply to them" do
-    it "jobseekers should be able to apply to JReq jobs with a resume" do
-      submission = @jobseeker.apply_to(job: @jreq_job, resume: @resume)
+    describe Jobseeker do
+      it "should be able to apply to JReq jobs with a resume" do
+        submission = @jobseeker.apply_to(job: @jreq_job, resume: @resume)
 
-      submission.valid?.should be_true
-    end
+        submission.valid?.should be_true
+      end
 
-    it "jobseekers should not be able to apply to JReq jobs without a resume" do
-      submission = @jobseeker.apply_to(job: @jreq_job, resume: NoResume)
+      it "should not be able to apply to JReq jobs without a resume" do
+        submission = @jobseeker.apply_to(job: @jreq_job, resume: NoResume)
 
-      submission.valid?.should be_false
+        submission.valid?.should be_false
+      end
     end
   end
 end
