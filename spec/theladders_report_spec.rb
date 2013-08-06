@@ -19,39 +19,35 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
     @other_jobseeker = Jobseeker.new
 
     @recruiter = Recruiter.new(name: "Robert Recruit")
+
+    @applied_to_job1 = @recruiter.post_job(title: "Valid Job 1")
+    @applied_to_job2 = @recruiter.post_job(title: "Valid Job 2")
+
+    @other_job = @recruiter.post_job(title: "Invalid Job")
+
+    @jobseeker.apply_to(job: @applied_to_job1)
+    @jobseeker.apply_to(job: @applied_to_job2)
+
+    @other_jobseeker.apply_to(job: @other_job)
+
+    @jobseekerlist = JobseekerList.new([@jobseeker, @other_jobseeker]) 
   end
 
   describe JobseekerApplicationsReport do
     it "should list the jobs to which a given jobseeker has applied" do
-      job1 = @recruiter.post_job(title: "Valid Job 1")
-      job2 = @recruiter.post_job(title: "Valid Job 2")
-
-      @jobseeker.apply_to(job: job1)
-      @jobseeker.apply_to(job: job2)
-
-      list = JobseekerList.new([@jobseeker, @other_jobseeker]) 
-
       reportgenerator = JobseekerApplicationsReportGenerator.new(@jobseeker)
 
-      report = reportgenerator.generate_from(list)
+      report = reportgenerator.generate_from(@jobseekerlist)
 
       report.to_string.should == "Job[Title: Valid Job 1][Recruiter: Robert Recruit]\nJob[Title: Valid Job 2][Recruiter: Robert Recruit]"
     end
 
     it "should only list the jobs to which a given jobseeker has applied" do
-      valid_job = @recruiter.post_job(title: "Valid Job")
-      @jobseeker.apply_to(job: valid_job)
-
-      invalid_job = @recruiter.post_job(title: "Invalid Job")
-      @other_jobseeker.apply_to(job: invalid_job)
-
-      list = JobseekerList.new([@jobseeker, @other_jobseeker]) 
-
       reportgenerator = JobseekerApplicationsReportGenerator.new(@jobseeker)
 
-      report = reportgenerator.generate_from(list)
+      report = reportgenerator.generate_from(@jobseekerlist)
 
-      report.to_string.should == "Job[Title: Valid Job][Recruiter: Robert Recruit]"
+      report.to_string.should == "Job[Title: Valid Job 1][Recruiter: Robert Recruit]\nJob[Title: Valid Job 2][Recruiter: Robert Recruit]"
     end
   end
 end
