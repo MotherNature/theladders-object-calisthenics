@@ -5,7 +5,7 @@ class Resume
 end
 
 class NoResume
-  def exists?
+  def self.exists?
     false
   end
 end

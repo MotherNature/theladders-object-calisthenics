@@ -8,7 +8,7 @@ class Jobseeker
 
   def apply_to(job: nil, resume: nil)
     @applied_to = @applied_to.with(job)
-    Submission.new(with_resume: resume)
+    Submission.new(with_resume: resume, submitted_to: job)
     #Submission.new(submitted_by: self, submitted_to: job, with_resume: resume)
   end
 

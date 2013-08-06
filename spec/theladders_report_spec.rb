@@ -91,15 +91,15 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
 
   describe "ATS jobs do not require a resume to apply to them" do
     it "jobseekers should be able to apply to ATS jobs without a resume" do
-      job = @recruiter.post_job(title: "Example Job", type: "ATS")
+      job = @recruiter.post_job(title: "Example Job", type: JobType.ATS)
 
-      submission = @jobseeker.apply_to(job: job, resume: NoResume.new)
+      submission = @jobseeker.apply_to(job: job, resume: NoResume)
 
       submission.valid?.should be_true
     end
 
     it "jobseekers should not be able to apply to ATS jobs with a resume (missing from original spec)" do
-      job = @recruiter.post_job(title: "Example Job", type: "ATS")
+      job = @recruiter.post_job(title: "Example Job", type: JobType.ATS)
 
       resume = @jobseeker.draft_resume
 
@@ -111,8 +111,7 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
 
   describe "JReq jobs require a resume to apply to them" do
     it "jobseekers should be able to apply to JReq jobs with a resume" do
-      pending "Complete the other spec in this group first"
-      job = @recruiter.post_job(title: "Example Job", type: "JReq")
+      job = @recruiter.post_job(title: "Example Job", type: JobType.JReq)
 
       resume = @jobseeker.draft_resume
 
@@ -122,9 +121,9 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
     end
 
     it "jobseekers should not be able to apply to JReq jobs without a resume" do
-      job = @recruiter.post_job(title: "Example Job", type: "JReq")
+      job = @recruiter.post_job(title: "Example Job", type: JobType.JReq)
 
-      submission = @jobseeker.apply_to(job: job, resume: NoResume.new)
+      submission = @jobseeker.apply_to(job: job, resume: NoResume)
 
       submission.valid?.should be_false
     end

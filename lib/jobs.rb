@@ -1,3 +1,25 @@
+class JobType
+  class ATS
+    def suitable_resume?(resume)
+      ! resume.exists?
+    end
+  end
+
+  class JReq
+    def suitable_resume?(resume)
+      resume.exists?
+    end
+  end
+
+  def self.ATS
+    ATS.new
+  end
+
+  def self.JReq
+    JReq.new
+  end
+end
+
 class Job
   def initialize(title: nil, posted_by: nil, type: nil)
     @title = title
@@ -10,6 +32,10 @@ class Job
       displayable.display_job_title(@title)
     end
     @posted_by.display_on(displayable)
+  end
+
+  def suitable_resume?(resume)
+    @type.suitable_resume?(resume)
   end
 end
 
