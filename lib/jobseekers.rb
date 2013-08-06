@@ -1,4 +1,5 @@
 require 'submissions'
+require 'resumes'
 
 class Jobseeker
   def initialize
@@ -7,8 +8,12 @@ class Jobseeker
 
   def apply_to(job: nil, resume: nil)
     @applied_to = @applied_to.with(job)
-    Submission.new
+    Submission.new(with_resume: resume)
     #Submission.new(submitted_by: self, submitted_to: job, with_resume: resume)
+  end
+
+  def draft_resume
+    Resume.new
   end
 
   def display_on(displayable)
