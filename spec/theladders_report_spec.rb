@@ -79,23 +79,22 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
   before(:each) do
     @jobseeker = Jobseeker.new
     @recruiter = Recruiter.new(name: "Robert Recruit")
+
+    @ats_job = @recruiter.post_job(title: "Example ATS Job", type: JobType.ATS)
+    @jreq_job = @recruiter.post_job(title: "Example JReq Job", type: JobType.JReq)
+
+    @resume = @jobseeker.draft_resume
   end
 
   describe "ATS jobs do not require a resume to apply to them" do
     it "jobseekers should be able to apply to ATS jobs without a resume" do
-      job = @recruiter.post_job(title: "Example Job", type: JobType.ATS)
-
-      submission = @jobseeker.apply_to(job: job, resume: NoResume)
+      submission = @jobseeker.apply_to(job: @ats_job, resume: NoResume)
 
       submission.valid?.should be_true
     end
 
     it "jobseekers should not be able to apply to ATS jobs with a resume (missing from original spec)" do
-      job = @recruiter.post_job(title: "Example Job", type: JobType.ATS)
-
-      resume = @jobseeker.draft_resume
-
-      submission = @jobseeker.apply_to(job: job, resume: resume)
+      submission = @jobseeker.apply_to(job: @ats_job, resume: @resume)
 
       submission.valid?.should be_false
     end
@@ -103,19 +102,13 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
 
   describe "JReq jobs require a resume to apply to them" do
     it "jobseekers should be able to apply to JReq jobs with a resume" do
-      job = @recruiter.post_job(title: "Example Job", type: JobType.JReq)
-
-      resume = @jobseeker.draft_resume
-
-      submission = @jobseeker.apply_to(job: job, resume: resume)
+      submission = @jobseeker.apply_to(job: @jreq_job, resume: @resume)
 
       submission.valid?.should be_true
     end
 
     it "jobseekers should not be able to apply to JReq jobs without a resume" do
-      job = @recruiter.post_job(title: "Example Job", type: JobType.JReq)
-
-      submission = @jobseeker.apply_to(job: job, resume: NoResume)
+      submission = @jobseeker.apply_to(job: @jreq_job, resume: NoResume)
 
       submission.valid?.should be_false
     end
