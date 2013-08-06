@@ -54,24 +54,20 @@ end
 
 describe "Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it" do
   describe JobReport do
-    it "should list the job title and the name of the recruiter that posted it" do
+    before(:each) do
       recruiter = Recruiter.new(name: "Robert Recruit")
 
       job = recruiter.post_job(title: "Example Job")
 
-      report = JobReport.new(job)
-
-      report.to_string.should == "Job[Title: Example Job][Recruiter: Robert Recruit]"
+      @report = JobReport.new(job)
     end
 
     it "should list the job title and the name of the recruiter that posted it" do
-      recruiter = Recruiter.new(name: "Robert Recruit")
+      @report.to_string.should == "Job[Title: Example Job][Recruiter: Robert Recruit]"
+    end
 
-      job = recruiter.post_job(title: "Example Job")
-
-      report = JobReport.new(job)
-
-      report.to_string.should == "Job[Title: Example Job][Recruiter: Robert Recruit]"
+    it "should list the job title and the name of the recruiter that posted it" do
+      @report.to_string.should == "Job[Title: Example Job][Recruiter: Robert Recruit]"
     end
   end
 end
