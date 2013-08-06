@@ -108,4 +108,25 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
       submission.valid?.should be_false
     end
   end
+
+  describe "JReq jobs require a resume to apply to them" do
+    it "jobseekers should be able to apply to JReq jobs with a resume" do
+      pending "Complete the other spec in this group first"
+      job = @recruiter.post_job(title: "Example Job", type: "JReq")
+
+      resume = @jobseeker.draft_resume
+
+      submission = @jobseeker.apply_to(job: job, resume: resume)
+
+      submission.valid?.should be_true
+    end
+
+    it "jobseekers should not be able to apply to JReq jobs without a resume" do
+      job = @recruiter.post_job(title: "Example Job", type: "JReq")
+
+      submission = @jobseeker.apply_to(job: job, resume: NoResume.new)
+
+      submission.valid?.should be_false
+    end
+  end
 end
