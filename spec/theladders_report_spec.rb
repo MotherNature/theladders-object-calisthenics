@@ -97,5 +97,15 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
 
       submission.valid?.should be_true
     end
+
+    it "jobseekers should not be able to apply to ATS jobs with a resume (missing from original spec)" do
+      job = @recruiter.post_job(title: "Example Job", type: "ATS")
+
+      resume = @jobseeker.draft_resume
+
+      submission = @jobseeker.apply_to(job: job, resume: resume)
+
+      submission.valid?.should be_false
+    end
   end
 end
