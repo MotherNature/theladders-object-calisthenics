@@ -117,4 +117,21 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
       end
     end
   end
+
+  describe "Jobseekers should be able to apply to different jobs with different resumes" do
+    before(:each) do
+      @jreq_job2 = @recruiter.post_job(title: "Example JReq Job 2", type: JobType.JReq)
+      @resume2 = @jobseeker.draft_resume
+    end
+
+    describe Jobseeker do
+      it "should be able to apply to different jobs with different resume" do
+        submission1 = @jobseeker.apply_to(job: @jreq_job, resume: @resume)
+        submission2 = @jobseeker.apply_to(job: @jreq_job2, resume: @resume2)
+
+        submission1.valid?.should be_true
+        submission2.valid?.should be_true
+      end
+    end
+  end
 end
