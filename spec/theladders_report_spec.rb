@@ -78,6 +78,7 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
 
   before(:each) do
     @jobseeker = Jobseeker.new
+    @other_jobseeker = Jobseeker.new
     @recruiter = Recruiter.new(name: "Robert Recruit")
 
     @ats_job = @recruiter.post_job(title: "Example ATS Job", type: JobType.ATS)
@@ -131,6 +132,20 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
 
         submission1.valid?.should be_true
         submission2.valid?.should be_true
+      end
+    end
+  end
+
+  describe "Jobseekers can not apply to a job with someone else’s resume" do
+    before(:each) do
+      @others_resume = @other_jobseeker.draft_resume
+    end
+
+    describe Jobseeker do
+      it "cannot apply to a job with another jobseeker's resume" do
+        submission = @jobseeker.apply_to(job: @jreq_job, with_resume: @others_resume)
+
+        submission.valid?.should be_false
       end
     end
   end
