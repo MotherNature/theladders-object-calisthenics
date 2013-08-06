@@ -20,15 +20,20 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
     @recruiter = Recruiter.new(name: "Robert Recruit")
 
-    @applied_to_job1 = @recruiter.post_job(title: "Valid Job 1", type: JobType.ATS)
-    @applied_to_job2 = @recruiter.post_job(title: "Valid Job 2", type: JobType.ATS)
+    unposted_job1 = UnpostedJob.new(title: "Valid Job 1", type: JobType.ATS)
+    unposted_job2 = UnpostedJob.new(title: "Valid Job 2", type: JobType.ATS)
 
-    @other_job = @recruiter.post_job(title: "Invalid Job", type: JobType.ATS)
+    @posted_job1 = @recruiter.post_job(unposted_job1)
+    @posted_job2 = @recruiter.post_job(unposted_job2)
 
-    @jobseeker.apply_to(job: @applied_to_job1, with_resume: NoResume)
-    @jobseeker.apply_to(job: @applied_to_job2, with_resume: NoResume)
+    other_job = UnpostedJob.new(title: "Invalid Job", type: JobType.ATS)
 
-    @other_jobseeker.apply_to(job: @other_job, with_resume: NoResume)
+    @other_posted_job = @recruiter.post_job(other_job)
+
+    @jobseeker.apply_to(job: @posted_job1, with_resume: NoResume)
+    @jobseeker.apply_to(job: @posted_job2, with_resume: NoResume)
+
+    @other_jobseeker.apply_to(job: @other_posted_job, with_resume: NoResume)
 
     @jobseekerlist = JobseekerList.new([@jobseeker, @other_jobseeker]) 
   end
@@ -57,9 +62,11 @@ describe "Jobs, when displayed, should be displayed with a title and the name of
     before(:each) do
       recruiter = Recruiter.new(name: "Robert Recruit")
 
-      job = recruiter.post_job(title: "Example Job")
+      job = UnpostedJob.new(title: "Example Job", type: JobType.ATS)
 
-      @report = JobReport.new(job)
+      posted_job = recruiter.post_job(job)
+
+      @report = JobReport.new(posted_job)
     end
 
     it "should list the job title and the name of the recruiter that posted it" do
@@ -81,8 +88,10 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
     @other_jobseeker = Jobseeker.new
     @recruiter = Recruiter.new(name: "Robert Recruit")
 
-    @ats_job = @recruiter.post_job(title: "Example ATS Job", type: JobType.ATS)
-    @jreq_job = @recruiter.post_job(title: "Example JReq Job", type: JobType.JReq)
+    unposted_ats_job = UnpostedJob.new(title: "Example ATS Job", type: JobType.ATS)
+    unposted_jreq_job = UnpostedJob.new(title: "Example JReq Job", type: JobType.JReq)
+    @ats_job = @recruiter.post_job(unposted_ats_job)
+    @jreq_job = @recruiter.post_job(unposted_jreq_job)
 
     @resume = @jobseeker.draft_resume
   end
@@ -121,7 +130,8 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
 
   describe "Jobseekers should be able to apply to different jobs with different resumes" do
     before(:each) do
-      @jreq_job2 = @recruiter.post_job(title: "Example JReq Job 2", type: JobType.JReq)
+      unposted_jreq_job2 = UnpostedJob.new(title: "Example JReq Job 2", type: JobType.JReq)
+      @jreq_job2 = @recruiter.post_job(unposted_jreq_job2)
       @resume2 = @jobseeker.draft_resume
     end
 

@@ -20,10 +20,9 @@ class JobType
   end
 end
 
-class Job
-  def initialize(title: nil, posted_by: nil, type: nil)
+class UnpostedJob
+  def initialize(title: nil, type: nil)
     @title = title
-    @posted_by = posted_by
     @type = type
   end
 
@@ -31,11 +30,27 @@ class Job
     if(displayable.respond_to?(:display_job_title))
       displayable.display_job_title(@title)
     end
-    @posted_by.display_on(displayable)
+    #@posted_by.display_on(displayable)
   end
 
   def suitable_resume?(resume)
     @type.suitable_resume?(resume)
+  end
+end
+
+class PostedJob
+  def initialize(job: nil, posted_by: nil)
+    @job = job
+    @poster = posted_by
+  end
+
+  def display_on(displayable)
+    @job.display_on(displayable)
+    @poster.display_on(displayable)
+  end
+
+  def suitable_resume?(resume)
+    @job.suitable_resume?(resume)
   end
 end
 

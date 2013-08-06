@@ -5,8 +5,8 @@ class Recruiter
     @name = name
   end
 
-  def post_job(title: nil, type: nil)
-    Job.new(title: title, posted_by: self, type: type)
+  def post_job(job)
+    PostedJob.new(job: job, posted_by: self)
   end
 
   def display_on(displayable)
