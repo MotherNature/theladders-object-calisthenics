@@ -1,7 +1,6 @@
 # Pending
 
 + Recruiters should be able to see a listing of the jobs they have posted.
-+ Jobseekers can save jobs onsite for later viewing.
 + Jobseekers, when displayed, should be displayed by their name.
 + Recruiters, when displayed, should be displayed by their name.
 + Jobseekers should be able to see a listing of jobs they have saved for later viewing.
@@ -15,6 +14,8 @@
 + TheLadders should be able to get the job application report in either csv or html format.
 
 # In Progress
+
++ Jobseekers can save jobs onsite for later viewing.
 
 # Completed
 
