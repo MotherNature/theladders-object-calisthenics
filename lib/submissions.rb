@@ -8,3 +8,9 @@ class Submission
     @job.suitable_resume?(@resume)
   end
 end
+
+class WrongJobseekersResumeSubmission < Submission
+  def valid?
+    false
+  end
+end
