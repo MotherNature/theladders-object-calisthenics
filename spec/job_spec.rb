@@ -9,8 +9,8 @@ require 'submissions'
 
 require 'helpers'
 
-RSpec.configure do |c|
-  c.include Helpers
+RSpec.configure do |klass|
+  klass.include Helpers
 end
 
 describe "Jobseekers can apply to jobs posted by employers" do

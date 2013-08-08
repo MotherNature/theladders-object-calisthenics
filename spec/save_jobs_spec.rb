@@ -8,8 +8,8 @@ require 'submissions'
 
 require 'helpers'
 
-RSpec.configure do |c|
-  c.include Helpers
+RSpec.configure do |klass|
+  klass.include Helpers
 end
 
 describe "Jobseekers can save jobs onsite for later viewing" do
