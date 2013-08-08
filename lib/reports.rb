@@ -21,7 +21,7 @@ module Reports
       method_symbol.to_s =~ /^report_(.*)/
       reporting_on = $1
       
-      full_method_symbol = "display_#{reporting_on}".to_sym
+      full_method_symbol = "report_#{reporting_on}".to_sym
 
       if(reportable.respond_to?(full_method_symbol))
         reportable.send(full_method_symbol, send(method_symbol))

@@ -22,8 +22,8 @@ class JobApplier
     submission
   end
 
-  def display_on(displayable)
-    @applied_to.display_on(displayable)
+  def report(reportable)
+    @applied_to.report(reportable)
   end
 end
 
@@ -40,8 +40,8 @@ class Jobseeker
     @applier.apply_to(job: job, with_resume: with_resume)
   end
 
-  def display_on(displayable)
-    @applier.display_on(displayable)
+  def report(reportable)
+    @applier.report(reportable)
   end
 end
 

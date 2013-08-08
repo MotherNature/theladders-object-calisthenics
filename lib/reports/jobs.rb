@@ -15,17 +15,17 @@ class JobListReport
     @employer_names = []
   end
 
-  def display_job_title(title)
+  def report_job_title(title)
     @job_titles.push(title)
   end
 
-  def display_employer_name(name)
+  def report_employer_name(name)
     @employer_names.push(name)
   end
 
   def to_string
     @list.each do |item|
-      item.display_on(self)
+      item.report(self)
     end
 
     job_count = @job_titles.size
@@ -45,22 +45,22 @@ class JobReport
     @name = nil
   end
 
-  def display_job_title(title)
+  def report_job_title(title)
     @title = title
   end
 
-  def display_employer_name(name)
+  def report_employer_name(name)
     @name = name
   end
 
   def to_string
-    @job.display_on(self)
+    @job.report(self)
 
     job_properties_as_string(job_title: @title, employer_name: @name)
   end
 end
 
 class SavedJobListReport < JobListReport
-  def display_saved_job
+  def report_saved_job
   end
 end

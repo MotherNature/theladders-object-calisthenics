@@ -35,10 +35,6 @@ class UnpostedJob
     @type = type
   end
 
-  def display_on(displayable)
-    report(displayable)
-  end
-
   def suitable_resume?(resume)
     @type.suitable_resume?(resume)
   end
@@ -52,9 +48,9 @@ class PostedJob < SimpleDelegator
     @poster = posted_by
   end
 
-  def display_on(displayable)
-    redirectee.display_on(displayable)
-    @poster.display_on(displayable)
+  def report(reportable)
+    redirectee.report(reportable)
+    @poster.report(reportable)
   end
 end
 
@@ -65,9 +61,9 @@ class SavedJob < SimpleDelegator
     super(job)
   end
 
-  def display_on(displayable)
-    if(displayable.respond_to?(:display_saved_job))
-      redirectee.display_on(displayable)
+  def report(reportable)
+    if(reportable.respond_to?(:report_saved_job))
+      redirectee.report(reportable)
     end
   end
 end
@@ -85,9 +81,9 @@ class JobList
     JobList.new([*@jobs, job])
   end
 
-  def display_on(displayable)
+  def report(reportable)
     self.each do |job|
-      job.display_on(displayable)
+      job.report(reportable)
     end
   end
 end
@@ -109,9 +105,9 @@ class JobSaver < RoleDelegator
     @jobs = @jobs.with(savedjob)
   end
 
-  def display_on(displayable)
+  def report(reportable)
     @jobs.each do |job|
-      job.display_on(displayable)
+      job.report(reportable)
     end
   end
 end

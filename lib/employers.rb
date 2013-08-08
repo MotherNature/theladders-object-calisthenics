@@ -11,8 +11,4 @@ class Employer
   def initialize(name: nil)
     @name = name
   end
-
-  def display_on(displayable)
-    report(displayable)
-  end
 end
