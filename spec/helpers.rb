@@ -5,8 +5,8 @@ module Helpers
     employer
   end
 
-  def posted_job
-    unposted_job = UnpostedJob.new(title: "A Job", type: JobType.ATS)
+  def posted_job(title: "A Job")
+    unposted_job = UnpostedJob.new(title: title, type: JobType.ATS)
 
     job = posting_employer.post_job(unposted_job)
   end

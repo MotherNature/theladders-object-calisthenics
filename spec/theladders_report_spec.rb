@@ -24,23 +24,18 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
     @jobseeker = Jobseeker.new
     @other_jobseeker = Jobseeker.new
 
-    @employer = Employer.new(name: "Robert Recruit")
-    @employer.take_on_role(JobPoster)
+    posted_job1 = posted_job(title: "Valid Job 1")
+    posted_job2 = posted_job(title: "Valid Job 2")
 
-    unposted_job1 = UnpostedJob.new(title: "Valid Job 1", type: JobType.ATS)
-    unposted_job2 = UnpostedJob.new(title: "Valid Job 2", type: JobType.ATS)
-
-    @posted_job1 = @employer.post_job(unposted_job1)
-    @posted_job2 = @employer.post_job(unposted_job2)
-
+    employer = posting_employer
     other_job = UnpostedJob.new(title: "Invalid Job", type: JobType.ATS)
 
-    @other_posted_job = @employer.post_job(other_job)
+    other_posted_job = employer.post_job(other_job)
 
-    @jobseeker.apply_to(job: @posted_job1, with_resume: NoResume)
-    @jobseeker.apply_to(job: @posted_job2, with_resume: NoResume)
+    @jobseeker.apply_to(job: posted_job1, with_resume: NoResume)
+    @jobseeker.apply_to(job: posted_job2, with_resume: NoResume)
 
-    @other_jobseeker.apply_to(job: @other_posted_job, with_resume: NoResume)
+    @other_jobseeker.apply_to(job: other_posted_job, with_resume: NoResume)
 
     @jobseekerlist = JobseekerList.new([@jobseeker, @other_jobseeker]) 
   end
@@ -51,7 +46,7 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
       report = reportgenerator.generate_from(@jobseekerlist)
 
-      report.to_string.should == "Job[Title: Valid Job 1][Employer: Robert Recruit]\nJob[Title: Valid Job 2][Employer: Robert Recruit]"
+      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
     end
 
     it "should only list the jobs to which a given jobseeker has applied" do
@@ -59,7 +54,7 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
       report = reportgenerator.generate_from(@jobseekerlist)
 
-      report.to_string.should == "Job[Title: Valid Job 1][Employer: Robert Recruit]\nJob[Title: Valid Job 2][Employer: Robert Recruit]"
+      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
     end
   end
 end
@@ -67,22 +62,11 @@ end
 describe "Jobs, when displayed, should be displayed with a title and the name of the employer who posted it" do
   describe JobReport do
     before(:each) do
-      employer = Employer.new(name: "Robert Recruit")
-      employer.take_on_role(JobPoster)
-
-      job = UnpostedJob.new(title: "Example Job", type: JobType.ATS)
-
-      posted_job = employer.post_job(job)
-
       @report = JobReport.new(posted_job)
     end
 
     it "should list the job title and the name of the employer that posted it" do
-      @report.to_string.should == "Job[Title: Example Job][Employer: Robert Recruit]"
-    end
-
-    it "should list the job title and the name of the employer that posted it" do
-      @report.to_string.should == "Job[Title: Example Job][Employer: Robert Recruit]"
+      @report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]"
     end
   end
 end
