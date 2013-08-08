@@ -109,14 +109,6 @@ class PostedJobList < JobList
     end
     PostedJobList.new(filtered_list)
   end
-
-  def report(reportable)
-    if(reportable.respond_to?(:report_posted_job))
-      each do |job|
-        job.report(reportable)
-      end
-    end
-  end
 end
 
 module JobPoster
