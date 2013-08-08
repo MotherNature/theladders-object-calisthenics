@@ -13,6 +13,12 @@ require 'employers'
 require 'resumes'
 require 'submissions'
 
+require 'helpers'
+
+RSpec.configure do |c|
+  c.include Helpers
+end
+
 describe "Jobseekers should be able to see a listing of the jobs for which they have applied" do
   before(:each) do
     @jobseeker = Jobseeker.new
@@ -83,17 +89,8 @@ end
 
 describe "Jobseekers should be able to see a listing of jobs they have saved for later viewing" do
   before(:each) do
-    @jobseeker = Jobseeker.new
-    @jobseeker = JobSaver.with_role_performed_by(@jobseeker)
-
-    employer = Employer.new(name: "Erin Employ")
-    employer.take_on_role(JobPoster)
-
-    unposted_job = UnpostedJob.new(title: "A Job", type: JobType.ATS)
-
-    @job = employer.post_job(unposted_job)
-
-    @jobseeker.save_job(@job)
+    @jobseeker = saving_jobseeker
+    @jobseeker.save_job(posted_job)
   end
 
   describe SavedJobListReport do
