@@ -15,7 +15,6 @@
 
 # In Progress
 
-+ Jobseekers can save jobs onsite for later viewing.
 
 # Completed
 
@@ -28,6 +27,7 @@
     + JReq jobs require a resume to apply to them.
     + Jobseekers should be able to apply to different jobs with different resumes.
     + Jobseekers can not apply to a job with someone else’s resume.
++ Jobseekers can save jobs onsite for later viewing.
 
 # Local TODO
 
