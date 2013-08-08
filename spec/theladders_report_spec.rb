@@ -115,5 +115,17 @@ describe "Employers should be able to see a listing of the jobs they have posted
 
       report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
     end
+
+    it "should generate a report that lists only the jobs posted by the given employer and not other employers" do
+      other_employer = posting_employer(name: "Anne Nother")
+      others_job = posted_job(title: "Not My Job", poster: other_employer)
+
+      expanded_joblist = @joblist.with(others_job)
+      postedjoblist = PostedJobList.filtered_from(expanded_joblist)
+
+      report = @reportgenerator.generate_from(postedjoblist)
+
+      report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
+    end
   end
 end
