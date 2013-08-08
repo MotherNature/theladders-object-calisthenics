@@ -1,4 +1,5 @@
 require 'utilities'
+require 'reports'
 
 class JobType
   class ATS
@@ -23,16 +24,19 @@ class JobType
 end
 
 class UnpostedJob
+  include Reports
+
+  reports(:job_title) do
+    @title
+  end
+
   def initialize(title: nil, type: nil)
     @title = title
     @type = type
   end
 
   def display_on(displayable)
-    if(displayable.respond_to?(:display_job_title))
-      displayable.display_job_title(@title)
-    end
-    #@posted_by.display_on(displayable)
+    report(displayable)
   end
 
   def suitable_resume?(resume)
