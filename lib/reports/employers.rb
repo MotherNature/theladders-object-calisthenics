@@ -5,11 +5,13 @@ class EmployersPostedJobReportGenerator
     @employer = employer
   end
 
-  def generate_from(list)
-    filtered_list = list.select do |item|
-      item.posted? && item.posted_by?(@employer)
+  def generate_from(joblist)
+    posted_jobs = PostedJobList.filtered_from(joblist)
+
+    employers_jobs = posted_jobs.select do |job|
+      job.posted_by?(@employer)
     end
       
-    JobListReport.new(filtered_list)
+    JobListReport.new(employers_jobs)
   end
 end

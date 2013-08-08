@@ -109,9 +109,8 @@ describe "Employers should be able to see a listing of the jobs they have posted
       unposted_job = UnpostedJob.new(title: "Unposted Job", type: JobType.ATS)
 
       expanded_joblist = @joblist.with(unposted_job)
-      postedjoblist = PostedJobList.filtered_from(expanded_joblist)
 
-      report = @reportgenerator.generate_from(postedjoblist)
+      report = @reportgenerator.generate_from(expanded_joblist)
 
       report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
     end
@@ -121,9 +120,8 @@ describe "Employers should be able to see a listing of the jobs they have posted
       others_job = posted_job(title: "Not My Job", poster: other_employer)
 
       expanded_joblist = @joblist.with(others_job)
-      postedjoblist = PostedJobList.filtered_from(expanded_joblist)
 
-      report = @reportgenerator.generate_from(postedjoblist)
+      report = @reportgenerator.generate_from(expanded_joblist)
 
       report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
     end
