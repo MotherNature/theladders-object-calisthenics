@@ -98,23 +98,23 @@ describe "Employers should be able to see a listing of the jobs they have posted
     @reportgenerator = EmployersPostedJobReportGenerator.new(@employer)
   end
 
-  def generates_with_expected_string_output(reportgenerator, joblist)
-    report = reportgenerator.generate_from(joblist)
+  def generates_with_expected_string_output_given_list(joblist)
+    report = @reportgenerator.generate_from(joblist)
 
     report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
   end
 
   describe EmployersPostedJobReportGenerator do
     it "should generate a report that lists the jobs posted by an employer" do
-      generates_with_expected_string_output(@reportgenerator, @joblist)
+      generates_with_expected_string_output_given_list(@joblist)
     end
 
-    it "should generate a report that lists only the jobs posted by the given employer and not unposted ones" do
+    it "should generate a report that lists posted jobs and not unposted ones" do
       unposted_job = UnpostedJob.new(title: "Unposted Job", type: JobType.ATS)
 
       expanded_joblist = @joblist.with(unposted_job)
 
-      generates_with_expected_string_output(@reportgenerator, expanded_joblist)
+      generates_with_expected_string_output_given_list(expanded_joblist)
     end
 
     it "should generate a report that lists only the jobs posted by the given employer and not other employers" do
@@ -123,7 +123,7 @@ describe "Employers should be able to see a listing of the jobs they have posted
 
       expanded_joblist = @joblist.with(others_job)
 
-      generates_with_expected_string_output(@reportgenerator, expanded_joblist)
+      generates_with_expected_string_output_given_list(expanded_joblist)
     end
   end
 end
