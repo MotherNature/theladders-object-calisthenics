@@ -1,3 +1,5 @@
+require 'utilities'
+
 class JobType
   class ATS
     def suitable_resume?(resume)
@@ -39,7 +41,7 @@ class UnpostedJob
 end
 
 class PostedJob < SimpleDelegator
-  alias_method :redirectee, :__getobj__
+  include HumanReadableDelegation
 
   def initialize(job: nil, posted_by: nil)
     super(job)
@@ -53,7 +55,7 @@ class PostedJob < SimpleDelegator
 end
 
 class SavedJob < SimpleDelegator
-  alias_method :redirectee, :__getobj__
+  include HumanReadableDelegation
 
   def initialize(job: nil)
     super(job)
@@ -87,7 +89,7 @@ class JobList
 end
 
 class JobPoster < SimpleDelegator
-  alias_method :redirectee, :__getobj__
+  include HumanReadableDelegation
 
   def post_job(job)
     PostedJob.new(job: job, posted_by: redirectee)
@@ -103,7 +105,7 @@ class JobPoster < SimpleDelegator
 end
 
 class JobSaver < SimpleDelegator
-  alias_method :redirectee, :__getobj__
+  include HumanReadableDelegation
 
   def initialize(role_filler)
     super(role_filler)
