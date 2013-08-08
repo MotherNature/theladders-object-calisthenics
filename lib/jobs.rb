@@ -38,10 +38,15 @@ class UnpostedJob
   def suitable_resume?(resume)
     @type.suitable_resume?(resume)
   end
+
+  def posted?
+    false
+  end
 end
 
 class PostedJob < SimpleDelegator
   include HumanReadableDelegation
+  include Reports
 
   def initialize(job: nil, posted_by: nil)
     super(job)
@@ -51,6 +56,10 @@ class PostedJob < SimpleDelegator
   def report(reportable)
     redirectee.report(reportable)
     @poster.report(reportable)
+  end
+
+  def posted?
+    true
   end
 end
 
@@ -77,6 +86,11 @@ class JobList
     @jobs.each(&block)
   end
 
+  def select(&block)
+    filtered_jobs = @jobs.select(&block)
+    JobList.new(filtered_jobs)
+  end
+
   def with(job)
     JobList.new([*@jobs, job])
   end
@@ -88,7 +102,24 @@ class JobList
   end
 end
 
-module JobPoster # Will rename to JobPoster
+class PostedJobList < JobList
+  def self.filtered_from(joblist)
+    filtered_list = joblist.each do |job|
+      job.posted?
+    end
+    PostedJobList.new(filtered_list)
+  end
+
+  def report(reportable)
+    if(reportable.respond_to?(:report_posted_job))
+      each do |job|
+        job.report(reportable)
+      end
+    end
+  end
+end
+
+module JobPoster
   def post_job(job)
     PostedJob.new(job: job, posted_by: self)
   end
