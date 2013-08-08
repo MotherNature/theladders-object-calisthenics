@@ -5,11 +5,6 @@ module Helpers
     employer
   end
 
-  def saving_jobseeker
-    jobseeker = Jobseeker.new
-    jobseeker = JobSaver.with_role_performed_by(@jobseeker)
-  end
-
   def posted_job(title: "A Job", type: JobType.ATS)
     unposted_job = UnpostedJob.new(title: title, type: type)
 
