@@ -6,7 +6,7 @@ module Reports
   end
 
   module ClassMethods
-    def reports(method_name, &block)
+    def when_reporting(method_name, &block)
       full_method_symbol = "report_#{method_name}".to_sym
       define_method(full_method_symbol, &block)
     end

@@ -26,7 +26,7 @@ end
 class UnpostedJob
   include Reports
 
-  reports(:job_title) do
+  when_reporting :job_title do
     @title
   end
 

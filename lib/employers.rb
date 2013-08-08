@@ -4,7 +4,7 @@ require 'jobs'
 class Employer
   include Reports
 
-  reports :employer_name do
+  when_reporting :employer_name do
     @name
   end
   
