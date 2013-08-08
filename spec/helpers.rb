@@ -5,10 +5,10 @@ module Helpers
     employer
   end
 
-  def posted_job(title: "A Job", type: JobType.ATS)
+  def posted_job(title: "A Job", type: JobType.ATS, poster: posting_employer)
     unposted_job = UnpostedJob.new(title: title, type: type)
 
-    job = posting_employer.post_job(unposted_job)
+    job = poster.post_job(unposted_job)
   end
 
   def saving_jobseeker
