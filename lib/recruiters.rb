@@ -11,3 +11,15 @@ class Recruiter
     end
   end
 end
+
+class JobPoster < SimpleDelegator
+  alias_method :redirectee, :__getobj__
+
+  def post_job(job)
+    PostedJob.new(job: job, posted_by: redirectee)
+  end
+
+  def self.assign_role_to(redirectee)
+    self.new(redirectee)
+  end
+end

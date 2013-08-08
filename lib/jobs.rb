@@ -73,13 +73,3 @@ class JobList
     end
   end
 end
-
-class JobPoster
-  def initialize(recruiter: nil)
-    @recruiter = recruiter
-  end
-
-  def post_job(job)
-    PostedJob.new(job: job, posted_by: @recruiter)
-  end
-end
