@@ -85,3 +85,35 @@ describe "Jobseekers should be able to see a listing of jobs they have saved for
     end
   end
 end
+
+describe "Employers should be able to see a listing of the jobs they have posted" do
+  before(:each) do
+    @employer = posting_employer
+
+    @job = posted_job(title: "A Job", poster: @employer)
+    @job2 = posted_job(title: "Another Job", poster: @employer)
+
+    @joblist = JobList.new([@job, @job2])
+
+    @reportgenerator = EmployersPostedJobReportGenerator.new(@employer)
+  end
+
+  describe EmployersPostedJobReportGenerator do
+    it "should generate a report that lists the jobs posted by an employer" do
+      report = @reportgenerator.generate_from(@joblist)
+
+      report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
+    end
+
+    it "should generate a report that lists only the jobs posted by the given employer and not unposted ones" do
+      unposted_job = UnpostedJob.new(title: "Unposted Job", type: JobType.ATS)
+
+      expanded_joblist = @joblist.with(unposted_job)
+      postedjoblist = PostedJobList.filtered_from(expanded_joblist)
+
+      report = @reportgenerator.generate_from(postedjoblist)
+
+      report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
+    end
+  end
+end
