@@ -4,4 +4,10 @@ def displayOn(aDisplayer)
   aDisplay.display(name: @name, post_date: @date)
 end
 
+Don't mix exception-throwing with failure value returning. Check out the "Conditions" system in Common Lisp (and Ruby implementations) as an alternative to exceptions.
+
 TODO: Refactor to use Visitor pattern instead of #name_to_string et al.
+
+TODO: implement as Employer.fulfill_role_of(JobPoster).
+TODO: Move more setup steps to helper methods.
+TODO: Replace specific-string tests with ones that check the calls to mock TestReport classes.
