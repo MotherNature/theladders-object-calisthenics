@@ -1,4 +1,5 @@
 require 'jobs'
+require 'employers'
 
 class EmployersPostedJobReportGenerator
   def initialize(employer)
@@ -6,12 +7,9 @@ class EmployersPostedJobReportGenerator
   end
 
   def generate_from(joblist)
-    posted_jobs = PostedJobList.filtered_from(joblist)
+    only_posted_jobs = PostedJobList.filtered_from(joblist)
+    only_employers_jobs = EmployerJobList.filtered_from(joblist: only_posted_jobs, posted_by: @employer)
 
-    employers_jobs = posted_jobs.select do |job|
-      job.posted_by?(@employer)
-    end
-      
-    JobListReport.new(employers_jobs)
+    JobListReport.new(only_employers_jobs)
   end
 end
