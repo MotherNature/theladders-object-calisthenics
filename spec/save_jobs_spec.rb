@@ -6,17 +6,17 @@ require 'jobseekers'
 require 'employers'
 require 'submissions'
 
+require 'helpers'
+
+RSpec.configure do |c|
+  c.include Helpers
+end
+
 describe "Jobseekers can save jobs onsite for later viewing" do
   before(:each) do
-    @jobseeker = Jobseeker.new
-    @jobseeker = JobSaver.with_role_performed_by(@jobseeker)
+    @jobseeker = saving_jobseeker
 
-    employer = Employer.new(name: "Erin Employ")
-    employer.take_on_role(JobPoster)
-
-    unposted_job = UnpostedJob.new(title: "A Job", type: JobType.ATS)
-
-    @job = employer.post_job(unposted_job)
+    @job = posted_job
   end
 
   describe Jobseeker do
