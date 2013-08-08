@@ -7,6 +7,12 @@ require 'employers'
 require 'resumes'
 require 'submissions'
 
+require 'helpers'
+
+RSpec.configure do |c|
+  c.include Helpers
+end
+
 describe "Jobseekers can apply to jobs posted by employers" do
   it "There are 2 different kinds of Jobs posted by employers: JReq and ATS." do
   end
@@ -14,14 +20,9 @@ describe "Jobseekers can apply to jobs posted by employers" do
   before(:each) do
     @jobseeker = Jobseeker.new
     @other_jobseeker = Jobseeker.new
-    @employer = Employer.new(name: "Robert Recruit")
-    @employer.take_on_role(JobPoster)
 
-    unposted_ats_job = UnpostedJob.new(title: "Example ATS Job", type: JobType.ATS)
-    unposted_jreq_job = UnpostedJob.new(title: "Example JReq Job", type: JobType.JReq)
-
-    @ats_job = @employer.post_job(unposted_ats_job)
-    @jreq_job = @employer.post_job(unposted_jreq_job)
+    @ats_job = posted_job(title: "Example ATS Job", type: JobType.ATS)
+    @jreq_job = posted_job(title: "Example JReq Job", type: JobType.JReq)
 
     @resume = @jobseeker.draft_resume
   end
@@ -60,9 +61,7 @@ describe "Jobseekers can apply to jobs posted by employers" do
 
   describe "Jobseekers should be able to apply to different jobs with different resumes" do
     before(:each) do
-      unposted_jreq_job2 = UnpostedJob.new(title: "Example JReq Job 2", type: JobType.JReq)
-
-      @jreq_job2 = @employer.post_job(unposted_jreq_job2)
+      @jreq_job2 = posted_job(title: "Example JReq Job 2", type: JobType.JReq)
 
       @resume2 = @jobseeker.draft_resume
     end
