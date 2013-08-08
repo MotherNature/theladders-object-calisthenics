@@ -61,6 +61,10 @@ class PostedJob < SimpleDelegator
   def posted?
     true
   end
+
+  def posted_by?(poster)
+    @poster == poster
+  end
 end
 
 class SavedJob < SimpleDelegator
