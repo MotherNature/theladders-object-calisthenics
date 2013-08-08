@@ -99,7 +99,7 @@ describe "Employers should be able to see a listing of the jobs they have posted
   end
 
   def generates_with_expected_string_output(reportgenerator, joblist)
-    report = @reportgenerator.generate_from(joblist)
+    report = reportgenerator.generate_from(joblist)
 
     report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
   end
