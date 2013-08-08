@@ -1,6 +1,5 @@
 # Pending
 
-+ Employers should be able to see a listing of the jobs they have posted.
 + Jobseekers, when displayed, should be displayed by their name.
 + Employers, when displayed, should be displayed by their name.
 + Employers should be able to see jobseekers who have applied to their jobs by both job and day. If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day.
@@ -13,6 +12,8 @@
 + TheLadders should be able to get the job application report in either csv or html format.
 
 # In Progress
+
++ Employers should be able to see a listing of the jobs they have posted.
 
 # Completed
 
