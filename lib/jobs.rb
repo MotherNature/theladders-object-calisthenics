@@ -88,25 +88,13 @@ class JobList
   end
 end
 
-class JobPoster < SimpleDelegator
-  include HumanReadableDelegation
-
+class JobPoster < RoleDelegator
   def post_job(job)
     PostedJob.new(job: job, posted_by: redirectee)
   end
-
-  def self.assign_role_to(redirectee)
-    self.new(redirectee)
-  end
-
-  def self.with_role_performed_by(redirectee)
-    self.assign_role_to(redirectee)
-  end
 end
 
-class JobSaver < SimpleDelegator
-  include HumanReadableDelegation
-
+class JobSaver < RoleDelegator
   def initialize(role_filler)
     super(role_filler)
     @jobs = JobList.new
@@ -121,13 +109,5 @@ class JobSaver < SimpleDelegator
     @jobs.each do |job|
       job.display_on(displayable)
     end
-  end
-
-  def self.assign_role_to(redirectee)
-    self.new(redirectee)
-  end
-
-  def self.with_role_performed_by(redirectee)
-    self.assign_role_to(redirectee)
   end
 end
