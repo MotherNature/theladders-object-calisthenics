@@ -38,19 +38,17 @@ class UnpostedJob
   end
 end
 
-class PostedJob
+class PostedJob < SimpleDelegator
+  alias_method :redirectee, :__getobj__
+
   def initialize(job: nil, posted_by: nil)
-    @job = job
+    super(job)
     @poster = posted_by
   end
 
   def display_on(displayable)
-    @job.display_on(displayable)
+    redirectee.display_on(displayable)
     @poster.display_on(displayable)
-  end
-
-  def suitable_resume?(resume)
-    @job.suitable_resume?(resume)
   end
 end
 
@@ -71,5 +69,17 @@ class JobList
     self.each do |job|
       job.display_on(displayable)
     end
+  end
+end
+
+class JobPoster < SimpleDelegator
+  alias_method :redirectee, :__getobj__
+
+  def post_job(job)
+    PostedJob.new(job: job, posted_by: redirectee)
+  end
+
+  def self.assign_role_to(redirectee)
+    self.new(redirectee)
   end
 end

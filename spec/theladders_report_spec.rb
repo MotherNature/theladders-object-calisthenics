@@ -23,6 +23,8 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
     unposted_job1 = UnpostedJob.new(title: "Valid Job 1", type: JobType.ATS)
     unposted_job2 = UnpostedJob.new(title: "Valid Job 2", type: JobType.ATS)
 
+    @recruiter = JobPoster.assign_role_to(@recruiter)
+
     @posted_job1 = @recruiter.post_job(unposted_job1)
     @posted_job2 = @recruiter.post_job(unposted_job2)
 
@@ -64,6 +66,8 @@ describe "Jobs, when displayed, should be displayed with a title and the name of
 
       job = UnpostedJob.new(title: "Example Job", type: JobType.ATS)
 
+      recruiter = JobPoster.assign_role_to(recruiter)
+
       posted_job = recruiter.post_job(job)
 
       @report = JobReport.new(posted_job)
@@ -90,6 +94,9 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
 
     unposted_ats_job = UnpostedJob.new(title: "Example ATS Job", type: JobType.ATS)
     unposted_jreq_job = UnpostedJob.new(title: "Example JReq Job", type: JobType.JReq)
+
+    @recruiter = JobPoster.assign_role_to(@recruiter)
+
     @ats_job = @recruiter.post_job(unposted_ats_job)
     @jreq_job = @recruiter.post_job(unposted_jreq_job)
 
@@ -131,7 +138,9 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
   describe "Jobseekers should be able to apply to different jobs with different resumes" do
     before(:each) do
       unposted_jreq_job2 = UnpostedJob.new(title: "Example JReq Job 2", type: JobType.JReq)
+
       @jreq_job2 = @recruiter.post_job(unposted_jreq_job2)
+
       @resume2 = @jobseeker.draft_resume
     end
 
