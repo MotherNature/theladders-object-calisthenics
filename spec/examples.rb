@@ -5,7 +5,7 @@ class ExampleFactory
       "Betty Smith",
       "Candice Yarn"
     ]
-    @recruiter_name_strings = [
+    @employer_name_strings = [
       "Rudy Allen",
       "Rachel Breecher",
       "Ralph Colbert"
@@ -29,8 +29,8 @@ class ExampleFactory
     #Jobseeker.new(name: Name.new(@jobseeker_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
   end
 
-  def build_recruiter
-    #Recruiter.new(name: Name.new(@recruiter_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
+  def build_employer
+    #Employer.new(name: Name.new(@employer_name_strings.shift), idnumber: @idnumberservice.generate_idnumber)
   end
 
   def build_job

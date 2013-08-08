@@ -9,7 +9,7 @@ end
 
 require 'jobs'
 require 'jobseekers'
-require 'recruiters'
+require 'employers'
 require 'resumes'
 require 'submissions'
 
@@ -18,19 +18,19 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
     @jobseeker = Jobseeker.new
     @other_jobseeker = Jobseeker.new
 
-    @recruiter = Recruiter.new(name: "Robert Recruit")
+    @employer = Employer.new(name: "Robert Recruit")
 
     unposted_job1 = UnpostedJob.new(title: "Valid Job 1", type: JobType.ATS)
     unposted_job2 = UnpostedJob.new(title: "Valid Job 2", type: JobType.ATS)
 
-    @recruiter = JobPoster.assign_role_to(@recruiter)
+    @employer = JobPoster.assign_role_to(@employer)
 
-    @posted_job1 = @recruiter.post_job(unposted_job1)
-    @posted_job2 = @recruiter.post_job(unposted_job2)
+    @posted_job1 = @employer.post_job(unposted_job1)
+    @posted_job2 = @employer.post_job(unposted_job2)
 
     other_job = UnpostedJob.new(title: "Invalid Job", type: JobType.ATS)
 
-    @other_posted_job = @recruiter.post_job(other_job)
+    @other_posted_job = @employer.post_job(other_job)
 
     @jobseeker.apply_to(job: @posted_job1, with_resume: NoResume)
     @jobseeker.apply_to(job: @posted_job2, with_resume: NoResume)
@@ -46,7 +46,7 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
       report = reportgenerator.generate_from(@jobseekerlist)
 
-      report.to_string.should == "Job[Title: Valid Job 1][Recruiter: Robert Recruit]\nJob[Title: Valid Job 2][Recruiter: Robert Recruit]"
+      report.to_string.should == "Job[Title: Valid Job 1][Employer: Robert Recruit]\nJob[Title: Valid Job 2][Employer: Robert Recruit]"
     end
 
     it "should only list the jobs to which a given jobseeker has applied" do
@@ -54,51 +54,51 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
       report = reportgenerator.generate_from(@jobseekerlist)
 
-      report.to_string.should == "Job[Title: Valid Job 1][Recruiter: Robert Recruit]\nJob[Title: Valid Job 2][Recruiter: Robert Recruit]"
+      report.to_string.should == "Job[Title: Valid Job 1][Employer: Robert Recruit]\nJob[Title: Valid Job 2][Employer: Robert Recruit]"
     end
   end
 end
 
-describe "Jobs, when displayed, should be displayed with a title and the name of the recruiter who posted it" do
+describe "Jobs, when displayed, should be displayed with a title and the name of the employer who posted it" do
   describe JobReport do
     before(:each) do
-      recruiter = Recruiter.new(name: "Robert Recruit")
+      employer = Employer.new(name: "Robert Recruit")
 
       job = UnpostedJob.new(title: "Example Job", type: JobType.ATS)
 
-      recruiter = JobPoster.assign_role_to(recruiter)
+      employer = JobPoster.assign_role_to(employer)
 
-      posted_job = recruiter.post_job(job)
+      posted_job = employer.post_job(job)
 
       @report = JobReport.new(posted_job)
     end
 
-    it "should list the job title and the name of the recruiter that posted it" do
-      @report.to_string.should == "Job[Title: Example Job][Recruiter: Robert Recruit]"
+    it "should list the job title and the name of the employer that posted it" do
+      @report.to_string.should == "Job[Title: Example Job][Employer: Robert Recruit]"
     end
 
-    it "should list the job title and the name of the recruiter that posted it" do
-      @report.to_string.should == "Job[Title: Example Job][Recruiter: Robert Recruit]"
+    it "should list the job title and the name of the employer that posted it" do
+      @report.to_string.should == "Job[Title: Example Job][Employer: Robert Recruit]"
     end
   end
 end
 
-describe "Jobseekers can apply to jobs posted by recruiters" do
-  it "There are 2 different kinds of Jobs posted by recruiters: JReq and ATS." do
+describe "Jobseekers can apply to jobs posted by employers" do
+  it "There are 2 different kinds of Jobs posted by employers: JReq and ATS." do
   end
 
   before(:each) do
     @jobseeker = Jobseeker.new
     @other_jobseeker = Jobseeker.new
-    @recruiter = Recruiter.new(name: "Robert Recruit")
+    @employer = Employer.new(name: "Robert Recruit")
 
     unposted_ats_job = UnpostedJob.new(title: "Example ATS Job", type: JobType.ATS)
     unposted_jreq_job = UnpostedJob.new(title: "Example JReq Job", type: JobType.JReq)
 
-    @recruiter = JobPoster.assign_role_to(@recruiter)
+    @employer = JobPoster.assign_role_to(@employer)
 
-    @ats_job = @recruiter.post_job(unposted_ats_job)
-    @jreq_job = @recruiter.post_job(unposted_jreq_job)
+    @ats_job = @employer.post_job(unposted_ats_job)
+    @jreq_job = @employer.post_job(unposted_jreq_job)
 
     @resume = @jobseeker.draft_resume
   end
@@ -139,7 +139,7 @@ describe "Jobseekers can apply to jobs posted by recruiters" do
     before(:each) do
       unposted_jreq_job2 = UnpostedJob.new(title: "Example JReq Job 2", type: JobType.JReq)
 
-      @jreq_job2 = @recruiter.post_job(unposted_jreq_job2)
+      @jreq_job2 = @employer.post_job(unposted_jreq_job2)
 
       @resume2 = @jobseeker.draft_resume
     end
