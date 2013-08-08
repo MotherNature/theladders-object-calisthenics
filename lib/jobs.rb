@@ -82,4 +82,27 @@ class JobPoster < SimpleDelegator
   def self.assign_role_to(redirectee)
     self.new(redirectee)
   end
+
+  def self.with_role_performed_by(redirectee)
+    self.assign_role_to(redirectee)
+  end
+end
+
+class JobSaver < SimpleDelegator
+  alias_method :redirectee, :__getobj__
+
+  def initialize(role_filler)
+    super(role_filler)
+  end
+
+  def save_job(job)
+  end
+
+  def self.assign_role_to(redirectee)
+    self.new(redirectee)
+  end
+
+  def self.with_role_performed_by(redirectee)
+    self.assign_role_to(redirectee)
+  end
 end
