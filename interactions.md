@@ -13,8 +13,6 @@
 
 # In Progress
 
-+ Employers should be able to see a listing of the jobs they have posted.
-
 # Completed
 
 + Jobseekers should be able to see a listing of the jobs for which they have applied.
@@ -28,6 +26,7 @@
     + Jobseekers can not apply to a job with someone else’s resume.
 + Jobseekers can save jobs onsite for later viewing.
 + Jobseekers should be able to see a listing of jobs they have saved for later viewing.
++ Employers should be able to see a listing of the jobs they have posted.
 
 # Local TODO
 
