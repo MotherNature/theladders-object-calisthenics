@@ -52,6 +52,20 @@ class PostedJob < SimpleDelegator
   end
 end
 
+class SavedJob < SimpleDelegator
+  alias_method :redirectee, :__getobj__
+
+  def initialize(job: nil)
+    super(job)
+  end
+
+  def display_on(displayable)
+    if(displayable.respond_to?(:display_saved_job))
+      redirectee.display_on(displayable)
+    end
+  end
+end
+
 class JobList
   def initialize(jobs=[])
     @jobs = jobs
@@ -93,9 +107,18 @@ class JobSaver < SimpleDelegator
 
   def initialize(role_filler)
     super(role_filler)
+    @jobs = JobList.new
   end
 
   def save_job(job)
+    savedjob = SavedJob.new(job: job)
+    @jobs = @jobs.with(savedjob)
+  end
+
+  def display_on(displayable)
+    @jobs.each do |job|
+      job.display_on(displayable)
+    end
   end
 
   def self.assign_role_to(redirectee)

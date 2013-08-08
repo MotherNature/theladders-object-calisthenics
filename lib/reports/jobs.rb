@@ -59,3 +59,8 @@ class JobReport
     job_properties_as_string(job_title: @title, employer_name: @name)
   end
 end
+
+class SavedJobListReport < JobListReport
+  def display_saved_job
+  end
+end

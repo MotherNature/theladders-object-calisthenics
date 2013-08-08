@@ -169,3 +169,27 @@ describe "Jobseekers can apply to jobs posted by employers" do
     end
   end
 end
+
+describe "Jobseekers should be able to see a listing of jobs they have saved for later viewing" do
+  before(:each) do
+    @jobseeker = Jobseeker.new
+    @jobseeker = JobSaver.with_role_performed_by(@jobseeker)
+
+    employer = Employer.new(name: "Erin Employ")
+    employer = JobPoster.with_role_performed_by(employer)
+
+    unposted_job = UnpostedJob.new(title: "A Job", type: JobType.ATS)
+
+    @job = employer.post_job(unposted_job)
+
+    @jobseeker.save_job(@job)
+  end
+
+  describe SavedJobListReport do
+    it "should list the jobs saved by a jobseeker" do
+      jobseekers = JobseekerList.new([@jobseeker])
+      report = SavedJobListReport.new(jobseekers)
+      report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]"
+    end
+  end
+end
