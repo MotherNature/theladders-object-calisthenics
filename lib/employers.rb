@@ -11,4 +11,8 @@ class Employer
   def initialize(name: nil)
     @name = name
   end
+
+  def take_on_role(role_module)
+    extend role_module
+  end
 end

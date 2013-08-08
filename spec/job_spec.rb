@@ -15,11 +15,10 @@ describe "Jobseekers can apply to jobs posted by employers" do
     @jobseeker = Jobseeker.new
     @other_jobseeker = Jobseeker.new
     @employer = Employer.new(name: "Robert Recruit")
+    @employer.take_on_role(JobPoster)
 
     unposted_ats_job = UnpostedJob.new(title: "Example ATS Job", type: JobType.ATS)
     unposted_jreq_job = UnpostedJob.new(title: "Example JReq Job", type: JobType.JReq)
-
-    @employer = JobPoster.assign_role_to(@employer)
 
     @ats_job = @employer.post_job(unposted_ats_job)
     @jreq_job = @employer.post_job(unposted_jreq_job)

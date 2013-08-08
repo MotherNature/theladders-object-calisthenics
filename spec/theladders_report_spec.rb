@@ -19,11 +19,10 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
     @other_jobseeker = Jobseeker.new
 
     @employer = Employer.new(name: "Robert Recruit")
+    @employer.take_on_role(JobPoster)
 
     unposted_job1 = UnpostedJob.new(title: "Valid Job 1", type: JobType.ATS)
     unposted_job2 = UnpostedJob.new(title: "Valid Job 2", type: JobType.ATS)
-
-    @employer = JobPoster.assign_role_to(@employer)
 
     @posted_job1 = @employer.post_job(unposted_job1)
     @posted_job2 = @employer.post_job(unposted_job2)
@@ -63,10 +62,9 @@ describe "Jobs, when displayed, should be displayed with a title and the name of
   describe JobReport do
     before(:each) do
       employer = Employer.new(name: "Robert Recruit")
+      employer.take_on_role(JobPoster)
 
       job = UnpostedJob.new(title: "Example Job", type: JobType.ATS)
-
-      employer = JobPoster.assign_role_to(employer)
 
       posted_job = employer.post_job(job)
 
@@ -89,7 +87,7 @@ describe "Jobseekers should be able to see a listing of jobs they have saved for
     @jobseeker = JobSaver.with_role_performed_by(@jobseeker)
 
     employer = Employer.new(name: "Erin Employ")
-    employer = JobPoster.with_role_performed_by(employer)
+    employer.take_on_role(JobPoster)
 
     unposted_job = UnpostedJob.new(title: "A Job", type: JobType.ATS)
 

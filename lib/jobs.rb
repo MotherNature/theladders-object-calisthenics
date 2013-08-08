@@ -88,9 +88,9 @@ class JobList
   end
 end
 
-class JobPoster < RoleDelegator
+module JobPoster # Will rename to JobPoster
   def post_job(job)
-    PostedJob.new(job: job, posted_by: redirectee)
+    PostedJob.new(job: job, posted_by: self)
   end
 end
 

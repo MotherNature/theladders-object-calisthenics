@@ -12,7 +12,7 @@ describe "Jobseekers can save jobs onsite for later viewing" do
     @jobseeker = JobSaver.with_role_performed_by(@jobseeker)
 
     employer = Employer.new(name: "Erin Employ")
-    employer = JobPoster.with_role_performed_by(employer)
+    employer.take_on_role(JobPoster)
 
     unposted_job = UnpostedJob.new(title: "A Job", type: JobType.ATS)
 
