@@ -140,7 +140,7 @@ class JobSaver < RoleDelegator
 end
 
 module JobApplier
-  def apply_to(job: nil, with_resume: nil)
+  def apply_to(job: nil, with_resume: NoResume)
     @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
 
     if(with_resume.exists? && ! with_resume.belongs_to?(self))
@@ -155,11 +155,6 @@ module JobApplier
     end
 
     submission
-  end
-
-  def report(reportable)
-    @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
-    @applied_to.report(reportable)
   end
 end
 

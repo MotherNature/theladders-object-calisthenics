@@ -3,8 +3,14 @@ require 'resumes'
 
 class Jobseeker
   include RoleTaker
+  include Reports
 
-  def initialize
+  when_reporting :jobseeker_name do
+    @name
+  end
+
+  def initialize(name: nil)
+    @name = name
   end
 
   def draft_resume
@@ -27,5 +33,15 @@ class JobseekerList
 
   def select(&block)
     JobseekerList.new(@jobseekers.select(&block))
+  end
+
+  def with(jobseeker)
+    JobseekerList.new([*@jobseekers, jobseeker])
+  end
+
+  def report(reportable)
+    each do |jobseeker|
+      jobseeker.report(reportable)
+    end
   end
 end
