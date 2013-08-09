@@ -5,7 +5,7 @@ class Jobseeker
   include RoleTaker
   include Reports
 
-  when_reporting :jobseeker_name do
+  when_reporting :jobseeker_name do |reportable|
     @name
   end
 
