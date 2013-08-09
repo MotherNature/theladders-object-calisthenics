@@ -17,11 +17,11 @@ class JobListReport < Report
 
   report_on :jobs
 
-  def report_job_title(title)
+  when_reporting :job_title do |title|
     @job_titles.push(title)
   end
 
-  def report_employer_name(name)
+  when_reporting :employer_name do |name|
     @employer_names.push(name)
   end
 
