@@ -15,4 +15,9 @@ module Helpers
     jobseeker = Jobseeker.new
     jobseeker = JobSaver.with_role_performed_by(@jobseeker)
   end
+
+  def applying_jobseeker(name: "Jane Jobseek")
+    jobseeker = Jobseeker.new#(name: name)
+    jobseeker = JobPoster.with_role_performed_by(@jobseeker)
+  end
 end
