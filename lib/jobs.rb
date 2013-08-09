@@ -53,9 +53,9 @@ class PostedJob < SimpleDelegator
     @poster = posted_by
   end
 
-  def report(reportable)
-    redirectee.report(reportable)
-    @poster.report(reportable)
+  def report_to(reportable)
+    redirectee.report_to(reportable)
+    @poster.report_to(reportable)
   end
 
   def posted?
@@ -74,9 +74,9 @@ class SavedJob < SimpleDelegator
     super(job)
   end
 
-  def report(reportable)
+  def report_to(reportable)
     if(reportable.respond_to?(:report_saved_job))
-      redirectee.report(reportable)
+      redirectee.report_to(reportable)
     end
   end
 end
@@ -108,9 +108,9 @@ class JobList
     JobList.new([*@jobs, job])
   end
 
-  def report(reportable)
+  def report_to(reportable)
     self.each do |job|
-      job.report(reportable)
+      job.report_to(reportable)
     end
   end
 end
@@ -141,9 +141,9 @@ class JobSaver < RoleDelegator
     @jobs = @jobs.with(savedjob)
   end
 
-  def report(reportable)
+  def report_to(reportable)
     @jobs.each do |job|
-      job.report(reportable)
+      job.report_to(reportable)
     end
   end
 end
@@ -180,7 +180,7 @@ module JobApplier
     @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
 
     @applied_to.each do |job|
-      job.report(reportable)
+      job.report_to(reportable)
     end
   end
 end

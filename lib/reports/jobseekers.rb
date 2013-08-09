@@ -19,7 +19,7 @@ class JobseekerListReport
   end
 
   def to_string
-    @list.report(self)
+    @list.report_to(self)
 
     formatted_strings = @names.map do |name|
       jobseeker_properties_as_string(jobseeker_name: name)

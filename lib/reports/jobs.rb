@@ -28,7 +28,7 @@ class JobListReport
 
   def to_string
     @list.each do |item|
-      item.report(self)
+      item.report_to(self)
     end
 
     job_count = @job_titles.size
@@ -57,7 +57,7 @@ class JobReport
   end
 
   def to_string
-    @job.report(self)
+    @job.report_to(self)
 
     job_properties_as_string(job_title: @title, employer_name: @name)
   end

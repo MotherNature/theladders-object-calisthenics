@@ -39,9 +39,9 @@ class JobseekerList
     JobseekerList.new([*@jobseekers, jobseeker])
   end
 
-  def report(reportable)
+  def report_to(reportable)
     each do |jobseeker|
-      jobseeker.report(reportable)
+      jobseeker.report_to(reportable)
     end
   end
 end
