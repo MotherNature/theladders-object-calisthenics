@@ -7,3 +7,4 @@ end
 Don't mix exception-throwing with failure value returning. Check out the "Conditions" system in Common Lisp (and Ruby implementations) as an alternative to exceptions.
 
 TODO: Replace specific-string tests with ones that check the calls to mock TestReport classes.
+TODO: Change #report to #report_to
