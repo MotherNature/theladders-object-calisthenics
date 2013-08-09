@@ -104,6 +104,7 @@ describe "Employers should be able to see a listing of the jobs they have posted
     report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
   end
 
+  # TODO: Add tests that check for *expected* additions to the JobList (otherwise, the tests could pass with the class just returning a static string 
   describe EmployersPostedJobReportGenerator do
     it "should generate a report that lists the jobs posted by an employer" do
       generates_with_expected_string_output_given_list(@joblist)
@@ -135,21 +136,44 @@ describe "Employers should be able to see jobseekers who have applied to their j
       jobseeker1 = applying_jobseeker(name: "Jane Jobseek")
       jobseeker2 = applying_jobseeker(name: "Sandy Seeker")
 
-      job = posted_job(poster: @employer)
+      @job = posted_job(poster: @employer)
+      jobseeker1.apply_to(job: @job)
+      jobseeker2.apply_to(job: @job)
 
-      @joblist = JobList.new([job])
+      @jobseekerlist = JobseekerList.new([jobseeker1, jobseeker2])
 
       @reportgenerator = EmployersApplyingJobseekersByJobReportGenerator.new(@employer)
+
+      @basic_expected_string = "Jobseeker[Name: Jane Jobseek]\nJobseeker[Name: Sandy Seeker]"
     end
     
-    def generates_with_expected_string_output_given_list(joblist)
+    def generates_with_expected_string_output_given_list(joblist, additional_string=nil)
       report = @reportgenerator.generate_from(joblist)
 
-      report.to_string.should == "Jobseeker[Name: Jane Jobseek]\nJobseeker[Name: Sandy Seeker]"
+      report.to_string.should == @basic_expected_string + (additional_string ? "\n" + additional_string : "")
     end
 
     it "should list jobseekers that have applied to jobs posted by the given employer" do
-      generates_with_expected_string_output_given_list(@joblist)
+      generates_with_expected_string_output_given_list(@jobseekerlist)
+    end
+
+    it "should list jobseekers that have applied to jobs posted by the given employer, including just-added ones" do
+      other_jobseeker = applying_jobseeker(name: "Nancy Nother")
+      other_jobseeker.apply_to(job: @job)
+
+      expanded_jobseekerlist = @jobseekerlist.with(other_jobseeker)
+      generates_with_expected_string_output_given_list(@jobseekerlist, "Jobseeker[Name: Nancy Nother]")
+    end
+
+    it "should list only jobseekers that have applied to jobs posted by the given employer" do
+      other_jobseeker = applying_jobseeker(name: "Olaf Other")
+      other_job = posted_job
+
+      applicable_jobseeker = applying_jobseeker(name: "Andy Applier")
+      applicable_jobseeker.apply_to(job: @job)
+
+      expanded_jobseekerlist = @jobseekerlist.with(applicable_jobseeker)
+      generates_with_expected_string_output_given_list(@jobseekerlist, "Jobseeker[Name: Andy Applier]")
     end
   end
 
