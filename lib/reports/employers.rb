@@ -13,3 +13,6 @@ class EmployersPostedJobReportGenerator
     JobListReport.new(only_employers_jobs)
   end
 end
+
+class EmployersApplyingJobseekersByJobReportGenerator
+end
