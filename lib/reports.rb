@@ -24,7 +24,7 @@ module Reports
       full_method_symbol = "report_#{reporting_on}".to_sym
 
       if(reportable.respond_to?(full_method_symbol))
-        reportable.send(full_method_symbol, send(method_symbol))
+        reportable.send(full_method_symbol, send(method_symbol, reportable))
       end
     end
   end
