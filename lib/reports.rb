@@ -37,4 +37,9 @@ class Report
     define_method(method_name) do |reporter|
     end
   end
+
+  def self.when_reporting(property_name, &block)
+    method_name = "report_#{property_name}".to_sym
+    define_method(method_name, &block)
+  end
 end
