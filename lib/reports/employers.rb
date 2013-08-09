@@ -18,7 +18,7 @@ class EmployersApplyingJobseekersByJobReportGenerator
   def initialize(employer)
   end
 
-  def generate_from(joblist)
-    JobseekerListReport.new(joblist)
+  def generate_from(jobseekerlist)
+    JobseekerListReport.new(jobseekerlist)
   end
 end
