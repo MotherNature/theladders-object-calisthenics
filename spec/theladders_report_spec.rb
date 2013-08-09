@@ -127,3 +127,32 @@ describe "Employers should be able to see a listing of the jobs they have posted
     end
   end
 end
+
+describe "Employers should be able to see jobseekers who have applied to their jobs by both job and day" do
+  describe EmployersApplyingJobseekersByJobReportGenerator do
+    before(:each) do
+      @employer = posting_employer
+      jobseeker1 = applying_jobseeker(name: "Jane Jobseek")
+      jobseeker2 = applying_jobseeker(name: "Sandy Seeker")
+
+      job = posted_job(poster: @employer)
+
+      @joblist = JobList.new([job])
+
+      @reportgenerator = EmployersApplyingJobseekersByJobReportGenerator.new(@employer)
+    end
+    
+    def generates_with_expected_string_output_given_list(joblist)
+      report = @reportgenerator.generate_from(joblist)
+
+      report.to_string.should == "Jobseeker[Name: Jane Jobseek]\nJobseeker[Name: Sandy Seeker]"
+    end
+
+    it "should list jobseekers that have applied to jobs posted by the given employer" do
+      generates_with_expected_string_output_given_list(@joblist)
+    end
+  end
+
+  describe "If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day" do
+  end
+end
