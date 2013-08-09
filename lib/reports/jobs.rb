@@ -38,7 +38,7 @@ class JobListReport < Report
   end
 end
 
-class JobReport
+class JobReport < Report
   include JobStringFormatter
 
   def initialize(job)
@@ -63,6 +63,5 @@ class JobReport
 end
 
 class SavedJobListReport < JobListReport
-  def report_saved_job
-  end
+  reports_on :saved_jobs
 end

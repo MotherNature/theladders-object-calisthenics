@@ -75,7 +75,7 @@ class SavedJob < SimpleDelegator
   end
 
   def report_to(reportable)
-    if(reportable.respond_to?(:report_saved_job))
+    if(reportable.respond_to?(:report_saved_jobs))
       redirectee.report_to(reportable)
     end
   end
