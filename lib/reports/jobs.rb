@@ -6,7 +6,7 @@ module JobStringFormatter
   end
 end
 
-class JobListReport
+class JobListReport < Report
   include JobStringFormatter
 
   def initialize(list)
@@ -15,8 +15,7 @@ class JobListReport
     @employer_names = []
   end
 
-  def report_jobs(jobs)
-  end
+  report_on :jobs
 
   def report_job_title(title)
     @job_titles.push(title)
