@@ -15,7 +15,7 @@ class JobListReport < Report
     @employer_names = []
   end
 
-  report_on :jobs
+  reports_on :jobs
 
   when_reporting :job_title do |title|
     @job_titles.push(title)
