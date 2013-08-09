@@ -15,6 +15,9 @@ class JobListReport
     @employer_names = []
   end
 
+  def report_jobs(jobs)
+  end
+
   def report_job_title(title)
     @job_titles.push(title)
   end
