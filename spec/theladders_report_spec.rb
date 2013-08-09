@@ -147,8 +147,8 @@ describe "Employers should be able to see jobseekers who have applied to their j
       @basic_expected_string = "Jobseeker[Name: Jane Jobseek]\nJobseeker[Name: Sandy Seeker]"
     end
     
-    def generates_with_expected_string_output_given_list(joblist, additional_string=nil)
-      report = @reportgenerator.generate_from(joblist)
+    def generates_with_expected_string_output_given_list(jobseekerlist, additional_string=nil)
+      report = @reportgenerator.generate_from(jobseekerlist)
 
       report.to_string.should == @basic_expected_string + (additional_string ? "\n" + additional_string : "")
     end
