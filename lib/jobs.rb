@@ -26,7 +26,7 @@ end
 class UnpostedJob
   include Reports
 
-  when_reporting :job_title do
+  when_reporting :job_title do |reportable|
     @title
   end
 
@@ -140,6 +140,8 @@ class JobSaver < RoleDelegator
 end
 
 module JobApplier
+  include Reports
+
   def apply_to(job: nil, with_resume: NoResume)
     @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
 
@@ -155,6 +157,12 @@ module JobApplier
     end
 
     submission
+  end
+
+  when_reporting :jobs do |reportable|
+    @applied_to.each do |job|
+      job.report(reportable)
+    end
   end
 end
 
