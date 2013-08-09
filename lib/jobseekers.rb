@@ -1,47 +1,14 @@
 require 'submissions'
 require 'resumes'
 
-class JobApplier
-  def initialize(jobseeker)
-    @jobseeker = jobseeker
-    @applied_to = JobList.new
-  end
-
-  def apply_to(job: nil, with_resume: nil)
-    if(with_resume.exists? && ! with_resume.belongs_to?(@jobseeker))
-      return WrongJobseekersResumeSubmission.new(with_resume: with_resume, submitted_to: job)
-    end
-
-    # TODO: should the validation happen here instead of the Submission class?
-    submission = Submission.new(with_resume: with_resume, submitted_to: job)
-
-    if(submission.valid?)
-      @applied_to = @applied_to.with(job)
-    end
-
-    submission
-  end
-
-  def report(reportable)
-    @applied_to.report(reportable)
-  end
-end
-
 class Jobseeker
+  include RoleTaker
+
   def initialize
-    @applier = JobApplier.new(self)
   end
 
   def draft_resume
     Resume.new(created_by: self)
-  end
-
-  def apply_to(job: nil, with_resume: nil)
-    @applier.apply_to(job: job, with_resume: with_resume)
-  end
-
-  def report(reportable)
-    @applier.report(reportable)
   end
 end
 

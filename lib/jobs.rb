@@ -138,3 +138,28 @@ class JobSaver < RoleDelegator
     end
   end
 end
+
+module JobApplier
+  def apply_to(job: nil, with_resume: nil)
+    @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
+
+    if(with_resume.exists? && ! with_resume.belongs_to?(self))
+      return WrongJobseekersResumeSubmission.new(with_resume: with_resume, submitted_to: job)
+    end
+
+    # TODO: should the validation happen here instead of the Submission class?
+    submission = Submission.new(with_resume: with_resume, submitted_to: job)
+
+    if(submission.valid?)
+      @applied_to = @applied_to.with(job)
+    end
+
+    submission
+  end
+
+  def report(reportable)
+    @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
+    @applied_to.report(reportable)
+  end
+end
+
