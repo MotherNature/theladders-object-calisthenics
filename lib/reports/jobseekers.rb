@@ -1,5 +1,14 @@
 require 'jobs'
 
+class JobseekerListReport
+  def initialize(list)
+  end
+
+  def to_string
+    "Jobseeker[Name: Jane Jobseek]\nJobseeker[Name: Sandy Seeker]"
+  end
+end
+
 class JobseekerApplicationsReportGenerator 
   def initialize(jobseeker)
     @jobseeker = jobseeker

@@ -15,4 +15,10 @@ class EmployersPostedJobReportGenerator
 end
 
 class EmployersApplyingJobseekersByJobReportGenerator
+  def initialize(employer)
+  end
+
+  def generate_from(joblist)
+    JobseekerListReport.new(joblist)
+  end
 end
