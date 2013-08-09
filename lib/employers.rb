@@ -3,6 +3,7 @@ require 'jobs'
 
 class Employer
   include Reports
+  include RoleTaker
 
   when_reporting :employer_name do
     @name
@@ -10,10 +11,6 @@ class Employer
   
   def initialize(name: nil)
     @name = name
-  end
-
-  def take_on_role(role_module)
-    extend role_module
   end
 end
 
