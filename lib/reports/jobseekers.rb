@@ -6,7 +6,7 @@ module JobseekerStringFormatter
   end
 end
 
-class JobseekerListReport
+class JobseekerListReport < Report
   include JobseekerStringFormatter
 
   def initialize(list)
@@ -14,7 +14,7 @@ class JobseekerListReport
     @names = []
   end
 
-  def report_jobseeker_name(name)
+  when_reporting :jobseeker_name do |name|
     @names.push(name)
   end
 
