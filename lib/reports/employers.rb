@@ -16,9 +16,11 @@ end
 
 class EmployersApplyingJobseekersByJobReportGenerator
   def initialize(employer)
+    @employer = employer
   end
 
   def generate_from(jobseekerlist)
-    JobseekerListReport.new(jobseekerlist)
+    only_applied_to_employers_jobs_jobseekers = AppliedToEmployersJobsJobApplierList.filtered_from(jobapplierlist: jobseekerlist, employer: @employer)
+    JobseekerListReport.new(only_applied_to_employers_jobs_jobseekers)
   end
 end
