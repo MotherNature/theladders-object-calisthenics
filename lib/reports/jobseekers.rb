@@ -1,11 +1,31 @@
 require 'jobs'
 
+module JobseekerStringFormatter
+  def jobseeker_properties_as_string(jobseeker_name: nil)
+    "Jobseeker[Name: #{jobseeker_name}]"
+  end
+end
+
 class JobseekerListReport
+  include JobseekerStringFormatter
+
   def initialize(list)
+    @list = list
+    @names = []
+  end
+
+  def report_jobseeker_name(name)
+    @names.push(name)
   end
 
   def to_string
-    "Jobseeker[Name: Jane Jobseek]\nJobseeker[Name: Sandy Seeker]"
+    @list.report(self)
+
+    formatted_strings = @names.map do |name|
+      jobseeker_properties_as_string(jobseeker_name: name)
+    end
+
+    formatted_strings.join("\n")
   end
 end
 
