@@ -31,3 +31,10 @@ module Reports
   end
 end
 
+class Report
+  def self.report_on(property_name)
+    method_name = "report_#{property_name}".to_sym
+    define_method(method_name) do |reporter|
+    end
+  end
+end
