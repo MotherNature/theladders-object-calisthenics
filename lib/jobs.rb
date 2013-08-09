@@ -95,6 +95,15 @@ class JobList
     JobList.new(filtered_jobs)
   end
 
+  def any?(&block)
+    filtered_list = select(&block)
+    filtered_list.size > 0
+  end
+
+  def size
+    @jobs.size
+  end
+
   def with(job)
     JobList.new([*@jobs, job])
   end
@@ -159,7 +168,17 @@ module JobApplier
     submission
   end
 
+  def applied_to_jobs_posted_by?(jobposter)
+    @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
+
+    @applied_to.any? do |job|
+      job.posted? && job.posted_by?(jobposter)
+    end
+  end
+
   when_reporting :jobs do |reportable|
+    @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
+
     @applied_to.each do |job|
       job.report(reportable)
     end
