@@ -7,5 +7,4 @@ end
 Don't mix exception-throwing with failure value returning. Check out the "Conditions" system in Common Lisp (and Ruby implementations) as an alternative to exceptions.
 
 TODO: Replace specific-string tests with ones that check the calls to mock TestReport classes.
-TODO: Change #report to #report_to
-TODO: Refactor #report_* methods in *Report classes to use a class method like ::when_reporting, e.g. ::upon_receiving and a new instance method name.
+TODO: Refactor reporting classes to use an ::upon_receiving method instead of an implicit interface.
