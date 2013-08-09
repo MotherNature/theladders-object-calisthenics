@@ -1,3 +1,9 @@
+module RoleTaker
+  def take_on_role(role_module)
+    extend role_module
+  end
+end
+
 module HumanReadableDelegation
   def self.included(mod)
     mod.class_eval do
