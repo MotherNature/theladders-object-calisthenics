@@ -47,11 +47,11 @@ class JobReport < Report
     @name = nil
   end
 
-  def report_job_title(title)
+  when_reporting :job_title do |title|
     @title = title
   end
 
-  def report_employer_name(name)
+  when_reporting :employer_name do |name|
     @name = name
   end
 
