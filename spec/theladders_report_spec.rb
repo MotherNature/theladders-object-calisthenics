@@ -21,8 +21,8 @@ end
 
 describe "Jobseekers should be able to see a listing of the jobs for which they have applied" do
   before(:each) do
-    @jobseeker = Jobseeker.new
-    @other_jobseeker = Jobseeker.new
+    @jobseeker = applying_jobseeker
+    @other_jobseeker = applying_jobseeker
 
     posted_job1 = posted_job(title: "Valid Job 1")
     posted_job2 = posted_job(title: "Valid Job 2")

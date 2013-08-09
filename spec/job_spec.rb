@@ -18,8 +18,8 @@ describe "Jobseekers can apply to jobs posted by employers" do
   end
 
   before(:each) do
-    @jobseeker = Jobseeker.new
-    @other_jobseeker = Jobseeker.new
+    @jobseeker = applying_jobseeker
+    @other_jobseeker = applying_jobseeker
 
     @ats_job = posted_job(title: "Example ATS Job", type: JobType.ATS)
     @jreq_job = posted_job(title: "Example JReq Job", type: JobType.JReq)
