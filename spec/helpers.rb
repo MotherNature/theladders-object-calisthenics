@@ -18,6 +18,6 @@ module Helpers
 
   def applying_jobseeker(name: "Jane Jobseek")
     jobseeker = Jobseeker.new#(name: name)
-    jobseeker = JobPoster.with_role_performed_by(@jobseeker)
+    jobseeker.take_on_role(JobApplier)
   end
 end
