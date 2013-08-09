@@ -5,7 +5,7 @@ class Employer
   include Reports
   include RoleTaker
 
-  when_reporting :employer_name do
+  when_reporting :employer_name do |reportable|
     @name
   end
   
