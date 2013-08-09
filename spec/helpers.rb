@@ -17,7 +17,7 @@ module Helpers
   end
 
   def applying_jobseeker(name: "Jane Jobseek")
-    jobseeker = Jobseeker.new#(name: name)
+    jobseeker = Jobseeker.new(name: name)
     jobseeker.take_on_role(JobApplier)
   end
 end
