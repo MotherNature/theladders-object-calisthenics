@@ -162,10 +162,11 @@ describe "Employers should be able to see jobseekers who have applied to their j
       other_jobseeker.apply_to(job: @job)
 
       expanded_jobseekerlist = @jobseekerlist.with(other_jobseeker)
-      generates_with_expected_string_output_given_list(@jobseekerlist, "Jobseeker[Name: Nancy Nother]")
+      generates_with_expected_string_output_given_list(expanded_jobseekerlist, "Jobseeker[Name: Nancy Nother]")
     end
 
     it "should list only jobseekers that have applied to jobs posted by the given employer" do
+      pending "Complete the one above first"
       other_jobseeker = applying_jobseeker(name: "Olaf Other")
       other_job = posted_job
 
