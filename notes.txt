@@ -24,3 +24,7 @@ TODO: Add "before change" state tests, to make sure that there wasn't anything a
 
 TODO: Ooooh: reporting and filtering should barely touch at all, mostly certainly not within classes themselves.
   Could have a ::when_filtering_on method to set #passes_thru? or something.
+
+TODO: Rename JobseekerAndJobsReport into SubmissionReport, same for corresponding List.
+  ALSO: Take the corresponding element instead of a list of jobseekers.
+
