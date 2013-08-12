@@ -152,14 +152,14 @@ describe "Employers should be able to see jobseekers who have applied to their j
   describe EmployersApplyingJobseekersByJobReportGenerator do
     before(:each) do
       @employer = posting_employer
-      jobseeker1 = applying_jobseeker(name: "Jane Jobseek")
-      jobseeker2 = applying_jobseeker(name: "Sandy Seeker")
+      @jobseeker1 = applying_jobseeker(name: "Jane Jobseek")
+      @jobseeker2 = applying_jobseeker(name: "Sandy Seeker")
 
       @job = posted_job(poster: @employer)
-      jobseeker1.apply_to(job: @job)
-      jobseeker2.apply_to(job: @job)
+      @jobseeker1.apply_to(job: @job)
+      @jobseeker2.apply_to(job: @job)
 
-      @jobseekerlist = JobseekerList.new([jobseeker1, jobseeker2])
+      @jobseekerlist = JobseekerList.new([@jobseeker1, @jobseeker2])
 
       @reportgenerator = EmployersApplyingJobseekersByJobReportGenerator.new(@employer)
 
@@ -198,7 +198,16 @@ describe "Employers should be able to see jobseekers who have applied to their j
     end
 
     it "should, for a jobseeker who applied to the given employer's jobs, list all of (and just) the employer's jobs to which they applied" do
-      pending "Need to add jobs that should be filtered out and test for that"
+      applicable_job = posted_job(title: "Applicable Job", poster: @employer)
+
+      other_employer = posting_employer(name: "Ian Inapplicable")
+      other_job = posted_job(title: "Inapplicable Job", poster: other_employer)
+
+      @jobseeker1.apply_to(job: applicable_job)
+      @jobseeker1.apply_to(job: other_job)
+
+      report = @reportgenerator.generate_from(@jobseekerlist)
+      report.to_string.should == "Jobseeker[Name: Jane Jobseek]\nJob[Title: A Job][Employer: Erin Employ]\nJob[Title: Applicable Job][Employer: Erin Employ]\n---\nJobseeker[Name: Sandy Seeker]\nJob[Title: A Job][Employer: Erin Employ]"
     end
   end
 
