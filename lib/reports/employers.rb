@@ -28,13 +28,13 @@ class EmployersApplyingJobseekersByJobReportGenerator
   end
 end
 
-class JobseekersAndJobsListReport < Report
+class JobseekerAndJobsReport < Report
   include JobseekerStringFormatter
   include JobStringFormatter
 
-  def initialize(list)
-    @list = list
-    @jobseeker_names = []
+  def initialize(jobseeker)
+    @jobseeker = jobseeker
+    @jobseeker_name = ""
     @titles = []
     @employer_names = []
   end
@@ -42,7 +42,7 @@ class JobseekersAndJobsListReport < Report
   reports_on :jobs
 
   when_reporting :jobseeker_name do |name|
-    @jobseeker_names.push(name)
+    @jobseeker_name = name
   end
 
   when_reporting :employer_name do |name|
@@ -54,17 +54,38 @@ class JobseekersAndJobsListReport < Report
   end
 
   def to_string
-    @list.report_to(self)
+    @jobseeker.report_to(self)
 
-    entries = [ ]
-    (0...@jobseeker_names.size).each do |index|
-      rows = [ ]
-      rows.push(jobseeker_properties_as_string(jobseeker_name: @jobseeker_names[index]))
-      rows.push(job_properties_as_string(job_title: @titles[index], employer_name: @employer_names[index]))
-      entry = rows.join("\n")
-      entries.push(entry)
+    jobs = [ ]
+    (0...@titles.size).each do |index|
+      jobs.push(job_properties_as_string(job_title: @titles[index], employer_name: @employer_names[index]))
     end
 
-    entries.join("\n---\n")
+    job_row = jobseeker_properties_as_string(jobseeker_name: @jobseeker_name)
+
+    entry_rows = [job_row, *jobs]
+
+    entry_rows.join("\n")
+  end
+end
+
+class JobseekersAndJobsListReport < Report
+  include JobseekerStringFormatter
+  include JobStringFormatter
+
+  def initialize(list)
+    @list = list
+  end
+
+  def to_string
+    reports = [ ]
+
+    @list.each do |jobseeker|
+      report = JobseekerAndJobsReport.new(jobseeker)
+      report_as_string = report.to_string
+      reports.push(report_as_string)
+    end
+
+    reports.join("\n---\n")
   end
 end
