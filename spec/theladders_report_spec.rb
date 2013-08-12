@@ -196,6 +196,10 @@ describe "Employers should be able to see jobseekers who have applied to their j
 
       generates_with_expected_string_output_given_list(expanded_jobseekerlist, "Jobseeker[Name: Andy Applier]\nJob[Title: A Job][Employer: Erin Employ]")
     end
+
+    it "should, for a jobseeker who applied to the given employer's jobs, list all of (and just) the employer's jobs to which they applied" do
+      pending "Need to add jobs that should be filtered out and test for that"
+    end
   end
 
   describe "If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day" do
