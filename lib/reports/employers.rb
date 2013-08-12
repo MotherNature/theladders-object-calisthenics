@@ -50,11 +50,11 @@ class JobseekerAndJobsReport < Report
 
     joblistreport = JobListReport.new(jobseekerlist)
 
-    jobs = joblistreport.to_string
+    job_rows = joblistreport.to_string
 
-    job_row = jobseeker_properties_as_string(jobseeker_name: @jobseeker_name)
+    jobseeker_row = jobseeker_properties_as_string(jobseeker_name: @jobseeker_name)
 
-    [job_row, jobs].join("\n")
+    [jobseeker_row, job_rows].join("\n")
   end
 end
 
