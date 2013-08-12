@@ -6,5 +6,21 @@ end
 
 Don't mix exception-throwing with failure value returning. Check out the "Conditions" system in Common Lisp (and Ruby implementations) as an alternative to exceptions.
 
+Joydip's interesting setup: recruiter = Recruiter.named(name)
+Could be stacked for immutable initialization:
+  recruiter = Recruiter.named(name)
+  recruiter = recruiter.hired_by(company)
+  recruiter = recruiter.paid_as(pay_scheme)
+
 TODO: Replace specific-string tests with ones that check the calls to mock TestReport classes.
 TODO: Refactor reporting classes to use an ::upon_receiving method instead of an implicit interface.
+TODO: Refactor tests to use spies instead of checking for specific strings.
+TODO: Start separate, filter-focused spec.
+TODO: Create a new class that just holds the specific info of a job tied to a jobseeker and a date.
+TODO: Move the populating of a Report's instance data from #to_string to the initialization, as all of the #to_* methods will need things initialized.
+TODO: Even better, have HTMLJobListReport generator, etc., which could subclass or take a JobListReport.
+TODO: Move setup code _below_ the actual tests.
+TODO: Add "before change" state tests, to make sure that there wasn't anything added or removed unexpectedly first.
+
+TODO: Ooooh: reporting and filtering should barely touch at all, mostly certainly not within classes themselves.
+  Could have a ::when_filtering_on method to set #passes_thru? or something.
