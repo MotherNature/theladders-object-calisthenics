@@ -147,7 +147,39 @@ describe "TheLadders should be able to get a report of what jobseekers have appl
     end
     
     def default_report_and(additional_string=nil)
-      "\n---\n" + additional_string
+      @default_report + "\n---\n" + additional_string
+    end
+  end
+
+  describe JobseekersAndJobsListReport do
+    it "should list the given jobseekers and all of the jobs to which they have applied" do
+      report = JobseekersAndJobsListReport.new(@jobseekerlist)
+      report.to_string.should == @default_report
+    end
+
+    it "should list the given jobseeker and all of the jobs to which they have applied, including just-added jobseekers" do
+      new_jobseeker = applying_jobseeker(name: "Anne Nother")
+      new_jobseeker.apply_to(job: @job)
+
+      expanded_list = @jobseekerlist.with(new_jobseeker)
+      report = JobseekersAndJobsListReport.new(expanded_list)
+      report.to_string.should == default_report_and("Jobseeker[Name: Anne Nother]\nJob[Title: A Job][Employer: Erin Employ]")
+    end
+
+    before(:each) do
+      @jobseeker = applying_jobseeker
+
+      @job = posted_job
+
+      @jobseeker.apply_to(job: @job)
+
+      @jobseekerlist = JobseekerList.new([@jobseeker])
+
+      @default_report = "Jobseeker[Name: Jane Jobseek]\nJob[Title: A Job][Employer: Erin Employ]"
+    end
+    
+    def default_report_and(additional_string)
+      @default_report + "\n---\n" + additional_string
     end
   end
 end
