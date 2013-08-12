@@ -130,6 +130,25 @@ describe "Employers should be able to see a listing of the jobs they have posted
 end
 
 describe "Employers should be able to see jobseekers who have applied to their jobs by both job and day" do
+  describe JobseekerAndJobsReport do
+    before(:each) do
+      job1 = posted_job(title: "A Job")
+      job2 = posted_job(title: "Another Job")
+
+      jobseeker = applying_jobseeker(name: "Amy Applier")
+
+      jobseeker.apply_to(job: job1)
+      jobseeker.apply_to(job: job2)
+
+      @jobseekerlist = JobseekerList.new([jobseeker])
+    end
+
+    it "should list the given jobseeker and all of the jobs to which they have applied" do
+      report = JobseekerAndJobsReport.new(@jobseekerlist)
+      report.to_string.should == "Jobseeker[Name: Amy Applier]\nJob[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
+    end
+  end
+
   describe EmployersApplyingJobseekersByJobReportGenerator do
     before(:each) do
       @employer = posting_employer
@@ -176,24 +195,6 @@ describe "Employers should be able to see jobseekers who have applied to their j
       expanded_jobseekerlist = expanded_jobseekerlist.with(other_jobseeker)
 
       generates_with_expected_string_output_given_list(expanded_jobseekerlist, "Jobseeker[Name: Andy Applier]\nJob[Title: A Job][Employer: Erin Employ]")
-    end
-
-    it "should, for a jobseeker who applied to the given employer's jobs, list all of the employer's jobs to which they applied" do
-      employer = posting_employer(name: "Patrick Poster")
-      job1 = posted_job(title: "A Job", poster: employer)
-      job2 = posted_job(title: "Another Job", poster: employer)
-
-      jobseeker = applying_jobseeker(name: "Amy Applier")
-
-      jobseeker.apply_to(job: job1)
-      jobseeker.apply_to(job: job2)
-
-      jobseekerlist = JobseekerList.new([jobseeker])
-
-      reportgenerator = EmployersApplyingJobseekersByJobReportGenerator.new(employer)
-
-      report = reportgenerator.generate_from(jobseekerlist)
-      report.to_string.should == "Jobseeker[Name: Amy Applier]\nJob[Title: A Job][Employer: Patrick Poster]\nJob[Title: Another Job][Employer: Patrick Poster]"
     end
   end
 
