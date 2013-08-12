@@ -20,6 +20,24 @@ RSpec.configure do |klass|
 end
 
 describe "Jobseekers should be able to see a listing of the jobs for which they have applied" do
+  describe JobseekerApplicationsReport do
+    it "should list the jobs to which a given jobseeker has applied" do
+      reportgenerator = JobseekerApplicationsReportGenerator.new(@jobseeker)
+
+      report = reportgenerator.generate_from(@jobseekerlist)
+
+      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
+    end
+
+    it "should only list the jobs to which a given jobseeker has applied" do
+      reportgenerator = JobseekerApplicationsReportGenerator.new(@jobseeker)
+
+      report = reportgenerator.generate_from(@jobseekerlist)
+
+      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
+    end
+  end
+
   before(:each) do
     @jobseeker = applying_jobseeker
     @other_jobseeker = applying_jobseeker
@@ -39,44 +57,21 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
     @jobseekerlist = JobseekerList.new([@jobseeker, @other_jobseeker]) 
   end
-
-  describe JobseekerApplicationsReport do
-    it "should list the jobs to which a given jobseeker has applied" do
-      reportgenerator = JobseekerApplicationsReportGenerator.new(@jobseeker)
-
-      report = reportgenerator.generate_from(@jobseekerlist)
-
-      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
-    end
-
-    it "should only list the jobs to which a given jobseeker has applied" do
-      reportgenerator = JobseekerApplicationsReportGenerator.new(@jobseeker)
-
-      report = reportgenerator.generate_from(@jobseekerlist)
-
-      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
-    end
-  end
 end
 
 describe "Jobs, when displayed, should be displayed with a title and the name of the employer who posted it" do
   describe JobReport do
-    before(:each) do
-      @report = JobReport.new(posted_job)
-    end
-
     it "should list the job title and the name of the employer that posted it" do
       @report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]"
+    end
+
+    before(:each) do
+      @report = JobReport.new(posted_job)
     end
   end
 end
 
 describe "Jobseekers should be able to see a listing of jobs they have saved for later viewing" do
-  before(:each) do
-    @jobseeker = saving_jobseeker
-    @jobseeker.save_job(posted_job)
-  end
-
   describe SavedJobListReport do
     it "should list the jobs saved by a jobseeker" do
       jobseekers = JobseekerList.new([@jobseeker])
@@ -84,26 +79,14 @@ describe "Jobseekers should be able to see a listing of jobs they have saved for
       report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]"
     end
   end
+
+  before(:each) do
+    @jobseeker = saving_jobseeker
+    @jobseeker.save_job(posted_job)
+  end
 end
 
 describe "Employers should be able to see a listing of the jobs they have posted" do
-  before(:each) do
-    @employer = posting_employer
-
-    @job = posted_job(title: "A Job", poster: @employer)
-    @job2 = posted_job(title: "Another Job", poster: @employer)
-
-    @joblist = JobList.new([@job, @job2])
-
-    @reportgenerator = EmployersPostedJobReportGenerator.new(@employer)
-  end
-
-  def generates_with_expected_string_output_given_list(joblist)
-    report = @reportgenerator.generate_from(joblist)
-
-    report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
-  end
-
   # TODO: Add tests that check for *expected* additions to the JobList (otherwise, the tests could pass with the class just returning a static string 
   describe EmployersPostedJobReportGenerator do
     it "should generate a report that lists the jobs posted by an employer" do
@@ -127,10 +110,31 @@ describe "Employers should be able to see a listing of the jobs they have posted
       generates_with_expected_string_output_given_list(expanded_joblist)
     end
   end
+
+  before(:each) do
+    @employer = posting_employer
+
+    @job = posted_job(title: "A Job", poster: @employer)
+    @job2 = posted_job(title: "Another Job", poster: @employer)
+
+    @joblist = JobList.new([@job, @job2])
+
+    @reportgenerator = EmployersPostedJobReportGenerator.new(@employer)
+  end
+
+  def generates_with_expected_string_output_given_list(joblist)
+    report = @reportgenerator.generate_from(joblist)
+
+    report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
+  end
 end
 
 describe "Employers should be able to see jobseekers who have applied to their jobs by job" do
   describe JobseekerAndJobsReport do
+    it "should list the given jobseeker and all of the jobs to which they have applied" do
+      generates_with_expected_string_output_given_list(@jobseekerlist)
+    end
+
     before(:each) do
       @jobseeker = applying_jobseeker
 
@@ -148,37 +152,11 @@ describe "Employers should be able to see jobseekers who have applied to their j
 
       report.to_string.should == @basic_expected_string + (additional_string ? "\n---\n" + additional_string : "")
     end
-
-    it "should list the given jobseeker and all of the jobs to which they have applied" do
-      generates_with_expected_string_output_given_list(@jobseekerlist)
-    end
   end
 end
 
 describe "Employers should be able to see jobseekers who have applied to their jobs by both job and day" do
   describe EmployersApplyingJobseekersByJobReportGenerator do
-    before(:each) do
-      @employer = posting_employer
-      @jobseeker1 = applying_jobseeker(name: "Jane Jobseek")
-      @jobseeker2 = applying_jobseeker(name: "Sandy Seeker")
-
-      @job = posted_job(poster: @employer)
-      @jobseeker1.apply_to(job: @job)
-      @jobseeker2.apply_to(job: @job)
-
-      @jobseekerlist = JobseekerList.new([@jobseeker1, @jobseeker2])
-
-      @reportgenerator = EmployersApplyingJobseekersByJobReportGenerator.new(@employer)
-
-      @basic_expected_string = "Jobseeker[Name: Jane Jobseek]\nJob[Title: A Job][Employer: Erin Employ]\n---\nJobseeker[Name: Sandy Seeker]\nJob[Title: A Job][Employer: Erin Employ]"
-    end
-    
-    def generates_with_expected_string_output_given_list(jobseekerlist, additional_string=nil)
-      report = @reportgenerator.generate_from(jobseekerlist)
-
-      report.to_string.should == @basic_expected_string + (additional_string ? "\n---\n" + additional_string : "")
-    end
-
     it "should list jobseekers that have applied to jobs posted by the given employer, and list the jobs to which they applied" do
       generates_with_expected_string_output_given_list(@jobseekerlist)
     end
@@ -216,6 +194,28 @@ describe "Employers should be able to see jobseekers who have applied to their j
 
       report = @reportgenerator.generate_from(@jobseekerlist)
       report.to_string.should == "Jobseeker[Name: Jane Jobseek]\nJob[Title: A Job][Employer: Erin Employ]\nJob[Title: Applicable Job][Employer: Erin Employ]\n---\nJobseeker[Name: Sandy Seeker]\nJob[Title: A Job][Employer: Erin Employ]"
+    end
+
+    before(:each) do
+      @employer = posting_employer
+      @jobseeker1 = applying_jobseeker(name: "Jane Jobseek")
+      @jobseeker2 = applying_jobseeker(name: "Sandy Seeker")
+
+      @job = posted_job(poster: @employer)
+      @jobseeker1.apply_to(job: @job)
+      @jobseeker2.apply_to(job: @job)
+
+      @jobseekerlist = JobseekerList.new([@jobseeker1, @jobseeker2])
+
+      @reportgenerator = EmployersApplyingJobseekersByJobReportGenerator.new(@employer)
+
+      @basic_expected_string = "Jobseeker[Name: Jane Jobseek]\nJob[Title: A Job][Employer: Erin Employ]\n---\nJobseeker[Name: Sandy Seeker]\nJob[Title: A Job][Employer: Erin Employ]"
+    end
+    
+    def generates_with_expected_string_output_given_list(jobseekerlist, additional_string=nil)
+      report = @reportgenerator.generate_from(jobseekerlist)
+
+      report.to_string.should == @basic_expected_string + (additional_string ? "\n---\n" + additional_string : "")
     end
   end
 
