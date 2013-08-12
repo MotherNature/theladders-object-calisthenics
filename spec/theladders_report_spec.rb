@@ -132,20 +132,25 @@ end
 describe "Employers should be able to see jobseekers who have applied to their jobs by job" do
   describe JobseekerAndJobsReport do
     before(:each) do
-      job1 = posted_job(title: "A Job")
-      job2 = posted_job(title: "Another Job")
+      @jobseeker = applying_jobseeker
 
-      jobseeker = applying_jobseeker(name: "Amy Applier")
+      @job = posted_job
 
-      jobseeker.apply_to(job: job1)
-      jobseeker.apply_to(job: job2)
+      @jobseeker.apply_to(job: @job)
 
-      @jobseekerlist = JobseekerList.new([jobseeker])
+      @jobseekerlist = JobseekerList.new([@jobseeker])
+
+      @basic_expected_string = "Jobseeker[Name: Jane Jobseek]\nJob[Title: A Job][Employer: Erin Employ]"
+    end
+    
+    def generates_with_expected_string_output_given_list(jobseekerlist, additional_string=nil)
+      report = JobseekerAndJobsReport.new(jobseekerlist)
+
+      report.to_string.should == @basic_expected_string + (additional_string ? "\n---\n" + additional_string : "")
     end
 
     it "should list the given jobseeker and all of the jobs to which they have applied" do
-      report = JobseekerAndJobsReport.new(@jobseekerlist)
-      report.to_string.should == "Jobseeker[Name: Amy Applier]\nJob[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
+      generates_with_expected_string_output_given_list(@jobseekerlist)
     end
   end
 end
