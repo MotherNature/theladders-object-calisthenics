@@ -129,10 +129,11 @@ describe "Employers should be able to see a listing of the jobs they have posted
   end
 end
 
-describe "Employers should be able to see jobseekers who have applied to their jobs by job" do
+describe "TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day" do
   describe JobseekerAndJobsReport do
     it "should list the given jobseeker and all of the jobs to which they have applied" do
-      generates_with_expected_string_output_given_list(@jobseekerlist)
+      report = JobseekerAndJobsReport.new(@jobseeker)
+      report.to_string.should == @default_report
     end
 
     before(:each) do
@@ -142,15 +143,11 @@ describe "Employers should be able to see jobseekers who have applied to their j
 
       @jobseeker.apply_to(job: @job)
 
-      @jobseekerlist = JobseekerList.new([@jobseeker])
-
-      @basic_expected_string = "Jobseeker[Name: Jane Jobseek]\nJob[Title: A Job][Employer: Erin Employ]"
+      @default_report = "Jobseeker[Name: Jane Jobseek]\nJob[Title: A Job][Employer: Erin Employ]"
     end
     
-    def generates_with_expected_string_output_given_list(jobseekerlist, additional_string=nil)
-      report = JobseekerAndJobsReport.new(jobseekerlist)
-
-      report.to_string.should == @basic_expected_string + (additional_string ? "\n---\n" + additional_string : "")
+    def default_report_and(additional_string=nil)
+      "\n---\n" + additional_string
     end
   end
 end
