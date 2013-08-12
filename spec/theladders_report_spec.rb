@@ -129,7 +129,7 @@ describe "Employers should be able to see a listing of the jobs they have posted
   end
 end
 
-describe "Employers should be able to see jobseekers who have applied to their jobs by both job and day" do
+describe "Employers should be able to see jobseekers who have applied to their jobs by job" do
   describe JobseekerAndJobsReport do
     before(:each) do
       job1 = posted_job(title: "A Job")
@@ -148,7 +148,9 @@ describe "Employers should be able to see jobseekers who have applied to their j
       report.to_string.should == "Jobseeker[Name: Amy Applier]\nJob[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
     end
   end
+end
 
+describe "Employers should be able to see jobseekers who have applied to their jobs by both job and day" do
   describe EmployersApplyingJobseekersByJobReportGenerator do
     before(:each) do
       @employer = posting_employer
