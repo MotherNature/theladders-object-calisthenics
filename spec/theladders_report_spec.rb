@@ -198,6 +198,7 @@ describe "Employers should be able to see jobseekers who have applied to their j
     end
 
     it "should, for a jobseeker who applied to the given employer's jobs, list all of (and just) the employer's jobs to which they applied" do
+      pending "Needs to be subdivided into smaller tests"
       applicable_job = posted_job(title: "Applicable Job", poster: @employer)
 
       other_employer = posting_employer(name: "Ian Inapplicable")
