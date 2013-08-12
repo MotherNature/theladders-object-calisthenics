@@ -34,25 +34,18 @@ class JobseekerAndJobsReport < Report
 
   def initialize(jobseeker)
     @jobseeker = jobseeker
-    @jobseeker_name = ""
-  end
-
-  reports_on :jobs
-
-  when_reporting :jobseeker_name do |name|
-    @jobseeker_name = name
   end
 
   def to_string
-    @jobseeker.report_to(self)
-
     jobseekerlist = JobseekerList.new([@jobseeker])
 
     joblistreport = JobListReport.new(jobseekerlist)
 
     job_rows = joblistreport.to_string
 
-    jobseeker_row = jobseeker_properties_as_string(jobseeker_name: @jobseeker_name)
+    jobseekerreport = JobseekerReport.new(@jobseeker)
+
+    jobseeker_row = jobseekerreport.to_string
 
     [jobseeker_row, job_rows].join("\n")
   end
