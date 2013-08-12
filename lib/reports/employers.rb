@@ -35,8 +35,6 @@ class JobseekerAndJobsReport < Report
   def initialize(jobseeker)
     @jobseeker = jobseeker
     @jobseeker_name = ""
-    @titles = []
-    @employer_names = []
   end
 
   reports_on :jobs
@@ -45,34 +43,22 @@ class JobseekerAndJobsReport < Report
     @jobseeker_name = name
   end
 
-  when_reporting :employer_name do |name|
-    @employer_names.push(name)
-  end
-
-  when_reporting :job_title do |name|
-    @titles.push(name)
-  end
-
   def to_string
     @jobseeker.report_to(self)
 
-    jobs = [ ]
-    (0...@titles.size).each do |index|
-      jobs.push(job_properties_as_string(job_title: @titles[index], employer_name: @employer_names[index]))
-    end
+    jobseekerlist = JobseekerList.new([@jobseeker])
+
+    joblistreport = JobListReport.new(jobseekerlist)
+
+    jobs = joblistreport.to_string
 
     job_row = jobseeker_properties_as_string(jobseeker_name: @jobseeker_name)
 
-    entry_rows = [job_row, *jobs]
-
-    entry_rows.join("\n")
+    [job_row, jobs].join("\n")
   end
 end
 
 class JobseekersAndJobsListReport < Report
-  include JobseekerStringFormatter
-  include JobStringFormatter
-
   def initialize(list)
     @list = list
   end
