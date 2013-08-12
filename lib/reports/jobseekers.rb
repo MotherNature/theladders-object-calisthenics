@@ -6,23 +6,33 @@ module JobseekerStringFormatter
   end
 end
 
-class JobseekerListReport < Report
+class JobseekerReport < Report
   include JobseekerStringFormatter
 
-  def initialize(list)
-    @list = list
-    @names = []
+  def initialize(jobseeker)
+    @jobseeker = jobseeker
+    @name = ""
   end
 
   when_reporting :jobseeker_name do |name|
-    @names.push(name)
+    @name = name
   end
 
   def to_string
-    @list.report_to(self)
+    @jobseeker.report_to(self)
+    jobseeker_properties_as_string(jobseeker_name: @name)
+  end
+end
 
-    formatted_strings = @names.map do |name|
-      jobseeker_properties_as_string(jobseeker_name: name)
+class JobseekerListReport < Report
+  def initialize(list)
+    @list = list
+  end
+
+  def to_string
+    formatted_strings = @list.map do |jobseeker|
+      report = JobseekerReport.new(jobseeker)
+      report.to_string
     end
 
     formatted_strings.join("\n")
