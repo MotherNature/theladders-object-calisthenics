@@ -13,13 +13,8 @@ module Reports
   end
 
   def report_to(reportable)
-    report_methods = public_methods.select do |method_symbol|
-      method_symbol.to_s =~ /^report_/
-    end
-
-    report_methods.each do |method_symbol|
-      method_symbol.to_s =~ /^report_(.*)_to/
-      reporting_on = $1
+    methods_used_for_reporting.each do |method_symbol|
+      reporting_on = subject_of_reporting_method(method_symbol)
       
       full_method_symbol = "report_#{reporting_on}".to_sym
       reporting_method_symbol = "report_#{reporting_on}_to".to_sym
@@ -28,6 +23,18 @@ module Reports
         reportable.send(full_method_symbol, send(reporting_method_symbol, reportable))
       end
     end
+  end
+
+  private
+  def methods_used_for_reporting
+    public_methods.select do |method_symbol|
+      method_symbol.to_s =~ /^report_/
+    end
+  end
+  
+  def subject_of_reporting_method(method_symbol)
+    match = /^report_(.*)_to/.match(method_symbol)
+    match && match[1]
   end
 end
 
