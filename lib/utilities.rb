@@ -24,19 +24,22 @@ module Filterable
   end
 
   def passes_filter?(filter)
-    answers = []
+    implemented_methods = methods_implemented_for(filter: filter, among_methods: filter_methods)
 
-    filter_methods.each do |method_symbol|
-      if(filter.respond_to?(method_symbol))
-        passed = filter.send(method_symbol, send(method_symbol, filter))
-        answers.push(passed)
-      end
+    pass_checks = implemented_methods.map do |method_symbol|
+      filter.send(method_symbol, send(method_symbol, filter))
     end
     
-    fails_no_tests(answers)
+    fails_no_tests(pass_checks)
   end
 
   private
+
+  def methods_implemented_for(filter: nil, among_methods: [])
+    among_methods.select do |method_symbol|
+      filter.respond_to?(method_symbol)
+    end
+  end
 
   def filter_methods
     public_methods.select do |method_symbol|
