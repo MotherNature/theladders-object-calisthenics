@@ -194,6 +194,26 @@ module JobApplier
     end
   end
 
+  def passes_filter?(filter)
+    answers = []
+
+    if(filter.respond_to? :on_posted_by)
+      any_posted_by = false
+
+      @applied_to.each do |job|
+        if(job.passes_filter?(filter))
+          any_posted_by = true
+        end
+      end
+
+      answers.push(any_posted_by)
+    end
+
+    answers.none? do |passed|
+      passed == false
+    end
+  end
+
   when_reporting :jobs do |reportable|
     @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
 
