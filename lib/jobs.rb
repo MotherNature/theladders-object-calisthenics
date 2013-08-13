@@ -115,7 +115,7 @@ class JobList
 end
 
 class PostedJobFilter
-  def self.on_posted(posted)
+  def on_posted(posted)
     posted
   end
 end

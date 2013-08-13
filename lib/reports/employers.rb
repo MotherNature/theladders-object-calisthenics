@@ -10,7 +10,7 @@ class EmployersPostedJobReportGenerator
   end
 
   def generate_from(joblist)
-    only_posted_jobs = joblist.filtered_by([PostedJobFilter])
+    only_posted_jobs = joblist.filtered_by([PostedJobFilter.new])
     only_employers_jobs = EmployerJobList.filtered_from(joblist: only_posted_jobs, posted_by: @employer)
 
     JobListReport.new(only_employers_jobs)
