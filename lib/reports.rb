@@ -16,16 +16,21 @@ module Reports
     ways_of_reporting.each do |method_symbol|
       reporting_on = subject_of_reporting_method(method_symbol)
       
-      full_method_symbol = "report_#{reporting_on}".to_sym
-      reporting_method_symbol = "report_#{reporting_on}_to".to_sym
+      reportables_method = "report_#{reporting_on}".to_sym
+      reporting_method = "report_#{reporting_on}_to".to_sym
 
-      if(reportable.respond_to?(full_method_symbol))
-        reportable.send(full_method_symbol, send(reporting_method_symbol, reportable))
+      if(reportable.respond_to?(reportables_method))
+        output = report_output(from: reportable, by_method: reporting_method)
+        reportable.send(reportables_method, output)
       end
     end
   end
 
   private
+
+  def report_output(from: nil, by_method: nil)
+    self.send(by_method, from)
+  end
 
   def ways_of_reporting
     methods_used_for_reporting.select do |method_symbol|
