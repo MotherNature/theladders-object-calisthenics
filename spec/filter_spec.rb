@@ -31,6 +31,16 @@ describe PostedByFilter do
       filtered_list.include?(@other_jobseeker).should be_false
     end
 
+    it "should filter down to jobseekers who have applied to jobs posted by the given job-poster, even if they have applied to other posters' jobs" do
+      @other_jobseeker.apply_to(job: @job)
+
+      filtered_list = @jobseekers.filtered_by([@posted_by])
+
+      filtered_list.size.should == 2
+      filtered_list.include?(@jobseeker).should be_true
+      filtered_list.include?(@other_jobseeker).should be_true
+    end
+
     before(:each) do
       @employer = posting_employer
       @job = posted_job(poster: @employer)
