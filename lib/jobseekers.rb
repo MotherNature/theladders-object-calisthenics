@@ -39,6 +39,19 @@ class JobseekerList
     JobseekerList.new([*@jobseekers, jobseeker])
   end
 
+  def include?(jobseeker)
+    @jobseekers.include?(jobseeker)
+  end
+
+  def filtered_by(filters)
+    filtered_jobseekers = @jobseekers.select do |jobseeker|
+      filters.all? do |filter|
+        jobseeker.passes_filter?(filter)
+      end
+    end
+    JobseekerList.new(filtered_jobseekers)
+  end
+
   def report_to(reportable)
     each do |jobseeker|
       jobseeker.report_to(reportable)
