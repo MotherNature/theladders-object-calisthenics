@@ -4,6 +4,38 @@ module RoleTaker # Rename to TakesRoles
   end
 end
 
+module Filterable
+  def self.included(base_class)
+    base_class.extend(ClassMethods)
+  end
+
+  module ClassMethods
+    def when_filtering_by(method_name, &block)
+      full_method_symbol = "filter_by_#{method_name}".to_sym
+      define_method(full_method_symbol, &block)
+    end
+  end
+
+  def passes_filter?(filter)
+    filter_methods = public_methods.select do |method_symbol|
+      method_symbol.to_s =~ /^filter_by_/
+    end
+
+    answers = []
+
+    filter_methods.each do |method_symbol|
+      if(filter.respond_to?(method_symbol))
+        passed = filter.send(method_symbol, send(method_symbol, filter))
+        answers.push(passed)
+      end
+    end
+    
+    answers.none? do |passed|
+      passed == false
+    end
+  end
+end
+
 module HumanReadableDelegation
   def self.included(mod)
     mod.class_eval do
