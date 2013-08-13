@@ -17,6 +17,12 @@ class UnpostedJob
     false
   end
 
+  def passes_filter?(filter)
+    if(filter.respond_to? :on_posted)
+      filter.on_posted(self.posted?)
+    end
+  end
+
   when_reporting :job_title do |reportable|
     @title.report_title_to(reportable)
   end
@@ -42,6 +48,12 @@ class PostedJob < SimpleDelegator
 
   def posted_by?(poster)
     @poster == poster
+  end
+
+  def passes_filter?(filter)
+    if(filter.respond_to? :on_posted)
+      filter.on_posted(self.posted?)
+    end
   end
 end
 
@@ -73,6 +85,15 @@ class JobList
     JobList.new(filtered_jobs)
   end
 
+  def filtered_by(filters)
+    filtered_jobs = @jobs.select do |job|
+      filters.any? do |filter|
+        job.passes_filter?(filter)
+      end
+    end
+    JobList.new(filtered_jobs)
+  end
+
   def any?(&block)
     filtered_list = select(&block)
     filtered_list.size > 0
@@ -93,6 +114,12 @@ class JobList
   end
 end
 
+class PostedJobFilter
+  def self.on_posted(posted)
+    posted
+  end
+end
+
 class PostedJobList < JobList
   def self.filtered_from(joblist)
     filtered_list = joblist.select do |job|
@@ -104,7 +131,7 @@ end
 
 module JobPoster
   def post_job(job)
-    PostedJob.new(job: job, posted_by: self)
+    posted_job = PostedJob.new(job: job, posted_by: self)
   end
 end
 
