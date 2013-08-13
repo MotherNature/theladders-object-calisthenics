@@ -11,3 +11,15 @@ class Name
     @name
   end
 end
+
+class Title
+  include Reports
+
+  def initialize(title_string)
+    @title = title_string
+  end
+
+  when_reporting :title do |reportable|
+    @title
+  end
+end

@@ -47,7 +47,7 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
     posted_job2 = posted_job(title: "Valid Job 2")
 
     employer = posting_employer
-    other_job = UnpostedJob.new(title: "Invalid Job", type: JobType.ATS)
+    other_job = unposted_job(title: "Invalid Job", type: JobType.ATS)
 
     other_posted_job = employer.post_job(other_job)
 
