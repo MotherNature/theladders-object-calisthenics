@@ -15,9 +15,9 @@ module Helpers
     job = poster.post_job(unposted_job)
   end
 
-  def saving_jobseeker
-    jobseeker = Jobseeker.new
-    jobseeker = JobSaver.with_role_performed_by(@jobseeker)
+  def saving_jobseeker(name: "Sally Saver")
+    jobseeker = Jobseeker.new(name: name)
+    jobseeker.take_on_role(JobSaver)
   end
 
   def applying_jobseeker(name: "Jane Jobseek")

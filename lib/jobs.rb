@@ -130,19 +130,19 @@ module JobPoster
   end
 end
 
-class JobSaver < RoleDelegator
-  def initialize(role_filler)
-    super(role_filler)
-    @jobs = JobList.new
-  end
+module JobSaver
+  include Reports
 
   def save_job(job)
+    @saved_jobs ||= JobList.new
     savedjob = SavedJob.new(job: job)
-    @jobs = @jobs.with(savedjob)
+    @saved_jobs = @saved_jobs.with(savedjob)
   end
 
-  def report_to(reportable)
-    @jobs.each do |job|
+  when_reporting :jobs do |reportable|
+    @saved_jobs ||= JobList.new
+
+    @saved_jobs.each do |job|
       job.report_to(reportable)
     end
   end
