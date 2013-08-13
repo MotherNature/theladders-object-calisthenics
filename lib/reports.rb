@@ -6,9 +6,14 @@ module Reports
   end
 
   module ClassMethods
-    def when_reporting(method_name, &block)
-      full_method = "report_#{method_name}_to".to_sym
-      define_method(full_method, &block)
+    def when_reporting(subject, &block)
+      define_method(reporting_method_for(subject), &block)
+    end
+
+    private
+
+    def reporting_method_for(subject) # TODO: How can I avoid this duplication?
+      "report_#{subject}_to".to_sym
     end
   end
 
@@ -24,8 +29,8 @@ module Reports
 
   private
 
-  def reporting_method_for(subject)
-      "report_#{subject}_to".to_sym
+  def reporting_method_for(subject) # TODO: How can I avoid this duplication?
+    "report_#{subject}_to".to_sym
   end
 
   def reportables_method_for(subject)
