@@ -19,17 +19,6 @@ class EmployersPostedJobReportGenerator
   end
 end
 
-class EmployersApplyingJobseekersByJobReportGenerator
-  def initialize(employer)
-    @employer = employer
-  end
-
-  def generate_from(jobseekerlist)
-    only_applied_to_employers_jobs_jobseekers = AppliedToEmployersJobsJobApplierList.filtered_from(jobapplierlist: jobseekerlist, employer: @employer)
-    JobseekersAndJobsListReport.new(only_applied_to_employers_jobs_jobseekers)
-  end
-end
-
 class JobseekerAndJobsReport < Report
   include JobseekerStringFormatter
   include JobStringFormatter
