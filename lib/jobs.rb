@@ -120,15 +120,6 @@ class PostedJobFilter
   end
 end
 
-class PostedJobList < JobList
-  def self.filtered_from(joblist)
-    filtered_list = joblist.select do |job|
-      job.posted?
-    end
-    PostedJobList.new(filtered_list)
-  end
-end
-
 module JobPoster
   def post_job(job)
     posted_job = PostedJob.new(job: job, posted_by: self)
