@@ -1,6 +1,6 @@
 module Helpers
   def posting_employer(name: "Erin Employ")
-    employer = Employer.new(name: name)
+    employer = Employer.new(name: Name.new(name))
     employer.take_on_role(JobPoster)
     employer
   end

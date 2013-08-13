@@ -7,6 +7,7 @@ Dir[File.join(File.dirname(__FILE__), '..', 'lib', 'reports', '*.rb')].each do |
   require report_lib
 end
 
+require 'labels'
 require 'jobs'
 require 'jobseekers'
 require 'employers'
