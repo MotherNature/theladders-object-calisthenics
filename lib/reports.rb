@@ -14,17 +14,19 @@ module Reports
 
   def report_to(reportable)
     relevant_ways_of_reporting_to(reportable).each do |method_symbol|
-      reporting_on = subject_of_reporting_method(method_symbol)
-      
-      reportables_method = "report_#{reporting_on}".to_sym
-      reporting_method = "report_#{reporting_on}_to".to_sym
+      subject = subject_of_reporting_method(method_symbol)
 
-      output = report_output(from: reportable, by_method: reporting_method)
-      reportable.send(reportables_method, output)
+      output = report_output(from: reportable, by_method: reporting_method_for(subject))
+
+      reportable.send(reportables_method_for(subject), output)
     end
   end
 
   private
+
+  def reporting_method_for(subject)
+      "report_#{subject}_to".to_sym
+  end
 
   def reportables_method_for(subject)
     "report_#{subject}".to_sym
