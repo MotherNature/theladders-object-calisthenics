@@ -6,7 +6,7 @@ class Jobseeker
   include Reports
 
   when_reporting :jobseeker_name do |reportable|
-    @name
+    @name.report_name_to(reportable)
   end
 
   def initialize(name: nil)
