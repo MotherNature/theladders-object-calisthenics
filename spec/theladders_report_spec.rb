@@ -95,7 +95,7 @@ describe "Employers should be able to see a listing of the jobs they have posted
     end
 
     it "should generate a report that lists posted jobs and not unposted ones" do
-      unposted_job = UnpostedJob.new(title: "Unposted Job", type: JobType.ATS)
+      unposted_job = unposted_job(title: "Unposted Job", type: JobType.ATS)
 
       expanded_joblist = @joblist.with(unposted_job)
 
