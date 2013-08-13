@@ -55,25 +55,7 @@ class PostedJob < SimpleDelegator
   end
 
   when_filtering_by :posted_by do |filter|
-    filter.filter_by_posted_by(@poster)
-  end
-
-  def passes_filter?(filter)
-    answers = []
-
-    if(filter.respond_to? :filter_by_posted)
-      passes = self.filter_by_posted(filter)
-      answers.push(passes)
-    end
-
-    if(filter.respond_to? :filter_by_posted_by)
-      passes = self.filter_by_posted_by(filter)
-      answers.push(passes)
-    end
-
-    answers.none? do |answer|
-      answer == false
-    end
+    filter.posted_by?(@poster)
   end
 end
 
@@ -105,8 +87,12 @@ class PostedByFilter
     @poster = poster
   end
 
-  def filter_by_posted_by(poster)
+  def posted_by?(poster)
     @poster == poster
+  end
+
+  def filter_by_posted_by(was_posted)
+    was_posted
   end
 end
 
