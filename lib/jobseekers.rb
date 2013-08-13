@@ -5,16 +5,16 @@ class Jobseeker
   include RoleTaker
   include Reports
 
-  when_reporting :jobseeker_name do |reportable|
-    @name.report_name_to(reportable)
-  end
-
   def initialize(name: nil)
     @name = name
   end
 
   def draft_resume
     Resume.new(created_by: self)
+  end
+
+  when_reporting :jobseeker_name do |reportable|
+    @name.report_name_to(reportable)
   end
 end
 
