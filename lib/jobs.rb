@@ -83,47 +83,7 @@ class SavedJob < SimpleDelegator
   end
 end
 
-class JobList
-  def initialize(jobs=[])
-    @jobs = jobs
-  end
-
-  def each(&block)
-    @jobs.each(&block)
-  end
-
-  def select(&block)
-    filtered_jobs = @jobs.select(&block)
-    JobList.new(filtered_jobs)
-  end
-
-  def filtered_by(filters)
-    filtered_jobs = @jobs.select do |job|
-      filters.all? do |filter|
-        job.passes_filter?(filter)
-      end
-    end
-    JobList.new(filtered_jobs)
-  end
-
-  def any?(&block)
-    filtered_list = select(&block)
-    filtered_list.size > 0
-  end
-
-  def size
-    @jobs.size
-  end
-
-  def with(job)
-    JobList.new([*@jobs, job])
-  end
-
-  def report_to(reportable)
-    self.each do |job|
-      job.report_to(reportable)
-    end
-  end
+class JobList < List
 end
 
 class PostedJobFilter
