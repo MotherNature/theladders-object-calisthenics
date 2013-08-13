@@ -14,15 +14,6 @@ class Employer
   end
 end
 
-class EmployerJobList < JobList
-  def self.filtered_from(joblist: nil, posted_by: nil)
-    filtered_list = joblist.select do |job|
-      job.posted_by?(posted_by)
-    end
-    EmployerJobList.new(filtered_list)
-  end
-end
-
 class AppliedToEmployersJobsJobApplierList < JobseekerList
   def self.filtered_from(jobapplierlist: nil, employer: nil)
     filtered_list = jobapplierlist.select do |jobapplier|
