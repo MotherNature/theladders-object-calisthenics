@@ -71,6 +71,10 @@ class List
     filtered_list.size > 0
   end
 
+  def map(&block)
+    @list.map(&block)
+  end
+
   def report_to(reportable)
     self.each do |item|
       item.report_to(reportable)

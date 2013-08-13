@@ -30,6 +30,7 @@ end
 class PostedJob < SimpleDelegator
   include HumanReadableDelegation
   include Reports
+  include Filterable
 
   def initialize(job: nil, posted_by: nil)
     super(job)
@@ -49,16 +50,24 @@ class PostedJob < SimpleDelegator
     @poster == poster
   end
 
+  when_filtering_by :posted do |filter|
+    self.posted?
+  end
+
+  when_filtering_by :posted_by do |filter|
+    filter.filter_by_posted_by(@poster)
+  end
+
   def passes_filter?(filter)
     answers = []
 
-    if(filter.respond_to? :on_posted)
-      passes = filter.on_posted(self.posted?)
+    if(filter.respond_to? :filter_by_posted)
+      passes = self.filter_by_posted(filter)
       answers.push(passes)
     end
 
-    if(filter.respond_to? :on_posted_by)
-      passes = filter.on_posted_by(@poster)
+    if(filter.respond_to? :filter_by_posted_by)
+      passes = self.filter_by_posted_by(filter)
       answers.push(passes)
     end
 
@@ -96,8 +105,25 @@ class PostedByFilter
     @poster = poster
   end
 
-  def on_posted_by(poster)
+  def filter_by_posted_by(poster)
     @poster == poster
+  end
+end
+
+class AnyPostedByFilter
+  def initialize(poster)
+    @poster = poster
+  end
+
+  def filter_jobs(jobs)
+    filter = PostedByFilter.new(@poster)
+    jobs.select do |job|
+      job.passes_filter?(filter)
+    end
+  end
+
+  def filter_by_jobs(any_jobs)
+    any_jobs
   end
 end
 
@@ -127,6 +153,7 @@ end
 
 module JobApplier
   include Reports
+  include Filterable
 
   def apply_to(job: nil, with_resume: NoResume)
     @applied_to ||= JobList.new # TODO: Can I initialize this in just one place?
@@ -153,24 +180,9 @@ module JobApplier
     end
   end
 
-  def passes_filter?(filter)
-    answers = []
-
-    if(filter.respond_to? :on_posted_by)
-      any_posted_by = false
-
-      @applied_to.each do |job|
-        if(job.passes_filter?(filter))
-          any_posted_by = true
-        end
-      end
-
-      answers.push(any_posted_by)
-    end
-
-    answers.none? do |passed|
-      passed == false
-    end
+  when_filtering_by :jobs do |filter|
+    filtered_jobs = filter.filter_jobs(@applied_to)
+    filtered_jobs.size > 0
   end
 
   when_reporting :jobs do |reportable|

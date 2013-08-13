@@ -21,7 +21,7 @@ RSpec.configure do |klass|
 end
 
 
-describe PostedByFilter do
+describe AnyPostedByFilter do
   describe JobseekerList do
     it "should filter down to jobseekers who have applied to jobs posted by the given job-poster" do
       filtered_list = @jobseekers.filtered_by([@posted_by])
@@ -55,7 +55,7 @@ describe PostedByFilter do
 
       @jobseekers = JobseekerList.new([@jobseeker, @other_jobseeker])
 
-      @posted_by = PostedByFilter.new(@employer)
+      @posted_by = AnyPostedByFilter.new(@employer)
     end
   end
 end
