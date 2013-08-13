@@ -3,6 +3,7 @@ require 'reports'
 
 class UnpostedJob
   include Reports
+  include Filterable
 
   def initialize(title: nil, type: nil)
     @title = title
@@ -17,10 +18,8 @@ class UnpostedJob
     false
   end
 
-  def passes_filter?(filter)
-    if(filter.respond_to? :on_posted)
-      filter.on_posted(self.posted?)
-    end
+  when_filtering_by :posted do |filter|
+    self.posted?
   end
 
   when_reporting :job_title do |reportable|
@@ -87,8 +86,8 @@ class JobList < List
 end
 
 class PostedJobFilter
-  def on_posted(posted)
-    posted
+  def filter_by_posted(posted)
+    posted == true
   end
 end
 
