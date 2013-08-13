@@ -55,7 +55,7 @@ class PostedJob < SimpleDelegator
   end
 
   when_filtering_by :posted_by do |filter|
-    filter.posted_by?(@poster)
+    filter.passing_poster?(@poster)
   end
 end
 
@@ -87,7 +87,7 @@ class PostedByFilter
     @poster = poster
   end
 
-  def posted_by?(poster)
+  def passing_poster?(poster)
     @poster == poster
   end
 
