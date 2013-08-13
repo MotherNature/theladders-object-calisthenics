@@ -33,9 +33,7 @@ module Filterable
       end
     end
     
-    answers.none? do |passed|
-      passed == false
-    end
+    fails_no_tests(answers)
   end
 
   private
@@ -43,6 +41,12 @@ module Filterable
   def filter_methods
     public_methods.select do |method_symbol|
       method_symbol.to_s =~ /^filter_by_/
+    end
+  end
+
+  def fails_no_tests(answers)
+    answers.none? do |passed|
+      passed == false
     end
   end
 end
