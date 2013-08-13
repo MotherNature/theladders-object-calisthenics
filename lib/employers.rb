@@ -6,7 +6,7 @@ class Employer
   include RoleTaker
 
   when_reporting :employer_name do |reportable|
-    @name
+    @name.report_name_to(reportable)
   end
   
   def initialize(name: nil)
