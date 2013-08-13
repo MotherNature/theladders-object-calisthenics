@@ -51,8 +51,20 @@ class PostedJob < SimpleDelegator
   end
 
   def passes_filter?(filter)
+    answers = []
+
     if(filter.respond_to? :on_posted)
-      filter.on_posted(self.posted?)
+      passes = filter.on_posted(self.posted?)
+      answers.push(passes)
+    end
+
+    if(filter.respond_to? :on_posted_by)
+      passes = filter.on_posted_by(@poster)
+      answers.push(passes)
+    end
+
+    answers.none? do |answer|
+      answer == false
     end
   end
 end
@@ -87,7 +99,7 @@ class JobList
 
   def filtered_by(filters)
     filtered_jobs = @jobs.select do |job|
-      filters.any? do |filter|
+      filters.all? do |filter|
         job.passes_filter?(filter)
       end
     end
@@ -117,6 +129,16 @@ end
 class PostedJobFilter
   def on_posted(posted)
     posted
+  end
+end
+
+class PostedByFilter
+  def initialize(poster)
+    @poster = poster
+  end
+
+  def on_posted_by(poster)
+    @poster == poster
   end
 end
 
