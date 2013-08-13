@@ -46,10 +46,6 @@ class PostedJob < SimpleDelegator
     true
   end
 
-  def posted_by?(poster)
-    @poster == poster
-  end
-
   when_filtering_by :posted do |filter|
     self.posted?
   end
