@@ -13,7 +13,7 @@ module Reports
   end
 
   def report_to(reportable)
-    methods_used_for_reporting.each do |method_symbol|
+    things_we_report_to.each do |method_symbol|
       reporting_on = subject_of_reporting_method(method_symbol)
       
       full_method_symbol = "report_#{reporting_on}".to_sym
@@ -26,6 +26,13 @@ module Reports
   end
 
   private
+
+  def things_we_report_to
+    methods_used_for_reporting.select do |method_symbol|
+      ! subject_of_reporting_method(method_symbol).nil?
+    end
+  end
+      
   def methods_used_for_reporting
     public_methods.select do |method_symbol|
       method_symbol.to_s =~ /^report_/
