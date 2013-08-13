@@ -27,7 +27,7 @@ class UnpostedJob
   include Reports
 
   when_reporting :job_title do |reportable|
-    @title
+    @title.report_title_to(reportable)
   end
 
   def initialize(title: nil, type: nil)

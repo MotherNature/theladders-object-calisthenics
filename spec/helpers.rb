@@ -6,11 +6,11 @@ module Helpers
   end
 
   def unposted_job(title: "A Job", type: JobType.ATS, poster: posting_employer)
-    UnpostedJob.new(title: title, type: type)
+    UnpostedJob.new(title: Title.new(title), type: type)
   end
 
   def posted_job(title: "A Job", type: JobType.ATS, poster: posting_employer)
-    unposted_job = UnpostedJob.new(title: title, type: type)
+    unposted_job = UnpostedJob.new(title: Title.new(title), type: type)
 
     job = poster.post_job(unposted_job)
   end
