@@ -24,10 +24,6 @@ module Filterable
   end
 
   def passes_filter?(filter)
-    filter_methods = public_methods.select do |method_symbol|
-      method_symbol.to_s =~ /^filter_by_/
-    end
-
     answers = []
 
     filter_methods.each do |method_symbol|
@@ -39,6 +35,14 @@ module Filterable
     
     answers.none? do |passed|
       passed == false
+    end
+  end
+
+  private
+
+  def filter_methods
+    public_methods.select do |method_symbol|
+      method_symbol.to_s =~ /^filter_by_/
     end
   end
 end
