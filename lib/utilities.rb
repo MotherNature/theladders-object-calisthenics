@@ -66,4 +66,8 @@ class List
     end
     self.class.new(filtered_items)
   end
+
+  def include?(item)
+    @list.include?(item)
+  end
 end
