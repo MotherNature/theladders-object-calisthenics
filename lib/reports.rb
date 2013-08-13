@@ -7,14 +7,14 @@ module Reports
 
   module ClassMethods
     def when_reporting(method_name, &block)
-      full_method_symbol = "report_#{method_name}_to".to_sym
-      define_method(full_method_symbol, &block)
+      full_method = "report_#{method_name}_to".to_sym
+      define_method(full_method, &block)
     end
   end
 
   def report_to(reportable)
-    relevant_ways_of_reporting_to(reportable).each do |method_symbol|
-      subject = subject_of_reporting_method(method_symbol)
+    relevant_ways_of_reporting_to(reportable).each do |method|
+      subject = subject_of_reporting_method(method)
 
       output = report_output(from: reportable, by_method: reporting_method_for(subject))
 
@@ -37,26 +37,26 @@ module Reports
   end
 
   def relevant_ways_of_reporting_to(reportable)
-    ways_of_reporting.select do |method_symbol|
-      subject = subject_of_reporting_method(method_symbol)
+    ways_of_reporting.select do |method|
+      subject = subject_of_reporting_method(method)
       reportable.respond_to?(reportables_method_for(subject))
     end
   end
 
   def ways_of_reporting
-    methods_used_for_reporting.select do |method_symbol|
-      ! subject_of_reporting_method(method_symbol).nil?
+    methods_used_for_reporting.select do |method|
+      ! subject_of_reporting_method(method).nil?
     end
   end
       
   def methods_used_for_reporting
-    public_methods.select do |method_symbol|
-      method_symbol.to_s =~ /^report_/
+    public_methods.select do |method|
+      method.to_s =~ /^report_/
     end
   end
   
-  def subject_of_reporting_method(method_symbol)
-    match = /^report_(.*)_to/.match(method_symbol)
+  def subject_of_reporting_method(method)
+    match = /^report_(.*)_to/.match(method)
     match && match[1]
   end
 end
