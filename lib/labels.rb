@@ -23,3 +23,25 @@ class Title
     @title
   end
 end
+
+class JobType
+  class ATS
+    def suitable_resume?(resume)
+      ! resume.exists?
+    end
+  end
+
+  class JReq
+    def suitable_resume?(resume)
+      resume.exists?
+    end
+  end
+
+  def self.ATS
+    ATS.new
+  end
+
+  def self.JReq
+    JReq.new
+  end
+end

@@ -1,28 +1,6 @@
 require 'utilities'
 require 'reports'
 
-class JobType
-  class ATS
-    def suitable_resume?(resume)
-      ! resume.exists?
-    end
-  end
-
-  class JReq
-    def suitable_resume?(resume)
-      resume.exists?
-    end
-  end
-
-  def self.ATS
-    ATS.new
-  end
-
-  def self.JReq
-    JReq.new
-  end
-end
-
 class UnpostedJob
   include Reports
 
