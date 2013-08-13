@@ -16,6 +16,13 @@ module Filterable
     end
   end
 
+  def passes_filters?(filters)
+    answers = filters.map do |filter|
+      self.passes_filter?(filter)
+    end
+    answers.all?
+  end
+
   def passes_filter?(filter)
     filter_methods = public_methods.select do |method_symbol|
       method_symbol.to_s =~ /^filter_by_/
@@ -83,9 +90,7 @@ class List
 
   def filtered_by(filters)
     filtered_items = @list.select do |item|
-      filters.all? do |filter|
-        item.passes_filter?(filter)
-      end
+      item.passes_filters?(filters)
     end
     self.class.new(filtered_items)
   end
