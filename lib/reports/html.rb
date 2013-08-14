@@ -1,17 +1,8 @@
 require 'jobseekers'
 
-class HTMLJobseekerReport < Report
-  def initialize(jobseeker)
-    @name = ""
-    jobseeker.report_to(self)
-  end
-
-  upon_receiving :jobseeker_name do |name|
-    @name = name
-  end
-
+class HTMLJobseekerReport < JobseekerReport
   def render
-    %{<div class="jobseeker"><span class="name">#{@name}</span></div>}
+    %{<div class="jobseeker"><span class="name">#{jobseeker_name}</span></div>}
   end
 end
 
