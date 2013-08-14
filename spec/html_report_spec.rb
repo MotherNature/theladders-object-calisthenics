@@ -78,16 +78,16 @@ describe HTMLJobseekerListReport do
   end
 end
 
-describe HTMLJobReport do
+describe HTMLPostedJobReport do
   it "should report on the job's title" do
-    report = HTMLJobReport.new(@unposted_job)
+    report = HTMLPostedJobReport.new(@unposted_job)
     html = report.render
 
     html.should have_selector('.job .title', :content => 'A Job')
   end
 
   it "should report on the poster's name if posted" do
-    report = HTMLJobReport.new(@posted_job)
+    report = HTMLPostedJobReport.new(@posted_job)
     html = report.render
 
     html.should have_selector('.job .employer .name', :content => 'Patrick Post')

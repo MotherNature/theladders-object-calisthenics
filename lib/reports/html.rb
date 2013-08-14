@@ -21,7 +21,7 @@ class HTMLJobseekerListReport
   end
 end
 
-class HTMLJobReport < JobReport
+class HTMLPostedJobReport < PostedJobReport
   def render
     %{<div class="job"><span class="title">#{job_title}</span>#{employer_html}</div>}
   end

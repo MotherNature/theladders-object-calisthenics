@@ -43,7 +43,7 @@ class JobListReport < Report
   end
 end
 
-class JobReport < Report
+class UnpostedJobReport < Report
   include JobStringFormatter
 
   def initialize(job)
@@ -80,16 +80,7 @@ class JobReport < Report
   end
 end
 
-class UnpostedJobReport < JobReport
-end
-
-class PostedJobReport < SimpleDelegator
-  include HumanReadableDelegation
-
-  def initialize(job)
-    @unpostedjobreport = UnpostedJobReport.new(job)
-    super(@unpostedjobreport)
-  end
+class PostedJobReport < UnpostedJobReport
 end
 
 class SavedJobListReport < JobListReport
