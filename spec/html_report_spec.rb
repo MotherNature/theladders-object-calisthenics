@@ -77,3 +77,16 @@ describe HTMLJobseekerListReport do
     @jobseekers = JobseekerList.new([jobseeker1, jobseeker2])
   end
 end
+
+describe HTMLJobReport do
+  it "should report on the job's title" do
+    report = HTMLJobReport.new(@job)
+    html = report.render
+
+    html.should have_selector('.job .title', :content => 'A Job')
+  end
+
+  before(:each) do
+    @job = unposted_job
+  end
+end
