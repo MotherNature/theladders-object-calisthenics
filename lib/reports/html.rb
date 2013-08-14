@@ -8,3 +8,13 @@ class HTMLJobseekerReport
     %{<div class="jobseeker"><span class="name">Betsy J. Basic</span></div>}
   end
 end
+
+class HTMLJobseekerListReport
+  def initialize(jobseekers)
+  end
+
+  def render
+    %{<div class="jobseeker"><span class="name">Betsy J. Basic</span></div>} +
+    %{<div class="jobseeker"><span class="name">Anne Ditional</span></div>}
+  end
+end
