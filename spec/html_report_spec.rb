@@ -40,6 +40,7 @@ describe HTMLJobseekerListReport do
   it "should report on all the jobseekers' names" do
     report = HTMLJobseekerListReport.new(@jobseekers)
     html = report.render
+
     html.should have_selector('.jobseeker .name', :content => 'Betsy J. Basic')
     html.should have_selector('.jobseeker .name', :content => 'Anne Ditional')
   end
@@ -51,6 +52,7 @@ describe HTMLJobseekerListReport do
 
     report = HTMLJobseekerListReport.new(expanded_list)
     html = report.render
+
     html.should have_selector('.jobseeker .name', :content => 'Betsy J. Basic')
     html.should have_selector('.jobseeker .name', :content => 'Anne Ditional')
     html.should have_selector('.jobseeker .name', :content => 'Teresa Third')
@@ -63,6 +65,7 @@ describe HTMLJobseekerListReport do
 
     report = HTMLJobseekerListReport.new(new_list)
     html = report.render
+
     html.should have_selector('.jobseeker .name', :content => 'Freda First')
     html.should_not have_selector('.jobseeker .name', :content => 'Anne Ditional')
     html.should_not have_selector('.jobseeker .name', :content => 'Teresa Third')
