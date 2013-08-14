@@ -60,18 +60,6 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
   end
 end
 
-describe "Jobs, when displayed, should be displayed with a title and the name of the employer who posted it" do
-  describe JobReport do
-    it "should list the job title and the name of the employer that posted it" do
-      @report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]"
-    end
-
-    before(:each) do
-      @report = JobReport.new(posted_job)
-    end
-  end
-end
-
 describe "Jobseekers should be able to see a listing of jobs they have saved for later viewing" do
   describe SavedJobListReport do
     it "should list the jobs saved by a jobseeker" do
