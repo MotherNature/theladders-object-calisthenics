@@ -23,6 +23,14 @@ end
 
 class HTMLJobReport < JobReport
   def render
-    %{<div class="job"><span class="title">#{job_title}</span></div>}
+    %{<div class="job"><span class="title">#{job_title}</span>#{employer_html}</div>}
+  end
+
+  private
+
+  def employer_html
+    if(employer_name) # TODO: route around null check
+      %{<span class="employer"><span class="name">#{employer_name}</span></span>}
+    end
   end
 end
