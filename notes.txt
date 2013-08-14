@@ -31,3 +31,7 @@ TODO: Rename JobseekerAndJobsReport into SubmissionReport, same for correspondin
 TODO: Push fix for typo on "Rule 1" of OC README.
 
 TODO: Rename #to_string methods to #render, possibly giving them an object parameter to which they would render (latter's probably overkill for a model exercise).
+
+
+TODO: More "as an X" framing of requirements. Extract implicit roles from those.
+  Make sure that your verbs follow that pattern. _Active_ verbs, _not_ passive ones.

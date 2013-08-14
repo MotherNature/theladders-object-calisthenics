@@ -20,9 +20,10 @@ RSpec.configure do |klass|
   klass.include Helpers
 end
 
-
 describe AnyPostedByFilter do
-  describe JobseekerList do
+  # TODO: Swap filter language around
+  # Example: employer.find_applications_for_my_jobs_in(application_list)
+  describe JobseekerList do # TODO: Filter a SubmissionList instead of a JobseekerList
     it "should filter down to jobseekers who have applied to jobs posted by the given job-poster" do
       filtered_list = @jobseekers.filtered_by([@posted_by])
 
