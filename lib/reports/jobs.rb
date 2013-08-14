@@ -2,7 +2,8 @@ require 'jobs'
 
 module JobStringFormatter
   def job_properties_as_string(job_title: nil, employer_name: nil)
-    "Job[Title: #{job_title}][Employer: #{employer_name}]"
+    employer_string = employer_name ? "[Employer: #{employer_name}]" : ""
+    "Job[Title: #{job_title}]#{employer_string}"
   end
 end
 
@@ -57,7 +58,7 @@ class UnpostedJobReport < Report
   end
 
   def render
-    job_properties_as_string(job_title: job_title, employer_name: employer_name)
+    job_properties_as_string(job_title: job_title)
   end
 
   private
@@ -75,6 +76,10 @@ class PostedJobReport < UnpostedJobReport
 
   upon_receiving :employer_name do |name|
     @name = name
+  end
+
+  def render
+    job_properties_as_string(job_title: job_title, employer_name: poster_name)
   end
 
   private
