@@ -72,8 +72,15 @@ class JobReport < Report
   end
 
   def employer_name
+    poster_name
+  end
+
+  def poster_name
     @name
   end
+end
+
+class PostedJobReport < JobReport
 end
 
 class SavedJobListReport < JobListReport
