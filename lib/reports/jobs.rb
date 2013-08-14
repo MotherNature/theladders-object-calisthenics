@@ -1,9 +1,11 @@
 require 'jobs'
 
 module JobStringFormatter
-  def job_properties_as_string(job_title: nil, employer_name: nil)
-    employer_string = employer_name ? "[Employer: #{employer_name}]" : ""
-    "Job[Title: #{job_title}]#{employer_string}"
+  def job_properties_as_string(job_title: nil)
+    "Job[Title: #{job_title}]"
+  end
+  def employer_properties_as_string(employer_name: nil)
+    "[Employer: #{employer_name}]"
   end
 end
 
@@ -30,7 +32,7 @@ class JobListReport < Report
   def to_string
     job_count = @job_titles.size
     job_strings = (0...job_count).map do |index|
-      job_properties_as_string(job_title: @job_titles[index], employer_name: @employer_names[index])
+      job_properties_as_string(job_title: @job_titles[index]) + employer_properties_as_string(employer_name: @employer_names[index])
     end
     job_strings.join("\n")
   end
@@ -79,7 +81,9 @@ class PostedJobReport < UnpostedJobReport
   end
 
   def render
-    job_properties_as_string(job_title: job_title, employer_name: poster_name)
+    job_string = super
+
+    "#{job_string}[Employer: #{poster_name}]"
   end
 
   private
