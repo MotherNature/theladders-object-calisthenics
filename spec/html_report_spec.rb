@@ -35,3 +35,18 @@ describe HTMLJobseekerReport do
     @jobseeker = basic_jobseeker
   end
 end
+
+describe HTMLJobseekerListReport do
+  it "should report on all the jobseekers' names" do
+    report = HTMLJobseekerListReport.new(@jobseekers)
+    html = report.render
+    html.should have_selector('.jobseeker .name', :content => 'Betsy J. Basic')
+    html.should have_selector('.jobseeker .name', :content => 'Anne Ditional')
+  end
+
+  before(:each) do
+    jobseeker1 = basic_jobseeker
+    jobseeker2 = basic_jobseeker(name: "Anne Ditional")
+    @jobseekers = JobseekerList.new([jobseeker1, jobseeker2])
+  end
+end
