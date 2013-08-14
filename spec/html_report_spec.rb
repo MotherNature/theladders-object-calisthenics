@@ -16,14 +16,19 @@ require 'submissions'
 
 require 'helpers'
 
+require 'webrat'
+
 RSpec.configure do |klass|
   klass.include Helpers
+  klass.include Webrat::Methods
+  klass.include Webrat::Matchers
 end
 
 describe HTMLJobseekerReport do
   it "should report on the jobseeker's name" do
     report = HTMLJobseekerReport.new(@jobseeker)
-    pending
+    html = report.render
+    html.should have_selector('.jobseeker .name', :content => 'Betsy J. Basic')
   end
 
   before(:each) do
