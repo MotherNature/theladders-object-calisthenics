@@ -22,6 +22,11 @@ end
 
 describe HTMLJobseekerReport do
   it "should report on the jobseeker's name" do
+    report = HTMLJobseekerReport.new(@jobseeker)
     pending
+  end
+
+  before(:each) do
+    @jobseeker = basic_jobseeker
   end
 end
