@@ -56,7 +56,7 @@ class UnpostedJobReport < Report
     @title = title
   end
 
-  def to_string
+  def render
     job_properties_as_string(job_title: job_title, employer_name: employer_name)
   end
 

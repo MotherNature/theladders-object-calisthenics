@@ -24,7 +24,7 @@ end
 describe "Jobs, when displayed, should be displayed with a title and the name of the employer who posted it" do
   describe TextPostedJobReport do
     it "should list the job title and the name of the employer that posted it" do
-      @report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]"
+      @report.render.should == "Job[Title: A Job][Employer: Erin Employ]"
     end
 
     before(:each) do
