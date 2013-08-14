@@ -10,9 +10,10 @@ class JobListReport < Report
   include JobStringFormatter
 
   def initialize(list)
-    @list = list
     @job_titles = []
     @employer_names = []
+
+    prepare_report(list)
   end
 
   reports_on :jobs
@@ -26,15 +27,19 @@ class JobListReport < Report
   end
 
   def to_string
-    @list.each do |item|
-      item.report_to(self)
-    end
-
     job_count = @job_titles.size
     job_strings = (0...job_count).map do |index|
       job_properties_as_string(job_title: @job_titles[index], employer_name: @employer_names[index])
     end
     job_strings.join("\n")
+  end
+
+  private
+
+  def prepare_report(list)
+    list.each do |item|
+      item.report_to(self)
+    end
   end
 end
 
@@ -42,9 +47,10 @@ class JobReport < Report
   include JobStringFormatter
 
   def initialize(job)
-    @job = job
     @title = nil
     @name = nil
+
+    job.report_to(self)
   end
 
   when_reporting :job_title do |title|
@@ -56,8 +62,6 @@ class JobReport < Report
   end
 
   def to_string
-    @job.report_to(self)
-
     job_properties_as_string(job_title: @title, employer_name: @name)
   end
 end
