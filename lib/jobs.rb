@@ -38,7 +38,7 @@ class PostedJob < SimpleDelegator
   end
 
   def report_to(reportable)
-    redirectee.report_to(reportable)
+    delegatee.report_to(reportable)
     @poster.report_to(reportable)
   end
 
@@ -64,7 +64,7 @@ class SavedJob < SimpleDelegator
 
   def report_to(reportable)
     if(reportable.respond_to?(:report_saved_jobs))
-      redirectee.report_to(reportable)
+      delegatee.report_to(reportable)
     end
   end
 end
