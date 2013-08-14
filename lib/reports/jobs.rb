@@ -59,10 +59,6 @@ class UnpostedJobReport < Report
     @title = title
   end
 
-  def render
-    job_properties_as_string(job_title: job_title)
-  end
-
   private
 
   def job_title
@@ -78,12 +74,6 @@ class PostedJobReport < UnpostedJobReport
 
   upon_receiving :employer_name do |name|
     @name = name
-  end
-
-  def render
-    job_string = super
-
-    "#{job_string}[Employer: #{poster_name}]"
   end
 
   private
