@@ -10,9 +10,8 @@ class JobseekerReport < Report
   include JobseekerStringFormatter
 
   def initialize(jobseeker)
-    @jobseeker = jobseeker
     @name = ""
-    @jobseeker.report_to(self)
+    jobseeker.report_to(self)
   end
 
   upon_receiving :jobseeker_name do |name|
