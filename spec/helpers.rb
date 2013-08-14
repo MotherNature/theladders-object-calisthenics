@@ -15,13 +15,17 @@ module Helpers
     job = poster.post_job(unposted_job)
   end
 
+  def basic_jobseeker(name: "Betsy J. Basic")
+    jobseeker = Jobseeker.new(name: Name.new(name))
+  end
+
   def saving_jobseeker(name: "Sally Saver")
-    jobseeker = Jobseeker.new(name: name)
+    jobseeker = basic_jobseeker(name: name)
     jobseeker.take_on_role(JobSaver)
   end
 
   def applying_jobseeker(name: "Jane Jobseek")
-    jobseeker = Jobseeker.new(name: Name.new(name))
+    jobseeker = basic_jobseeker(name: name)
     jobseeker.take_on_role(JobApplier)
   end
 end
