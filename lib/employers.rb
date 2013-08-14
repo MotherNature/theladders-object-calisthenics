@@ -3,7 +3,7 @@ require 'jobs'
 
 class Employer
   include Reports
-  include RoleTaker
+  include TakesRoles
   
   def initialize(name: nil)
     @name = name

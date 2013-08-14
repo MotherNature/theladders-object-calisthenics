@@ -1,4 +1,4 @@
-module RoleTaker # Rename to TakesRoles
+module TakesRoles # Rename to TakesRoles
   def take_on_role(role_module)
     extend role_module
   end

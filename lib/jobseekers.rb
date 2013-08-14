@@ -2,7 +2,7 @@ require 'submissions'
 require 'resumes'
 
 class Jobseeker
-  include RoleTaker
+  include TakesRoles
   include Reports
 
   def initialize(name: nil)
