@@ -11,3 +11,6 @@ class TextPostedJobReport < PostedJobReport
     "Job[Title: #{job_title}][Employer: #{poster_name}]"
   end
 end
+
+class TextSavedJobListReport < SavedJobListReport
+end
