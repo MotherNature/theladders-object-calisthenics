@@ -30,3 +30,4 @@ TODO: Rename JobseekerAndJobsReport into SubmissionReport, same for correspondin
 
 TODO: Push fix for typo on "Rule 1" of OC README.
 
+TODO: Rename #to_string methods to #render, possibly giving them an object parameter to which they would render (latter's probably overkill for a model exercise).

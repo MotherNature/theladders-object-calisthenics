@@ -56,6 +56,18 @@ describe HTMLJobseekerListReport do
     html.should have_selector('.jobseeker .name', :content => 'Teresa Third')
   end
 
+  it "should report on all the jobseekers' names for a fresh list of jobseekers" do
+    new_jobseeker = basic_jobseeker(name: "Freda First")
+
+    new_list = JobseekerList.new([new_jobseeker])
+
+    report = HTMLJobseekerListReport.new(new_list)
+    html = report.render
+    html.should have_selector('.jobseeker .name', :content => 'Freda First')
+    html.should_not have_selector('.jobseeker .name', :content => 'Anne Ditional')
+    html.should_not have_selector('.jobseeker .name', :content => 'Teresa Third')
+  end
+
   before(:each) do
     jobseeker1 = basic_jobseeker
     jobseeker2 = basic_jobseeker(name: "Anne Ditional")
