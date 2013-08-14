@@ -18,11 +18,11 @@ class JobListReport < Report
 
   reports_on :jobs
 
-  when_reporting :job_title do |title|
+  upon_receiving :job_title do |title|
     @job_titles.push(title)
   end
 
-  when_reporting :employer_name do |name|
+  upon_receiving :employer_name do |name|
     @employer_names.push(name)
   end
 
@@ -53,11 +53,11 @@ class JobReport < Report
     job.report_to(self)
   end
 
-  when_reporting :job_title do |title|
+  upon_receiving :job_title do |title|
     @title = title
   end
 
-  when_reporting :employer_name do |name|
+  upon_receiving :employer_name do |name|
     @name = name
   end
 

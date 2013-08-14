@@ -15,7 +15,7 @@ class JobseekerReport < Report
     @jobseeker.report_to(self)
   end
 
-  when_reporting :jobseeker_name do |name|
+  upon_receiving :jobseeker_name do |name|
     @name = name
   end
 
