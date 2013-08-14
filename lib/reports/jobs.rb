@@ -80,7 +80,16 @@ class JobReport < Report
   end
 end
 
-class PostedJobReport < JobReport
+class UnpostedJobReport < JobReport
+end
+
+class PostedJobReport < SimpleDelegator
+  include HumanReadableDelegation
+
+  def initialize(job)
+    @unpostedjobreport = UnpostedJobReport.new(job)
+    super(@unpostedjobreport)
+  end
 end
 
 class SavedJobListReport < JobListReport
