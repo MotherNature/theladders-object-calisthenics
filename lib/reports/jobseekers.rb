@@ -19,7 +19,13 @@ class JobseekerReport < Report
   end
 
   def to_string
-    jobseeker_properties_as_string(jobseeker_name: @name)
+    jobseeker_properties_as_string(jobseeker_name: jobseeker_name)
+  end
+
+  private
+
+  def jobseeker_name
+    @name
   end
 end
 
