@@ -24,34 +24,39 @@ class JobseekerAndJobsReport < Report
   include JobStringFormatter
 
   def initialize(jobseeker)
-    @jobseeker = jobseeker
+    prepare_subreports(jobseeker)
   end
 
   def to_string
-    jobseekerlist = JobseekerList.new([@jobseeker])
+    job_rows = @joblistreport.to_string
 
-    joblistreport = JobListReport.new(jobseekerlist)
-
-    job_rows = joblistreport.to_string
-
-    jobseekerreport = JobseekerReport.new(@jobseeker)
-
-    jobseeker_row = jobseekerreport.to_string
+    jobseeker_row = @jobseekerreport.to_string
 
     [jobseeker_row, job_rows].join("\n")
+  end
+
+  private
+
+  def prepare_subreports(jobseeker)
+    jobseekerlist = JobseekerList.new([jobseeker])
+
+    @joblistreport = JobListReport.new(jobseekerlist)
+
+    @jobseekerreport = JobseekerReport.new(jobseeker)
   end
 end
 
 class JobseekersAndJobsListReport < Report
   def initialize(list)
-    @list = list
+    @sub_reports = list.map do |jobseeker|
+      JobseekerAndJobsReport.new(jobseeker)
+    end
   end
 
   def to_string
     reports = [ ]
 
-    @list.each do |jobseeker|
-      report = JobseekerAndJobsReport.new(jobseeker)
+    @sub_reports.each do |report|
       report_as_string = report.to_string
       reports.push(report_as_string)
     end
