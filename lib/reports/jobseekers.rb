@@ -12,6 +12,7 @@ class JobseekerReport < Report
   def initialize(jobseeker)
     @jobseeker = jobseeker
     @name = ""
+    @jobseeker.report_to(self)
   end
 
   when_reporting :jobseeker_name do |name|
@@ -19,7 +20,6 @@ class JobseekerReport < Report
   end
 
   def to_string
-    @jobseeker.report_to(self)
     jobseeker_properties_as_string(jobseeker_name: @name)
   end
 end
@@ -27,11 +27,13 @@ end
 class JobseekerListReport < Report
   def initialize(list)
     @list = list
+    @sub_reports = @list.map do |jobseeker|
+      JobseekerReport.new(jobseeker)
+    end
   end
 
   def to_string
-    formatted_strings = @list.map do |jobseeker|
-      report = JobseekerReport.new(jobseeker)
+    formatted_strings = @sub_reports.map do |report|
       report.to_string
     end
 
@@ -55,10 +57,10 @@ end
 class JobseekerApplicationsReport
   def initialize(list)
     @list = list
+    @sub_report = JobListReport.new(@list)
   end
 
   def to_string
-    report = JobListReport.new(@list)
-    report.to_string
+    @sub_report.to_string
   end
 end
