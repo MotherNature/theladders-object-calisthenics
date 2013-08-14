@@ -23,6 +23,6 @@ end
 
 class HTMLJobReport < JobReport
   def render
-    %{<div class="job"><span class="title">#{@title}</span></div>}
+    %{<div class="job"><span class="title">#{job_title}</span></div>}
   end
 end

@@ -62,7 +62,17 @@ class JobReport < Report
   end
 
   def to_string
-    job_properties_as_string(job_title: @title, employer_name: @name)
+    job_properties_as_string(job_title: job_title, employer_name: employer_name)
+  end
+
+  private
+
+  def job_title
+    @title
+  end
+
+  def employer_name
+    @name
   end
 end
 
