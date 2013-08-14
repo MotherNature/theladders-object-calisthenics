@@ -20,3 +20,9 @@ class HTMLJobseekerListReport
     rendered_parts.join
   end
 end
+
+class HTMLJobReport < JobReport
+  def render
+    %{<div class="job"><span class="title">#{@title}</span></div>}
+  end
+end
