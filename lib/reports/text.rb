@@ -12,5 +12,8 @@ class TextPostedJobReport < PostedJobReport
   end
 end
 
+class TextJobListReport < JobListReport
+end
+
 class TextSavedJobListReport < SavedJobListReport
 end
