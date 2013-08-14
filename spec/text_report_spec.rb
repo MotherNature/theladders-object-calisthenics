@@ -22,6 +22,16 @@ RSpec.configure do |klass|
 end
 
 describe "Jobs, when displayed, should be displayed with a title and the name of the employer who posted it" do
+  describe TextUnpostedJobReport do
+    it "should list the job title" do
+      @report.render.should == "Job[Title: A Job]"
+    end
+
+    before(:each) do
+      @report = TextUnpostedJobReport.new(posted_job)
+    end
+  end
+
   describe TextPostedJobReport do
     it "should list the job title and the name of the employer that posted it" do
       @report.render.should == "Job[Title: A Job][Employer: Erin Employ]"
