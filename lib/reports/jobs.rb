@@ -48,17 +48,12 @@ class UnpostedJobReport < Report
 
   def initialize(job)
     @title = nil
-    @name = nil
 
     job.report_to(self)
   end
 
   upon_receiving :job_title do |title|
     @title = title
-  end
-
-  upon_receiving :employer_name do |name|
-    @name = name
   end
 
   def to_string
@@ -70,6 +65,19 @@ class UnpostedJobReport < Report
   def job_title
     @title
   end
+end
+
+class PostedJobReport < UnpostedJobReport
+  def initialize(job)
+    @name = nil
+    super(job)
+  end
+
+  upon_receiving :employer_name do |name|
+    @name = name
+  end
+
+  private
 
   def employer_name
     poster_name
@@ -78,9 +86,6 @@ class UnpostedJobReport < Report
   def poster_name
     @name
   end
-end
-
-class PostedJobReport < UnpostedJobReport
 end
 
 class SavedJobListReport < JobListReport
