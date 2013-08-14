@@ -44,6 +44,18 @@ describe HTMLJobseekerListReport do
     html.should have_selector('.jobseeker .name', :content => 'Anne Ditional')
   end
 
+  it "should report on all the jobseekers' names, including just-added jobseekers" do
+    new_jobseeker = basic_jobseeker(name: "Teresa Third")
+
+    expanded_list = @jobseekers.with(new_jobseeker)
+
+    report = HTMLJobseekerListReport.new(expanded_list)
+    html = report.render
+    html.should have_selector('.jobseeker .name', :content => 'Betsy J. Basic')
+    html.should have_selector('.jobseeker .name', :content => 'Anne Ditional')
+    html.should have_selector('.jobseeker .name', :content => 'Teresa Third')
+  end
+
   before(:each) do
     jobseeker1 = basic_jobseeker
     jobseeker2 = basic_jobseeker(name: "Anne Ditional")
