@@ -13,6 +13,10 @@ class Jobseeker
     Resume.new(created_by: self)
   end
 
+  def as_reportable
+    { name: @name.as_reportable }
+  end
+
   when_reporting :jobseeker_name do |reportable|
     @name.report_name_to(reportable)
   end
