@@ -29,13 +29,15 @@ class JobListReport < Report
     @employer_names.push(name)
   end
 
-  def to_string
+  def render
     job_count = @job_titles.size
     job_strings = (0...job_count).map do |index|
       job_properties_as_string(job_title: @job_titles[index]) + employer_properties_as_string(employer_name: @employer_names[index])
     end
     job_strings.join("\n")
   end
+
+  alias_method :to_string, :render
 
   private
 
