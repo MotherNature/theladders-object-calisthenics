@@ -162,9 +162,45 @@ class JobRepo
 end
 
 class JobApplierRole < Role
+  def initialize(apply_to_service: nil)
+    @service = apply_to_service
+  end
+
+  def apply_to_job(job: nil, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
+    if(with_resume.exists? && ! with_resume.belongs_to?(self))
+      return WrongJobseekersResumeSubmission.new(with_resume: with_resume, submitted_to: job)
+    end
+
+    # TODO: Should the validation happen here instead of the Submission class?
+    # TODO: Rename to Application
+    submission = Submission.new(with_resume: with_resume, submitted_to: job)
+
+    if(submission.valid?)
+      @service.save_job(job) # TODO: Refactor so that it's actually #apply_to, which will supply the Submission/Application
+    end
+
+    submission
+  end
+end
+
+class Application
+  def as_reportable
+    OpenStruct.new
+  end
+end
+
+class ApplicationList < List
+  def as_reportable
+  end
 end
 
 class ApplicationService
+  def save_job(job)
+  end
+
+  def applications_by(jobseeker)
+    ApplicationList.new
+  end
 end
 
 module JobApplier

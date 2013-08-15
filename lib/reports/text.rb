@@ -44,3 +44,12 @@ class TextJobseekerApplicationsReportGenerator < JobseekerApplicationsReportGene
     super(jobseeker, report_class: TextJobseekerApplicationsReport)
   end
 end
+
+class TextApplicationsJobsReport
+  def initialize(reportable)
+  end
+  
+  def render
+    ""
+  end
+end
