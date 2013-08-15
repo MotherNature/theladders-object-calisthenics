@@ -21,7 +21,6 @@ module Helpers
 
   def saving_jobseeker(name: "Sally Saver", save_to_repo: JobRepo.new)
     jobseeker = basic_jobseeker(name: name)
-    jobseeker.take_on_role(JobSaver) # TODO: Remove once we've made JobSaver a delegator
     jobs = JobList.new
     role = JobSaverRole.new(save_to_repo: save_to_repo)
     jobseeker.with_role(role)

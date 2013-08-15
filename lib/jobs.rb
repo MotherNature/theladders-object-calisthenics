@@ -135,32 +135,6 @@ module JobPoster
   end
 end
 
-module JobSaver
-  include Reports
-
-  def save_job(job)
-    @saved_jobs ||= JobList.new
-    savedjob = SavedJob.new(job: job)
-    @saved_jobs = @saved_jobs.with(savedjob)
-  end
-
-  when_reporting :jobs do |reportable|
-    @saved_jobs ||= JobList.new
-
-    @saved_jobs.each do |job|
-      job.report_to(reportable)
-    end
-  end
-
-  def as_reportable
-    reportables = @saved_jobs.map do |job|
-      job.as_reportable
-    end
-    
-    OpenStruct.new(saved_jobs: reportables)
-  end
-end
-
 class JobSaverRole < SimpleDelegator
   include HumanReadableDelegation
 
