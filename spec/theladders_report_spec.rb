@@ -25,7 +25,7 @@ describe "Jobseekers should be able to see a listing of jobs they have saved for
     it "should list the jobs saved by a jobseeker" do
       jobseekers = JobseekerList.new([@jobseeker])
       report = SavedJobListReport.new(jobseekers)
-      report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]"
+      report.render.should == "Job[Title: A Job][Employer: Erin Employ]"
     end
   end
 
