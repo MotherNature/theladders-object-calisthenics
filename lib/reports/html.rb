@@ -2,7 +2,7 @@ require 'jobseekers'
 
 class HTMLJobseekerReport < JobseekerReport
   def initialize(reportable)
-    @name = reportable[:name]
+    @name = reportable.name
   end
 
   def render

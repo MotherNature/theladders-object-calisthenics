@@ -13,8 +13,10 @@ class Jobseeker
     Resume.new(created_by: self)
   end
 
+  Reportable = Struct.new(:name)
+
   def as_reportable
-    { name: @name.as_reportable }
+    Reportable.new(@name.as_reportable)
   end
 
   when_reporting :jobseeker_name do |reportable|
