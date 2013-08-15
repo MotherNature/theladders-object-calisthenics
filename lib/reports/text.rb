@@ -13,3 +13,9 @@ end
 
 class TextSavedJobListReport < SavedJobListReport
 end
+
+class TextJobseekerApplicationsReport < JobseekerApplicationsReport
+end
+
+class TextJobseekerApplicationsReportGenerator < JobseekerApplicationsReportGenerator
+end

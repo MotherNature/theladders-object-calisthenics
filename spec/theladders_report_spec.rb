@@ -20,46 +20,6 @@ RSpec.configure do |klass|
   klass.include Helpers
 end
 
-describe "Jobseekers should be able to see a listing of the jobs for which they have applied" do
-  describe JobseekerApplicationsReport do
-    it "should list the jobs to which a given jobseeker has applied" do
-      reportgenerator = JobseekerApplicationsReportGenerator.new(@jobseeker)
-
-      report = reportgenerator.generate_from(@jobseekerlist)
-
-      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
-    end
-
-    it "should only list the jobs to which a given jobseeker has applied" do
-      reportgenerator = JobseekerApplicationsReportGenerator.new(@jobseeker)
-
-      report = reportgenerator.generate_from(@jobseekerlist)
-
-      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
-    end
-  end
-
-  before(:each) do
-    @jobseeker = applying_jobseeker
-    @other_jobseeker = applying_jobseeker
-
-    posted_job1 = posted_job(title: "Valid Job 1")
-    posted_job2 = posted_job(title: "Valid Job 2")
-
-    employer = posting_employer
-    other_job = unposted_job(title: "Invalid Job", type: JobType.ATS)
-
-    other_posted_job = employer.post_job(other_job)
-
-    @jobseeker.apply_to(job: posted_job1, with_resume: NoResume)
-    @jobseeker.apply_to(job: posted_job2, with_resume: NoResume)
-
-    @other_jobseeker.apply_to(job: other_posted_job, with_resume: NoResume)
-
-    @jobseekerlist = JobseekerList.new([@jobseeker, @other_jobseeker]) 
-  end
-end
-
 describe "Jobseekers should be able to see a listing of jobs they have saved for later viewing" do
   describe SavedJobListReport do
     it "should list the jobs saved by a jobseeker" do
