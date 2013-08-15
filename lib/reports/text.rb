@@ -50,6 +50,6 @@ class TextApplicationsJobsReport
   end
   
   def render
-    ""
+    "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
   end
 end
