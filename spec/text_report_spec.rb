@@ -52,7 +52,7 @@ describe "Jobseekers should be able to see a listing of jobs they have saved for
     it "should list the jobs saved by a jobseeker" do
       jobseekers = JobseekerList.new([@jobseeker])
       report = TextSavedJobListReport.new(jobseekers)
-      report.to_string.should == "Job[Title: A Job][Employer: Erin Employ]"
+      report.render.should == "Job[Title: A Job][Employer: Erin Employ]"
     end
   end
 
@@ -69,7 +69,7 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
       report = reportgenerator.generate_from(@jobseekerlist)
 
-      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
+      report.render.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
     end
 
     it "should only list the jobs to which a given jobseeker has applied" do
@@ -77,7 +77,7 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
       report = reportgenerator.generate_from(@jobseekerlist)
 
-      report.to_string.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
+      report.render.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
     end
   end
 
