@@ -1,6 +1,6 @@
 require 'jobseekers'
 
-class HTMLJobseekerReport < JobseekerReport
+class HTMLJobseekerReport
   def initialize(reportable)
     @name = reportable.name
   end
