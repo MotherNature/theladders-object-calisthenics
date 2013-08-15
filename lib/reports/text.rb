@@ -11,7 +11,21 @@ end
 class TextJobListReport < JobListReport
 end
 
-class TextSavedJobListReport < SavedJobListReport
+class TextJobseekersSavedJobsReport
+  def initialize(reportable)
+    job_reportables = reportable.saved_jobs
+    @sub_reports = job_reportables.map do |job_reportable|
+      TextJobReport.new(job_reportable)
+    end
+  end
+
+  def render
+    rendered = @sub_reports.map do |report|
+      report.render
+    end
+
+    rendered.join("\n")
+  end
 end
 
 class TextJobseekerApplicationsReport

@@ -145,13 +145,25 @@ module JobSaver
     end
   end
 
-
   def as_reportable
     reportables = @saved_jobs.map do |job|
       job.as_reportable
     end
     
     OpenStruct.new(saved_jobs: reportables)
+  end
+end
+
+class JobSaverRole < SimpleDelegator
+  include HumanReadableDelegation
+
+  def initialize(save_to_list: nil)
+    @savedjoblist = save_to_list
+    super(nil)
+  end
+
+  def delegate_to(new_delegatee)
+    self.delegatee = new_delegatee
   end
 end
 
