@@ -71,8 +71,9 @@ end
 class SavedJob < SimpleDelegator
   include HumanReadableDelegation
 
-  def initialize(job: nil)
+  def initialize(job: nil, saved_by: nil)
     super(job)
+    @saved_by = saved_by
   end
 
   def report_to(reportable)
@@ -83,6 +84,12 @@ class SavedJob < SimpleDelegator
 end
 
 class JobList < List
+  def as_reportable
+    job_reportables = self.map do |job|
+      job.as_reportable
+    end
+    OpenStruct.new(jobs: job_reportables)
+  end
 end
 
 class PostedJobFilter
@@ -157,13 +164,32 @@ end
 class JobSaverRole < SimpleDelegator
   include HumanReadableDelegation
 
-  def initialize(save_to_list: nil)
-    @savedjoblist = save_to_list
+  def initialize(save_to_repo: nil)
+    @repo = save_to_repo 
     super(nil)
+  end
+
+  def save_job(job)
+    savedjob = SavedJob.new(job: job, saved_by: self)
+    @repo.add_job(savedjob)
   end
 
   def delegate_to(new_delegatee)
     self.delegatee = new_delegatee
+  end
+end
+
+class JobRepo
+  def initialize
+    @jobs = JobList.new
+  end
+
+  def add_job(job)
+    @jobs = @jobs.with(job)
+  end
+
+  def contents_as_reportable
+    @jobs.as_reportable
   end
 end
 
