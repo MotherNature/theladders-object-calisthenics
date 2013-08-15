@@ -26,8 +26,10 @@ module Helpers
     jobseeker.with_role(role)
   end
 
-  def applying_jobseeker(name: "Jane Jobseek")
+  def applying_jobseeker(name: "Jane Jobseek", apply_to_service: ApplicationService.new)
     jobseeker = basic_jobseeker(name: name)
     jobseeker.take_on_role(JobApplier)
+    role = JobApplierRole.new(apply_to_service: apply_to_service)
+    jobseeker.with_role(role)
   end
 end
