@@ -79,7 +79,7 @@ class Report
   end
 end
 
-class ReportableJobReport
+class JobReport
   def initialize(reportable)
     @title = reportable.title
     if(reportable.posted)

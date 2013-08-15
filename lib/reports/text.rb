@@ -1,6 +1,6 @@
 require 'jobseekers'
 
-class TextJobReport < ReportableJobReport
+class TextJobReport < JobReport
   def render
     job_string = "Job[Title: #{@title}]"
     employer_string = @employer_name ? "[Employer: #{@employer_name}]" : ""
