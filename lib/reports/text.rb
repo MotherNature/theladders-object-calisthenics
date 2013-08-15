@@ -1,14 +1,10 @@
 require 'jobseekers'
 
-class TextUnpostedJobReport < UnpostedJobReport
+class TextJobReport < ReportableJobReport
   def render
-    "Job[Title: #{job_title}]"
-  end
-end
-
-class TextPostedJobReport < PostedJobReport
-  def render
-    "Job[Title: #{job_title}][Employer: #{poster_name}]"
+    job_string = "Job[Title: #{@title}]"
+    employer_string = @employer_name ? "[Employer: #{@employer_name}]" : ""
+    "#{job_string}#{employer_string}"
   end
 end
 
