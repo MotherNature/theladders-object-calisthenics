@@ -13,7 +13,7 @@ end
 
 class TextJobseekersSavedJobsReport
   def initialize(reportable)
-    job_reportables = reportable.saved_jobs
+    job_reportables = reportable.jobs
     @sub_reports = job_reportables.map do |job_reportable|
       TextJobReport.new(job_reportable)
     end
