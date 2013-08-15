@@ -61,11 +61,14 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
     end
 
     it "should only list the jobs to which a given jobseeker has applied" do
-      applications = @applicationservice.applications_by(@jobseeker)
+      new_job = posted_job(title: "New Job")
+      new_jobseeker = applying_jobseeker(apply_to_service: @applicationservice)
+
+      applications = @applicationservice.applications_by(new_jobseeker)
 
       report = TextApplicationsJobsReport.new(applications)
 
-      report.render.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
+      report.render.should == "Job[Title: New Job][Employer: Erin Employ]"
     end
   end
 
