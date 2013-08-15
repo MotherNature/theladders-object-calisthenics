@@ -5,6 +5,7 @@ module TakesRoles # Rename to TakesRoles
 
   def with_role(role)
     role.delegate_to(self)
+    role
   end
 end
 
