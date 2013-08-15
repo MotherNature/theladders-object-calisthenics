@@ -26,10 +26,6 @@ class TextJobseekerApplicationsReport
   def render
     @sub_report.to_string
   end
-
-  def to_string
-    render
-  end
 end
 
 class TextJobseekerApplicationsReportGenerator < JobseekerApplicationsReportGenerator
