@@ -98,7 +98,7 @@ describe "Jobseekers should be able to see a listing of jobs they have saved for
   before(:each) do
     job = posted_job(title: "Posted Job")
     jobseeker = saving_jobseeker
-    jobseeker.save_job(posted_job)
+    jobseeker.save_job(job)
     @reportable = jobseeker.as_reportable
   end
 end
