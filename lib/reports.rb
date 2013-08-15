@@ -78,3 +78,13 @@ class Report
     define_method(method_name, &block)
   end
 end
+
+class ReportableJobReport
+  def initialize(reportable)
+    @title = reportable.title
+    if(reportable.posted)
+      poster = reportable.poster
+      @employer_name = poster.name
+    end
+  end
+end

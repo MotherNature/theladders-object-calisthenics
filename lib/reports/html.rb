@@ -26,15 +26,7 @@ class HTMLJobseekerListReport
   end
 end
 
-class HTMLPostedJobReport
-  def initialize(reportable)
-    @title = reportable.title
-    if(reportable.posted)
-      poster = reportable.poster
-      @employer_name = poster.name
-    end
-  end
-
+class HTMLPostedJobReport < ReportableJobReport
   def render
     %{<div class="job"><span class="title">#{@title}</span>#{employer_html}</div>}
   end
