@@ -1,3 +1,5 @@
+require 'ostruct'
+
 require 'utilities'
 require 'reports'
 
@@ -16,6 +18,10 @@ class UnpostedJob
 
   def posted?
     false
+  end
+
+  def as_reportable
+    OpenStruct.new(title: @title.as_reportable, posted: posted?)
   end
 
   when_filtering_by :posted do |filter|
@@ -44,6 +50,13 @@ class PostedJob < SimpleDelegator
 
   def posted?
     true
+  end
+
+  def as_reportable
+    reportable = super
+    reportable.posted = posted?
+    reportable.poster = @poster.as_reportable
+    reportable
   end
 
   when_filtering_by :posted do |filter|

@@ -23,6 +23,10 @@ class Title
     @title = title_string
   end
 
+  def as_reportable
+    @title
+  end
+
   when_reporting :title do |reportable|
     @title
   end
