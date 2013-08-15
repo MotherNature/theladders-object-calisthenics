@@ -1,6 +1,10 @@
 module TakesRoles # Rename to TakesRoles
-  def take_on_role(role_module)
+  def take_on_role(role_module) # TODO: Remove once we've made all roles into delegators
     extend role_module
+  end
+
+  def with_role(role)
+    role.delegate_to(self)
   end
 end
 
@@ -58,6 +62,7 @@ module HumanReadableDelegation
   def self.included(mod)
     mod.class_eval do
       alias_method :delegatee, :__getobj__
+      alias_method :delegatee=, :__setobj__
     end
   end
 end
