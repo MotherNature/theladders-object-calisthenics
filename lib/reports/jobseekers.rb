@@ -47,7 +47,7 @@ class JobseekerListReport < Report
 end
 
 class JobseekerApplicationsReportGenerator 
-  def initialize(jobseeker, report_class=JobseekerApplicationsReport)
+  def initialize(jobseeker, report_class: nil)
     @jobseeker = jobseeker
     @report_class = report_class
   end
@@ -57,16 +57,5 @@ class JobseekerApplicationsReportGenerator
       @jobseeker == jobseeker
     end
     return @report_class.new(filtered_list)
-  end
-end
-
-class JobseekerApplicationsReport
-  def initialize(list)
-    @list = list
-    @sub_report = JobListReport.new(@list)
-  end
-
-  def to_string
-    @sub_report.to_string
   end
 end

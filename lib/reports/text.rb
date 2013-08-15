@@ -14,8 +14,19 @@ end
 class TextSavedJobListReport < SavedJobListReport
 end
 
-class TextJobseekerApplicationsReport < JobseekerApplicationsReport
+class TextJobseekerApplicationsReport
+  def initialize(list)
+    @list = list
+    @sub_report = JobListReport.new(@list)
+  end
+
+  def to_string
+    @sub_report.to_string
+  end
 end
 
 class TextJobseekerApplicationsReportGenerator < JobseekerApplicationsReportGenerator
+  def initialize(jobseeker)
+    super(jobseeker, report_class: TextJobseekerApplicationsReport)
+  end
 end
