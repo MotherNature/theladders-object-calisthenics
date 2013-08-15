@@ -1,15 +1,20 @@
 require 'jobseekers'
 
 class HTMLJobseekerReport < JobseekerReport
+  def initialize(reportable)
+    @name = reportable[:name]
+  end
+
   def render
-    %{<div class="jobseeker"><span class="name">#{jobseeker_name}</span></div>}
+    %{<div class="jobseeker"><span class="name">#{@name}</span></div>}
   end
 end
 
 class HTMLJobseekerListReport
   def initialize(jobseekers)
     @sub_reports = jobseekers.map do |jobseeker|
-      HTMLJobseekerReport.new(jobseeker)
+      reportable = jobseeker.as_reportable
+      HTMLJobseekerReport.new(reportable)
     end
   end
 
