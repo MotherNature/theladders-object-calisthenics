@@ -48,26 +48,32 @@ describe "Jobs, when displayed, should be displayed with a title and the name of
 end
 
 describe "Jobseekers should be able to see a listing of the jobs for which they have applied" do
-  describe TextJobseekerApplicationsReport do
+  describe TextApplicationsJobsReport do
     it "should list the jobs to which a given jobseeker has applied" do
-      reportgenerator = TextJobseekerApplicationsReportGenerator.new(@jobseeker)
+      applications = @applicationservice.applications_by(@jobseeker)
 
-      report = reportgenerator.generate_from(@jobseekerlist)
+      applications_reportable = applications.as_reportable
+
+      report = TextApplicationsJobsReport.new(applications_reportable)
 
       report.render.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
     end
 
     it "should only list the jobs to which a given jobseeker has applied" do
-      reportgenerator = TextJobseekerApplicationsReportGenerator.new(@jobseeker)
+      applications = @applicationservice.applications_by(@jobseeker)
 
-      report = reportgenerator.generate_from(@jobseekerlist)
+      applications_reportable = applications.as_reportable
+
+      report = TextApplicationsJobsReport.new(applications_reportable)
 
       report.render.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
     end
   end
 
   before(:each) do
-    @jobseeker = applying_jobseeker
+    @applicationservice = ApplicationService.new
+
+    @jobseeker = applying_jobseeker(apply_to_service: @applicationservice)
     @other_jobseeker = applying_jobseeker
 
     posted_job1 = posted_job(title: "Valid Job 1")
@@ -78,10 +84,10 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
     other_posted_job = employer.post_job(other_job)
 
-    @jobseeker.apply_to(job: posted_job1, with_resume: NoResume)
-    @jobseeker.apply_to(job: posted_job2, with_resume: NoResume)
+    @jobseeker.apply_to_job(job: posted_job1, with_resume: NoResume)
+    @jobseeker.apply_to_job(job: posted_job2, with_resume: NoResume)
 
-    @other_jobseeker.apply_to(job: other_posted_job, with_resume: NoResume)
+    @other_jobseeker.apply_to_job(job: other_posted_job, with_resume: NoResume)
 
     @jobseekerlist = JobseekerList.new([@jobseeker, @other_jobseeker]) 
   end
