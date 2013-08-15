@@ -1,3 +1,20 @@
+module HumanReadableDelegation
+  def self.included(mod)
+    mod.class_eval do
+      alias_method :delegatee, :__getobj__
+      alias_method :delegatee=, :__setobj__
+    end
+  end
+end
+
+class Role < SimpleDelegator
+  include HumanReadableDelegation
+
+  def delegate_to(new_delegatee)
+    self.delegatee = new_delegatee
+  end
+end
+
 module TakesRoles # Rename to TakesRoles
   def take_on_role(role_module) # TODO: Remove once we've made all roles into delegators
     extend role_module
@@ -55,15 +72,6 @@ module Filterable
   def fails_no_tests(answers)
     answers.none? do |passed|
       passed == false
-    end
-  end
-end
-
-module HumanReadableDelegation
-  def self.included(mod)
-    mod.class_eval do
-      alias_method :delegatee, :__getobj__
-      alias_method :delegatee=, :__setobj__
     end
   end
 end

@@ -135,9 +135,7 @@ module JobPoster
   end
 end
 
-class JobSaverRole < SimpleDelegator
-  include HumanReadableDelegation
-
+class JobSaverRole < Role
   def initialize(save_to_repo: nil)
     @repo = save_to_repo 
     super(nil)
@@ -146,10 +144,6 @@ class JobSaverRole < SimpleDelegator
   def save_job(job)
     savedjob = SavedJob.new(job: job, saved_by: self)
     @repo.add_job(savedjob)
-  end
-
-  def delegate_to(new_delegatee)
-    self.delegatee = new_delegatee
   end
 end
 
@@ -165,6 +159,12 @@ class JobRepo
   def contents_as_reportable
     @jobs.as_reportable
   end
+end
+
+class JobApplierRole < Role
+end
+
+class ApplicationService
 end
 
 module JobApplier
