@@ -7,6 +7,10 @@ class Name
     @name = name_string
   end
 
+  def as_reportable
+    @name
+  end
+
   when_reporting :name do |reportable|
     @name
   end
