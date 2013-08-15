@@ -26,7 +26,7 @@ class HTMLJobseekerListReport
   end
 end
 
-class HTMLPostedJobReport < ReportableJobReport
+class HTMLJobReport < ReportableJobReport
   def render
     %{<div class="job"><span class="title">#{@title}</span>#{employer_html}</div>}
   end

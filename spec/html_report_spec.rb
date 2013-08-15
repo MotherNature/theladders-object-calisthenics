@@ -79,9 +79,9 @@ describe HTMLJobseekerListReport do
   end
 end
 
-describe HTMLPostedJobReport do
+describe HTMLJobReport do
   it "should report on the job's title" do
-    report = HTMLPostedJobReport.new(@unposted_reportable)
+    report = HTMLJobReport.new(@unposted_reportable)
 
     html = report.render
 
@@ -89,7 +89,7 @@ describe HTMLPostedJobReport do
   end
 
   it "should report on the poster's name if posted" do
-    report = HTMLPostedJobReport.new(@posted_reportable)
+    report = HTMLJobReport.new(@posted_reportable)
 
     html = report.render
 
