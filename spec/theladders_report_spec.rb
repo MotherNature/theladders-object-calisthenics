@@ -20,21 +20,6 @@ RSpec.configure do |klass|
   klass.include Helpers
 end
 
-describe "Jobseekers should be able to see a listing of jobs they have saved for later viewing" do
-  describe SavedJobListReport do
-    it "should list the jobs saved by a jobseeker" do
-      jobseekers = JobseekerList.new([@jobseeker])
-      report = SavedJobListReport.new(jobseekers)
-      report.render.should == "Job[Title: A Job][Employer: Erin Employ]"
-    end
-  end
-
-  before(:each) do
-    @jobseeker = saving_jobseeker
-    @jobseeker.save_job(posted_job)
-  end
-end
-
 describe "Employers should be able to see a listing of the jobs they have posted" do
   # TODO: Add tests that check for *expected* additions to the JobList (otherwise, the tests could pass with the class just returning a static string 
   describe EmployersPostedJobReportGenerator do
