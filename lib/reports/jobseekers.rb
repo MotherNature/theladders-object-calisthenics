@@ -47,15 +47,16 @@ class JobseekerListReport < Report
 end
 
 class JobseekerApplicationsReportGenerator 
-  def initialize(jobseeker)
+  def initialize(jobseeker, report_class=JobseekerApplicationsReport)
     @jobseeker = jobseeker
+    @report_class = report_class
   end
 
   def generate_from(list)
     filtered_list = list.select do |jobseeker|
       @jobseeker == jobseeker
     end
-    return JobseekerApplicationsReport.new(filtered_list)
+    return @report_class.new(filtered_list)
   end
 end
 
