@@ -28,7 +28,8 @@ describe "Jobs, when displayed, should be displayed with a title and the name of
     end
 
     before(:each) do
-      @report = TextUnpostedJobReport.new(posted_job)
+      reportable = unposted_job.as_reportable
+      @report = TextUnpostedJobReport.new(reportable)
     end
   end
 
@@ -38,7 +39,8 @@ describe "Jobs, when displayed, should be displayed with a title and the name of
     end
 
     before(:each) do
-      @report = TextPostedJobReport.new(posted_job)
+      reportable = posted_job.as_reportable
+      @report = TextPostedJobReport.new(reportable)
     end
   end
 end
