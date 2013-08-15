@@ -12,6 +12,9 @@ class TextJobListReport < JobListReport
 end
 
 class TextSavedJobListReport < SavedJobListReport
+  def render
+    to_string
+  end
 end
 
 class TextJobseekerApplicationsReport
@@ -20,8 +23,12 @@ class TextJobseekerApplicationsReport
     @sub_report = JobListReport.new(@list)
   end
 
-  def to_string
+  def render
     @sub_report.to_string
+  end
+
+  def to_string
+    render
   end
 end
 
