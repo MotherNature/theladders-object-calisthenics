@@ -27,10 +27,10 @@ class JobseekerAndJobsReport < Report
     prepare_subreports(jobseeker)
   end
 
-  def to_string
-    job_rows = @joblistreport.to_string
+  def render
+    job_rows = @joblistreport.render
 
-    jobseeker_row = @jobseekerreport.to_string
+    jobseeker_row = @jobseekerreport.render
 
     [jobseeker_row, job_rows].join("\n")
   end
@@ -53,11 +53,11 @@ class JobseekersAndJobsListReport < Report
     end
   end
 
-  def to_string
+  def render
     reports = [ ]
 
     @sub_reports.each do |report|
-      report_as_string = report.to_string
+      report_as_string = report.render
       reports.push(report_as_string)
     end
 

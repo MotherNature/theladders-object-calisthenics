@@ -12,9 +12,6 @@ class TextJobListReport < JobListReport
 end
 
 class TextSavedJobListReport < SavedJobListReport
-  def render
-    to_string
-  end
 end
 
 class TextJobseekerApplicationsReport
@@ -24,7 +21,7 @@ class TextJobseekerApplicationsReport
   end
 
   def render
-    @sub_report.to_string
+    @sub_report.render
   end
 end
 

@@ -18,7 +18,7 @@ class JobseekerReport < Report
     @name = name
   end
 
-  def to_string
+  def render
     jobseeker_properties_as_string(jobseeker_name: jobseeker_name)
   end
 
@@ -37,9 +37,9 @@ class JobseekerListReport < Report
     end
   end
 
-  def to_string
+  def render
     formatted_strings = @sub_reports.map do |report|
-      report.to_string
+      report.render
     end
 
     formatted_strings.join("\n")

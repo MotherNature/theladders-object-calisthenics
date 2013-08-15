@@ -37,8 +37,6 @@ class JobListReport < Report
     job_strings.join("\n")
   end
 
-  alias_method :to_string, :render
-
   private
 
   def prepare_report(list)
