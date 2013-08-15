@@ -81,14 +81,16 @@ end
 
 describe HTMLPostedJobReport do
   it "should report on the job's title" do
-    report = HTMLPostedJobReport.new(@unposted_job)
+    report = HTMLPostedJobReport.new(@unposted_reportable)
+
     html = report.render
 
     html.should have_selector('.job .title', :content => 'A Job')
   end
 
   it "should report on the poster's name if posted" do
-    report = HTMLPostedJobReport.new(@posted_job)
+    report = HTMLPostedJobReport.new(@posted_reportable)
+
     html = report.render
 
     html.should have_selector('.job .employer .name', :content => 'Patrick Post')
@@ -97,7 +99,7 @@ describe HTMLPostedJobReport do
   before(:each) do
     employer = posting_employer(name: "Patrick Post")
 
-    @unposted_job = unposted_job
-    @posted_job = posted_job(poster: employer)
+    @unposted_reportable = unposted_job.as_reportable
+    @posted_reportable = posted_job(poster: employer).as_reportable
   end
 end
