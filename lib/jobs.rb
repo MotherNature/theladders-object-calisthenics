@@ -144,6 +144,15 @@ module JobSaver
       job.report_to(reportable)
     end
   end
+
+
+  def as_reportable
+    reportables = @saved_jobs.map do |job|
+      job.as_reportable
+    end
+    
+    OpenStruct.new(saved_jobs: reportables)
+  end
 end
 
 module JobApplier
