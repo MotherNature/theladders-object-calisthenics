@@ -176,7 +176,7 @@ class JobApplierRole < Role
     submission = Submission.new(with_resume: with_resume, submitted_to: job)
 
     if(submission.valid?)
-      @service.save_job(job) # TODO: Refactor so that it's actually #apply_to, which will supply the Submission/Application
+      @service.apply_to_job(job) # TODO: Refactor so that it's actually #apply_to, which will supply the Submission/Application
     end
 
     submission
@@ -184,22 +184,31 @@ class JobApplierRole < Role
 end
 
 class Application
+  def initialize(for_job: nil)
+    @job = for_job
+  end
+
   def as_reportable
-    OpenStruct.new
+    job_reportable = @job.as_reportable
+    OpenStruct.new(job: job_reportable)
   end
 end
 
 class ApplicationList < List
-  def as_reportable
-  end
 end
 
 class ApplicationService
-  def save_job(job)
+  def initialize
+    @applications = ApplicationList.new
+  end
+
+  def apply_to_job(job)
+    application = Application.new(for_job: job)
+    @applications = @applications.with(application)
   end
 
   def applications_by(jobseeker)
-    ApplicationList.new
+    @applications
   end
 end
 

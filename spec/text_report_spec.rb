@@ -49,22 +49,21 @@ end
 
 describe "Jobseekers should be able to see a listing of the jobs for which they have applied" do
   describe TextApplicationsJobsReport do
-    it "should list the jobs to which a given jobseeker has applied" do
+    it "should list the jobs to which a given jobseeker has applied, including new ones" do
+      new_job = posted_job(title: "Valid Job 3")
+      @jobseeker.apply_to_job(job: new_job)
+
       applications = @applicationservice.applications_by(@jobseeker)
 
-      applications_reportable = applications.as_reportable
+      report = TextApplicationsJobsReport.new(applications)
 
-      report = TextApplicationsJobsReport.new(applications_reportable)
-
-      report.render.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
+      report.render.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]\nJob[Title: Valid Job 3][Employer: Erin Employ]"
     end
 
     it "should only list the jobs to which a given jobseeker has applied" do
       applications = @applicationservice.applications_by(@jobseeker)
 
-      applications_reportable = applications.as_reportable
-
-      report = TextApplicationsJobsReport.new(applications_reportable)
+      report = TextApplicationsJobsReport.new(applications)
 
       report.render.should == "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
     end

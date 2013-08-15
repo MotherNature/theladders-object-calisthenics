@@ -46,10 +46,18 @@ class TextJobseekerApplicationsReportGenerator < JobseekerApplicationsReportGene
 end
 
 class TextApplicationsJobsReport
-  def initialize(reportable)
+  def initialize(list)
+    @reports = list.map do |application|
+      application_reportable = application.as_reportable
+      job_reportable = application_reportable.job
+      TextJobReport.new(job_reportable)
+    end
   end
   
   def render
-    "Job[Title: Valid Job 1][Employer: Erin Employ]\nJob[Title: Valid Job 2][Employer: Erin Employ]"
+    rendered_reports = @reports.map do |report|
+      report.render
+    end
+    rendered_reports.join("\n")
   end
 end
