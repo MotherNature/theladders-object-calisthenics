@@ -32,6 +32,31 @@ TODO: Push fix for typo on "Rule 1" of OC README.
 
 TODO: Rename #to_string methods to #render, possibly giving them an object parameter to which they would render (latter's probably overkill for a model exercise).
 
+TODO: "Application" instead of "Submission". Maintain parity with the ubiquitous domain language.
 
 TODO: More "as an X" framing of requirements. Extract implicit roles from those.
   Make sure that your verbs follow that pattern. _Active_ verbs, _not_ passive ones.
+
+TODO: "TheLadders" will be an actor, too, so go ahead and have a class for it. (Per Joydip's example.)
+
+employer = employer.new(name: "X")
+
+role = JobPoster.new(post_to: posting_repo)
+
+posting_employer = employer.with_role(role)
+
+posting_employer.post_job(job)
+posting_employer.posted_job?(job) # Totally okay!
+
+TODO: Consider having, for example, Job provide a ReportableJob, which is just a data-bag. Reports can then #get from that without issue, as a ReportableJob is responsible for nothing but providing data.
+Example:
+
+reportable_job = job.as_reportable
+
+def job_report.report_on(reportable_job)
+  "Title: #{reportable_job.title}"
+end
+
+job_report.report_on(reportable_job)
+
+Alternately, go back to Displayable instead of Reportable.
