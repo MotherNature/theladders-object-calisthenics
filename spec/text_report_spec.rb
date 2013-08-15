@@ -47,21 +47,6 @@ describe "Jobs, when displayed, should be displayed with a title and the name of
   end
 end
 
-describe "Jobseekers should be able to see a listing of jobs they have saved for later viewing" do
-  describe TextSavedJobListReport do
-    it "should list the jobs saved by a jobseeker" do
-      jobseekers = JobseekerList.new([@jobseeker])
-      report = TextSavedJobListReport.new(jobseekers)
-      report.render.should == "Job[Title: A Job][Employer: Erin Employ]"
-    end
-  end
-
-  before(:each) do
-    @jobseeker = saving_jobseeker
-    @jobseeker.save_job(posted_job)
-  end
-end
-
 describe "Jobseekers should be able to see a listing of the jobs for which they have applied" do
   describe TextJobseekerApplicationsReport do
     it "should list the jobs to which a given jobseeker has applied" do
@@ -103,9 +88,9 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 end
 
 describe "Jobseekers should be able to see a listing of jobs they have saved for later viewing" do
-  describe TextSavedJobListReport do
+  describe TextJobseekersSavedJobsReport do
     it "should list the jobs saved by a jobseeker" do
-      report = TextSavedJobListReport.new(@reportable)
+      report = TextJobseekersSavedJobsReport.new(@reportable)
       report.render.should == "Job[Title: Posted Job][Employer: Erin Employ]"
     end
   end
