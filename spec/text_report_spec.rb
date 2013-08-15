@@ -96,10 +96,11 @@ describe "Jobseekers should be able to see a listing of jobs they have saved for
   end
 
   before(:each) do
+    repo = JobRepo.new
     job = posted_job(title: "Posted Job")
-    jobseeker = saving_jobseeker
+    jobseeker = saving_jobseeker(save_to_repo: repo)
     jobseeker.save_job(job)
-    @reportable = jobseeker.as_reportable
+    @reportable = repo.contents_as_reportable
   end
 end
 
