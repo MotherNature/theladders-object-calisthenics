@@ -29,7 +29,6 @@ end
 class HTMLPostedJobReport
   def initialize(reportable)
     @title = reportable.title
-    pp reportable
     if(reportable.posted)
       poster = reportable.poster
       @employer_name = poster.name
