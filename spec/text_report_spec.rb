@@ -31,7 +31,7 @@ describe "TheLadders should be able to get a report of what jobseekers have appl
       report.render.should == "Jobseeker[Name: Jane Jobseek]"
     end
 
-    it "should list the information for applications, including just-added applications" do
+    it "should, for each application, list the applying jobseeker, including those of just-added applications" do
       other_jobseeker = applying_jobseeker(name: "Anne Nother", apply_to_service: @service)
       other_jobseeker.apply_to_job(job: @job)
 
