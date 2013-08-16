@@ -43,23 +43,6 @@ class TextJobseekersSavedJobsReport
   end
 end
 
-class TextJobseekerApplicationsReport
-  def initialize(list)
-    @list = list
-    @sub_report = JobListReport.new(@list)
-  end
-
-  def render
-    @sub_report.render
-  end
-end
-
-class TextJobseekerApplicationsReportGenerator < JobseekerApplicationsReportGenerator
-  def initialize(jobseeker)
-    super(jobseeker, report_class: TextJobseekerApplicationsReport)
-  end
-end
-
 class TextApplicationsJobsReport
   def initialize(list)
     @reports = list.map do |application|
