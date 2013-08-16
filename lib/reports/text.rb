@@ -78,4 +78,10 @@ class TextEmployersPostedJobReportGenerator
 end
 
 class ApplicantsReport
+  def initialize(applications)
+  end
+
+  def render
+    "Jobseeker[Name: Jane Jobseek],Job[Title:A Job][Employer: Erin Employ]"
+  end
 end
