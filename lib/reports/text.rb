@@ -11,6 +11,21 @@ end
 class TextJobListReport < JobListReport
 end
 
+class TextJobseekerReport
+  def initialize(reportable)
+    @name = reportable.name
+  end
+
+  def render
+    "Jobseeker[Name: #{name}]"
+  end
+
+  private
+  def name
+    @name
+  end
+end
+
 class TextJobseekersSavedJobsReport
   def initialize(reportable)
     job_reportables = reportable.jobs
@@ -77,11 +92,19 @@ class TextEmployersPostedJobReportGenerator
   end
 end
 
-class ApplicantsReport
+class TextApplicantsReport
   def initialize(applications)
+    @subreports = applications.map do |application|
+      application_reportable = application.as_reportable
+      jobseeker_reportable = application_reportable.submission.jobseeker
+      TextJobseekerReport.new(jobseeker_reportable)
+    end
   end
 
   def render
-    "Jobseeker[Name: Jane Jobseek],Job[Title:A Job][Employer: Erin Employ]"
+    reports = @subreports.map do |report|
+      report.render
+    end
+    reports.join("\n")
   end
 end
