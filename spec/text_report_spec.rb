@@ -24,8 +24,27 @@ end
 
 describe "TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day" do
   describe ApplicationsByDateFilter do
-    it "should filter down to applications submitted on a given date" do
-      pending
+    it "should filter down to only applications submitted on a given date" do
+      service = ApplicationService.new
+
+      jobseeker = applying_jobseeker(apply_to_service: service)
+
+      job = posted_job
+      other_job = posted_job(title: "Other Job")
+
+      date = ApplicationDate.new(2012, 12, 13)
+      other_date = ApplicationDate.new(2013, 5, 9)
+
+      application1 = jobseeker.apply_to_job(job: job, on_date: date)
+      application2 = jobseeker.apply_to_job(job: other_job, on_date: other_date)
+
+      filter = ApplicationsByDateFilter.new(date)
+
+      filtered_applications = service.applications_filtered_by([filter])
+
+      filtered_applications.size.should == 1
+      filtered_applications.include?(application1).should be_true
+      filtered_applications.include?(application2).should be_false
     end
   end
 
