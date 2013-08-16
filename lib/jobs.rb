@@ -143,6 +143,10 @@ class AnyPostedByFilter
   def filter_by_jobs(any_jobs)
     any_jobs
   end
+
+  def allows?(application)
+    application.posted_by?(@poster)
+  end
 end
 
 module JobPoster

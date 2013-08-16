@@ -28,6 +28,10 @@ class Application
     @submission.submitted_by?(jobseeker)
   end
 
+  def posted_by?(poster)
+    @job.posted_by?(poster)
+  end
+
   def as_reportable
     job_reportable = @job.as_reportable
     submission_reportable = @submission.as_reportable
