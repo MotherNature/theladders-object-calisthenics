@@ -5,7 +5,7 @@ require 'jobs'
 require 'jobseekers'
 require 'employers'
 require 'resumes'
-require 'submissions'
+require 'applications'
 
 require 'helpers'
 
@@ -30,15 +30,15 @@ describe "Jobseekers can apply to jobs posted by employers" do
   describe "ATS jobs do not require a resume to apply to them" do
     describe Jobseeker do
       it "should be able to apply to ATS jobs without a resume" do
-        submission = @jobseeker.apply_to(job: @ats_job, with_resume: NoResume)
+        application = @jobseeker.apply_to_job_job(job: @ats_job, with_resume: NoResume)
 
-        submission.valid?.should be_true
+        application.valid?.should be_true
       end
 
       it "should not be able to apply to ATS jobs with a resume (missing from original spec)" do
-        submission = @jobseeker.apply_to(job: @ats_job, with_resume: @resume)
+        application = @jobseeker.apply_to_job(job: @ats_job, with_resume: @resume)
 
-        submission.valid?.should be_false
+        application.valid?.should be_false
       end
     end
   end
@@ -46,15 +46,15 @@ describe "Jobseekers can apply to jobs posted by employers" do
   describe "JReq jobs require a resume to apply to them" do
     describe Jobseeker do
       it "should be able to apply to JReq jobs with a resume" do
-        submission = @jobseeker.apply_to(job: @jreq_job, with_resume: @resume)
+        application = @jobseeker.apply_to_job(job: @jreq_job, with_resume: @resume)
 
-        submission.valid?.should be_true
+        application.valid?.should be_true
       end
 
       it "should not be able to apply to JReq jobs without a resume" do
-        submission = @jobseeker.apply_to(job: @jreq_job, with_resume: NoResume)
+        application = @jobseeker.apply_to_job(job: @jreq_job, with_resume: NoResume)
 
-        submission.valid?.should be_false
+        application.valid?.should be_false
       end
     end
   end
@@ -68,11 +68,11 @@ describe "Jobseekers can apply to jobs posted by employers" do
 
     describe Jobseeker do
       it "should be able to apply to different jobs with different resume" do
-        submission1 = @jobseeker.apply_to(job: @jreq_job, with_resume: @resume)
-        submission2 = @jobseeker.apply_to(job: @jreq_job2, with_resume: @resume2)
+        application1 = @jobseeker.apply_to_job(job: @jreq_job, with_resume: @resume)
+        application2 = @jobseeker.apply_to_job(job: @jreq_job2, with_resume: @resume2)
 
-        submission1.valid?.should be_true
-        submission2.valid?.should be_true
+        application1.valid?.should be_true
+        application2.valid?.should be_true
       end
     end
   end
@@ -84,9 +84,9 @@ describe "Jobseekers can apply to jobs posted by employers" do
 
     describe Jobseeker do
       it "cannot apply to a job with another jobseeker's resume" do
-        submission = @jobseeker.apply_to(job: @jreq_job, with_resume: @others_resume)
-
-        submission.valid?.should be_false
+        expect do
+          application = @jobseeker.apply_to_job(job: @jreq_job, with_resume: @others_resume)
+        end.to throw_exception
       end
     end
   end
