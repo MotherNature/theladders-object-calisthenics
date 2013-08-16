@@ -24,17 +24,29 @@ end
 describe "TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day" do
   describe ApplicantsReport do
     it "should, for each application, list the applying jobseeker, the applied-to job, and the job poster" do
-      service = ApplicationService.new
-
-      jobseeker = applying_jobseeker(apply_to_service: service)
-      job = posted_job
-      jobseeker.apply_to(job: job)
-
-      applications = service.applications_by(jobseeker)
+      applications = @service.applications_by(@jobseeker)
 
       report = ApplicantsReport.new(applications)
 
       report.render.should == "Jobseeker[Name: Jane Jobseek],Job[Title:A Job][Employer: Erin Employ]"
+    end
+
+    it "should list the information for applications, including just-added applications" do
+      other_job = posted_job(title: "Another Job")
+      @jobseeker.apply_to(job: other_job)
+
+      applications = @service.applications_by(@jobseeker)
+
+      report = ApplicantsReport.new(applications)
+
+      report.render.should == "Jobseeker[Name: Jane Jobseek],Job[Title:A Job][Employer: Erin Employ]\nJobseeker[Name: Jane Jobseek],Job[Title:Another Job][Employer: Erin Employ]"
+    end
+
+    before(:each) do
+      @service = ApplicationService.new
+      @job = posted_job
+      @jobseeker = applying_jobseeker(apply_to_service: @service)
+      @jobseeker.apply_to(job: @job)
     end
   end
 
