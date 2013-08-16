@@ -27,7 +27,7 @@ describe "TheLadders should be able to get a report of what jobseekers have appl
     it "should filter down to only applications submitted on a given date" do
       filter = ApplicationsByDateFilter.new(@date)
 
-      filtered_applications = @service.applications_filtered_by([filter])
+      filtered_applications = @service.select_applications_filtered_by([filter])
 
       filtered_applications.size.should == 1
       filtered_applications.include?(@application1).should be_true
@@ -37,7 +37,7 @@ describe "TheLadders should be able to get a report of what jobseekers have appl
     it "should filter down to only applications submitted on other given dates" do
       filter = ApplicationsByDateFilter.new(@other_date)
 
-      filtered_applications = @service.applications_filtered_by([filter])
+      filtered_applications = @service.select_applications_filtered_by([filter])
 
       filtered_applications.size.should == 1
       filtered_applications.include?(@application1).should be_false
