@@ -35,9 +35,32 @@ class Application
   end
 end
 
+class DatedApplication < SimpleDelegator
+  def initialize(application: nil, submitted_on: nil)
+    super(application)
+    @date = submitted_on
+  end
+
+  def submitted_on?(date)
+    @date == date
+  end
+end
+
 class ApplicationList < List
   def [](index)
     @list[index]
+  end
+
+  def select_filtered_by(filters)
+    @list.select do |item|
+      passes = true
+      filters.each do |filter|
+        if(! filter.allows?(item))
+          passes = false
+        end
+      end
+      passes
+    end
   end
 end
 
@@ -48,7 +71,8 @@ class ApplicationService
 
   def apply(with_submission: nil, to_job: nil, on_date: nil)
     application = Application.new(to_job: to_job, with_submission: with_submission)
-    save_application(application)
+    datedapplication = DatedApplication.new(application: application, submitted_on: on_date)
+    save_application(datedapplication)
     application
   end
 
@@ -62,8 +86,8 @@ class ApplicationService
     end
   end
 
-  def applications_filtered_by(filters)
-    ApplicationList.new([@applications[0]])
+  def select_applications_filtered_by(filters)
+    @applications.select_filtered_by(filters)
   end
 
   private
@@ -123,5 +147,10 @@ end
 
 class ApplicationsByDateFilter
   def initialize(date)
+    @date = date
+  end
+
+  def allows?(application)
+    application.submitted_on?(@date)
   end
 end
