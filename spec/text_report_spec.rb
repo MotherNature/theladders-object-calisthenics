@@ -22,7 +22,6 @@ RSpec.configure do |klass|
 end
 
 describe "Employers should be able to see a listing of the jobs they have posted" do
-  # TODO: Add tests that check for *expected* additions to the JobList (otherwise, the tests could pass with the class just returning a static string 
   describe TextEmployersPostedJobReportGenerator do
     it "should generate a report that lists the jobs posted by an employer, including just-added ones" do
       new_job = posted_job(title: "New Job", poster: @employer)
