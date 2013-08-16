@@ -28,10 +28,6 @@ class UnpostedJob
     OpenStruct.new(title: @title.as_reportable, posted: posted?)
   end
 
-  when_filtering_by :posted do |filter|
-    self.posted?
-  end
-
   when_reporting :job_title do |reportable|
     @title.report_title_to(reportable)
   end
@@ -65,14 +61,6 @@ class PostedJob < SimpleDelegator
     reportable.posted = posted?
     reportable.poster = @poster.as_reportable
     reportable
-  end
-
-  when_filtering_by :posted do |filter|
-    self.posted?
-  end
-
-  when_filtering_by :posted_by do |filter|
-    filter.passing_poster?(@poster)
   end
 end
 
