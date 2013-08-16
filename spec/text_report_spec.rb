@@ -23,8 +23,18 @@ end
 
 describe "TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day" do
   describe ApplicantsReport do
-    it "should, for each application, list the applying jobseeker and the applied-to job" do
-      pending
+    it "should, for each application, list the applying jobseeker, the applied-to job, and the job poster" do
+      service = ApplicationService.new
+
+      jobseeker = applying_jobseeker(apply_to_service: service)
+      job = posted_job
+      jobseeker.apply_to(job: job)
+
+      applications = service.applications_by(jobseeker)
+
+      report = ApplicantsReport.new(applications)
+
+      report.render.should == "Jobseeker[Name: Jane Jobseek],Job[Title:A Job][Employer: Erin Employ]"
     end
   end
 
