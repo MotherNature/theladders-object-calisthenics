@@ -168,29 +168,29 @@ class JobApplierRole < Role
 
   def apply_to_job(job: nil, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
     if(with_resume.exists? && ! with_resume.belongs_to?(self))
-      return WrongJobseekersResumeSubmission.new(with_resume: with_resume, submitted_to: job)
+      throw WrongJobseekersResumeSubmissionException
     end
 
-    # TODO: Should the validation happen here instead of the Submission class?
-    # TODO: Rename to Application
-    submission = Submission.new(with_resume: with_resume, submitted_to: job)
+    submission = NewSubmission.new(by_jobseeker: self, with_resume: with_resume)
 
-    if(submission.valid?)
-      @service.apply_to_job(job) # TODO: Refactor so that it's actually #apply_to, which will supply the Submission/Application
-    end
-
-    submission
+    @service.apply(with_submission: submission, to_job: job)
   end
 end
 
 class Application
-  def initialize(for_job: nil)
-    @job = for_job
+  def initialize(to_job: nil, with_submission: nil)
+    @job = to_job
+    @submission = with_submission
+  end
+
+  def submitted_by?(jobseeker)
+    @submission.submitted_by?(jobseeker)
   end
 
   def as_reportable
     job_reportable = @job.as_reportable
-    OpenStruct.new(job: job_reportable)
+    submission_reportable = @submission.as_reportable
+    OpenStruct.new(job: job_reportable, submission: submission_reportable)
   end
 end
 
@@ -202,13 +202,21 @@ class ApplicationService
     @applications = ApplicationList.new
   end
 
-  def apply_to_job(job)
-    application = Application.new(for_job: job)
-    @applications = @applications.with(application)
+  def apply(with_submission: nil, to_job: nil)
+    application = Application.new(to_job: to_job, with_submission: with_submission)
+    save_application(application)
   end
 
   def applications_by(jobseeker)
-    @applications
+    @applications.select do |application|
+      application.submitted_by?(jobseeker)
+    end
+  end
+
+  private
+
+  def save_application(application)
+    @applications = @applications.with(application)
   end
 end
 
@@ -254,4 +262,3 @@ module JobApplier
     end
   end
 end
-
