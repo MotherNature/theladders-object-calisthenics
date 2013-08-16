@@ -62,7 +62,9 @@ describe "Jobseekers should be able to see a listing of the jobs for which they 
 
     it "should only list the jobs to which a given jobseeker has applied" do
       new_job = posted_job(title: "New Job")
+
       new_jobseeker = applying_jobseeker(apply_to_service: @applicationservice)
+      new_jobseeker.apply_to_job(job: new_job)
 
       applications = @applicationservice.applications_by(new_jobseeker)
 
