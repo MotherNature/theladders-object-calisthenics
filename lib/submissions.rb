@@ -17,3 +17,23 @@ end
 
 class SubmissionDate < Date
 end
+
+class NewSubmission
+  def initialize(by_jobseeker: nil, with_resume: nil)
+    @resume = with_resume
+    @jobseeker = by_jobseeker
+  end
+
+  def submitted_by?(jobseeker)
+    @jobseeker == jobseeker
+  end
+
+  def as_reportable
+    resume_reportable = @resume.as_reportable
+    jobseeker_reportable = @jobseeker.as_reportable
+    OpenStruct.new(resume: resume_reportable, jobseeker: jobseeker_reportable)
+  end
+end
+
+class WrongJobseekersResumeSubmissionException < Exception
+end
