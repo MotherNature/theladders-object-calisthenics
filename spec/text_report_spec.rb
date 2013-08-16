@@ -22,6 +22,12 @@ RSpec.configure do |klass|
 end
 
 describe "TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day" do
+  describe ApplicantsReport do
+    it "should, for each application, list the applying jobseeker and the applied-to job" do
+      pending
+    end
+  end
+
   describe JobseekerAndJobsReport do
     it "should list the given jobseeker and all of the jobs to which they have applied" do
       report = JobseekerAndJobsReport.new(@jobseeker)

@@ -77,3 +77,5 @@ class TextEmployersPostedJobReportGenerator
   end
 end
 
+class ApplicantsReport
+end
