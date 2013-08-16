@@ -47,21 +47,6 @@ class DatedApplication < SimpleDelegator
 end
 
 class ApplicationList < List
-  def [](index)
-    @list[index]
-  end
-
-  def select_filtered_by(filters)
-    @list.select do |item|
-      passes = true
-      filters.each do |filter|
-        if(! filter.allows?(item))
-          passes = false
-        end
-      end
-      passes
-    end
-  end
 end
 
 class ApplicationService

@@ -90,6 +90,18 @@ class List
     self.class.new(filtered_items)
   end
 
+  def select_filtered_by(filters)
+    @list.select do |item|
+      passes = true
+      filters.each do |filter|
+        if(! filter.allows?(item))
+          passes = false
+        end
+      end
+      passes
+    end
+  end
+
   def size
     @list.size
   end
@@ -105,6 +117,10 @@ class List
 
   def map(&block)
     @list.map(&block)
+  end
+
+  def [](index)
+    @list[index]
   end
 
   def report_to(reportable)
