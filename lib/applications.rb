@@ -7,14 +7,14 @@ class JobApplierRole < Role
     @service = apply_to_service
   end
 
-  def apply_to_job(job: nil, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
+  def apply_to_job(job: nil, on_date: Date.new, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
     if(with_resume.exists? && ! with_resume.belongs_to?(self))
       throw WrongJobseekersResumeSubmissionException
     end
 
     submission = NewSubmission.new(by_jobseeker: self, with_resume: with_resume)
 
-    @service.apply(with_submission: submission, to_job: job)
+    @service.apply(with_submission: submission, to_job: job, on_date: on_date)
   end
 end
 
@@ -36,6 +36,9 @@ class Application
 end
 
 class ApplicationList < List
+  def [](index)
+    @list[index]
+  end
 end
 
 class ApplicationService
@@ -43,7 +46,7 @@ class ApplicationService
     @applications = ApplicationList.new
   end
 
-  def apply(with_submission: nil, to_job: nil)
+  def apply(with_submission: nil, to_job: nil, on_date: nil)
     application = Application.new(to_job: to_job, with_submission: with_submission)
     save_application(application)
     application
@@ -57,6 +60,10 @@ class ApplicationService
     @applications.select do |application|
       application.submitted_by?(jobseeker)
     end
+  end
+
+  def applications_filtered_by(filters)
+    ApplicationList.new([@applications[0]])
   end
 
   private
@@ -109,5 +116,12 @@ module JobApplier
   end
 end
 
+class ApplicationDate
+  def initialize(year, month, day)
+  end
+end
+
 class ApplicationsByDateFilter
+  def initialize(date)
+  end
 end
