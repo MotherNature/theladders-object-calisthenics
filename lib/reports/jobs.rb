@@ -45,7 +45,3 @@ class JobListReport < Report
     end
   end
 end
-
-class SavedJobListReport < JobListReport
-  reports_on :saved_jobs
-end
