@@ -4,21 +4,6 @@ require 'employers'
 require 'reports/jobs'
 require 'reports/jobseekers'
 
-class EmployersPostedJobReportGenerator
-  def initialize(employer)
-    @employer = employer
-  end
-
-  def generate_from(joblist)
-    is_posted = PostedJobFilter.new
-    posted_by = PostedByFilter.new(@employer)
-
-    filtered_jobs = joblist.filtered_by([is_posted, posted_by])
-
-    JobListReport.new(filtered_jobs)
-  end
-end
-
 class JobseekerAndJobsReport < Report
   include JobseekerStringFormatter
   include JobStringFormatter

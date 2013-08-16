@@ -23,7 +23,7 @@ end
 
 describe "Employers should be able to see a listing of the jobs they have posted" do
   # TODO: Add tests that check for *expected* additions to the JobList (otherwise, the tests could pass with the class just returning a static string 
-  describe EmployersPostedJobReportGenerator do
+  describe TextEmployersPostedJobReportGenerator do
     it "should generate a report that lists the jobs posted by an employer" do
       generates_with_expected_string_output_given_list(@joblist)
     end
@@ -54,7 +54,7 @@ describe "Employers should be able to see a listing of the jobs they have posted
 
     @joblist = JobList.new([@job, @job2])
 
-    @reportgenerator = EmployersPostedJobReportGenerator.new(@employer)
+    @reportgenerator = TextEmployersPostedJobReportGenerator.new(@employer)
   end
 
   def generates_with_expected_string_output_given_list(joblist)
