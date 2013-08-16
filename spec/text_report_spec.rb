@@ -14,6 +14,7 @@ require 'jobseekers'
 require 'employers'
 require 'resumes'
 require 'submissions'
+require 'applications'
 
 require 'helpers'
 
