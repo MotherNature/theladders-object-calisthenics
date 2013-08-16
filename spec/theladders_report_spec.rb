@@ -20,49 +20,6 @@ RSpec.configure do |klass|
   klass.include Helpers
 end
 
-describe "Employers should be able to see a listing of the jobs they have posted" do
-  # TODO: Add tests that check for *expected* additions to the JobList (otherwise, the tests could pass with the class just returning a static string 
-  describe EmployersPostedJobReportGenerator do
-    it "should generate a report that lists the jobs posted by an employer" do
-      generates_with_expected_string_output_given_list(@joblist)
-    end
-
-    it "should generate a report that lists posted jobs and not unposted ones" do
-      unposted_job = unposted_job(title: "Unposted Job", type: JobType.ATS)
-
-      expanded_joblist = @joblist.with(unposted_job)
-
-      generates_with_expected_string_output_given_list(expanded_joblist)
-    end
-
-    it "should generate a report that lists only the jobs posted by the given employer and not other employers" do
-      other_employer = posting_employer(name: "Anne Nother")
-      others_job = posted_job(title: "Not My Job", poster: other_employer)
-
-      expanded_joblist = @joblist.with(others_job)
-
-      generates_with_expected_string_output_given_list(expanded_joblist)
-    end
-  end
-
-  before(:each) do
-    @employer = posting_employer
-
-    @job = posted_job(title: "A Job", poster: @employer)
-    @job2 = posted_job(title: "Another Job", poster: @employer)
-
-    @joblist = JobList.new([@job, @job2])
-
-    @reportgenerator = EmployersPostedJobReportGenerator.new(@employer)
-  end
-
-  def generates_with_expected_string_output_given_list(joblist)
-    report = @reportgenerator.generate_from(joblist)
-
-    report.render.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
-  end
-end
-
 describe "TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day" do
   describe JobseekerAndJobsReport do
     it "should list the given jobseeker and all of the jobs to which they have applied" do
