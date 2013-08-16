@@ -22,31 +22,31 @@ RSpec.configure do |klass|
 end
 
 describe "TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day" do
-  describe ApplicantsReport do
-    it "should, for each application, list the applying jobseeker, the applied-to job, and the job poster" do
-      applications = @service.applications_by(@jobseeker)
+  describe TextApplicantsReport do
+    it "should, for each application, list the applying jobseeker" do
+      applications = @service.all_applications
 
-      report = ApplicantsReport.new(applications)
+      report = TextApplicantsReport.new(applications)
 
-      report.render.should == "Jobseeker[Name: Jane Jobseek],Job[Title:A Job][Employer: Erin Employ]"
+      report.render.should == "Jobseeker[Name: Jane Jobseek]"
     end
 
     it "should list the information for applications, including just-added applications" do
-      other_job = posted_job(title: "Another Job")
-      @jobseeker.apply_to(job: other_job)
+      other_jobseeker = applying_jobseeker(name: "Anne Nother", apply_to_service: @service)
+      other_jobseeker.apply_to_job(job: @job)
 
-      applications = @service.applications_by(@jobseeker)
+      applications = @service.all_applications
 
-      report = ApplicantsReport.new(applications)
+      report = TextApplicantsReport.new(applications)
 
-      report.render.should == "Jobseeker[Name: Jane Jobseek],Job[Title:A Job][Employer: Erin Employ]\nJobseeker[Name: Jane Jobseek],Job[Title:Another Job][Employer: Erin Employ]"
+      report.render.should == "Jobseeker[Name: Jane Jobseek]\nJobseeker[Name: Anne Nother]"
     end
 
     before(:each) do
       @service = ApplicationService.new
       @job = posted_job
       @jobseeker = applying_jobseeker(apply_to_service: @service)
-      @jobseeker.apply_to(job: @job)
+      @jobseeker.apply_to_job(job: @job)
     end
   end
 
