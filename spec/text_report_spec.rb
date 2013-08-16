@@ -34,13 +34,14 @@ describe "Employers should be able to see a listing of the jobs they have posted
     end
 
     it "should generate a report that lists posted jobs and not unposted ones" do
-      unposted_job = unposted_job(title: "Unposted Job", type: JobType.ATS)
+      posted_job = posted_job(title: "Posted Job", poster: @employer)
+      unposted_job = unposted_job(title: "Unposted Job")
 
-      expanded_joblist = @joblist.with(unposted_job)
+      expanded_joblist = @joblist.with(posted_job).with(unposted_job)
 
-      report = @reportgenerator.generate_from(@joblist)
+      report = @reportgenerator.generate_from(expanded_joblist)
 
-      report.render.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
+      report.render.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]\nJob[Title: Posted Job][Employer: Erin Employ]"
     end
 
     it "should generate a report that lists only the jobs posted by the given employer and not other employers" do
