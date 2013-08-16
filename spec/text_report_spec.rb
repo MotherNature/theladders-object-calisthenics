@@ -53,6 +53,14 @@ describe "Employers should be able to see a listing of the jobs they have posted
 
       report.render.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
     end
+
+    it "should report nothing for an empty list" do
+      empty_joblist = JobList.new
+
+      report = @reportgenerator.generate_from(empty_joblist)
+
+      report.render.should == ""
+    end
   end
 
   before(:each) do
