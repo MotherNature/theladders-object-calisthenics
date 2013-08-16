@@ -20,6 +20,10 @@ class UnpostedJob
     false
   end
 
+  def posted_by?(poster)
+    false
+  end
+
   def as_reportable
     OpenStruct.new(title: @title.as_reportable, posted: posted?)
   end
@@ -50,6 +54,10 @@ class PostedJob < SimpleDelegator
 
   def posted?
     true
+  end
+
+  def posted_by?(poster)
+    @poster == poster
   end
 
   def as_reportable
@@ -96,6 +104,10 @@ class PostedJobFilter
   def filter_by_posted(posted)
     posted == true
   end
+
+  def allows?(job)
+    job.posted?
+  end
 end
 
 class PostedByFilter
@@ -109,6 +121,10 @@ class PostedByFilter
 
   def filter_by_posted_by(was_posted)
     was_posted
+  end
+
+  def allows?(job)
+    job.posted_by?(@poster)
   end
 end
 
