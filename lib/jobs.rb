@@ -205,6 +205,11 @@ class ApplicationService
   def apply(with_submission: nil, to_job: nil)
     application = Application.new(to_job: to_job, with_submission: with_submission)
     save_application(application)
+    application
+  end
+
+  def all_applications
+    @applications
   end
 
   def applications_by(jobseeker)
