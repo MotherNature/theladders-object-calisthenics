@@ -69,7 +69,7 @@ class TextEmployersPostedJobReportGenerator
     is_posted = PostedJobFilter.new
     posted_by = PostedByFilter.new(@employer)
 
-    filtered_jobs = joblist.filtered_by([is_posted, posted_by])
+    filtered_jobs = joblist.select_filtered_by([is_posted, posted_by])
 
     JobListReport.new(filtered_jobs)
   end
