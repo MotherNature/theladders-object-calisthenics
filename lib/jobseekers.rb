@@ -1,5 +1,7 @@
+require 'utilities'
 require 'submissions'
 require 'resumes'
+require 'reports'
 
 class Jobseeker
   include TakesRoles
