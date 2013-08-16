@@ -24,10 +24,13 @@ end
 describe "Employers should be able to see a listing of the jobs they have posted" do
   # TODO: Add tests that check for *expected* additions to the JobList (otherwise, the tests could pass with the class just returning a static string 
   describe TextEmployersPostedJobReportGenerator do
-    it "should generate a report that lists the jobs posted by an employer" do
-      report = @reportgenerator.generate_from(@joblist)
+    it "should generate a report that lists the jobs posted by an employer, including just-added ones" do
+      new_job = posted_job(title: "New Job", poster: @employer)
+      expanded_joblist = @joblist.with(new_job)
 
-      report.render.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]"
+      report = @reportgenerator.generate_from(expanded_joblist)
+
+      report.render.should == "Job[Title: A Job][Employer: Erin Employ]\nJob[Title: Another Job][Employer: Erin Employ]\nJob[Title: New Job][Employer: Erin Employ]"
     end
 
     it "should generate a report that lists posted jobs and not unposted ones" do
