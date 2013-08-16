@@ -22,6 +22,12 @@ RSpec.configure do |klass|
 end
 
 describe "TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day" do
+  describe ApplicationsByDateFilter do
+    it "should filter down to applications submitted on a given date" do
+      pending
+    end
+  end
+
   describe TextApplicantsReport do
     it "should, for each application, list the applying jobseeker" do
       applications = @service.all_applications
