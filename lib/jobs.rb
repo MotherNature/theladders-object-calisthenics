@@ -5,7 +5,6 @@ require 'reports'
 
 class UnpostedJob
   include Reports
-  include Filterable
 
   def initialize(title: nil, type: nil)
     @title = title
@@ -36,7 +35,6 @@ end
 class PostedJob < SimpleDelegator
   include HumanReadableDelegation
   include Reports
-  include Filterable
 
   def initialize(job: nil, posted_by: nil)
     super(job)
