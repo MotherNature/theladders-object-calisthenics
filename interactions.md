@@ -1,7 +1,5 @@
 # Pending
 
-+ Jobseekers, when displayed, should be displayed by their name.
-+ Employers, when displayed, should be displayed by their name.
 + Employers should be able to see jobseekers who have applied to their jobs by both job and day. If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day.
 + TheLadders wants the system to be able to handle more than one job with the same title.
 + TheLadders wants the system to be able to handle more than one jobseeker with the same name.
@@ -16,6 +14,8 @@
 
 # Completed
 
++ Jobseekers, when displayed, should be displayed by their name.
++ Employers, when displayed, should be displayed by their name.
 + Jobseekers should be able to see a listing of the jobs for which they have applied.
 + Jobs, when displayed, should be displayed with a title and the name of the employer who posted it.
 + Employers can post jobs.
