@@ -141,10 +141,10 @@ module JobPoster
   end
 end
 
-class JobSaverRole < Role
-  def initialize(save_to_repo: nil)
+class JobSaverRole < DelegateClass(Object)
+  def initialize(roletaker: nil, save_to_repo: nil)
     @repo = save_to_repo 
-    super(nil)
+    super(roletaker)
   end
 
   def save_job(job)
