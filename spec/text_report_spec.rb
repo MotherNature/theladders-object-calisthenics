@@ -88,6 +88,35 @@ describe "TheLadders should be able to get a report of what jobseekers have appl
     end
   end
 
+  describe "Integration" do
+    it "generate a report of applicants on a specific date" do
+      jobseeker1 = applying_jobseeker(name: "Anne Plier", apply_to_service: @service)
+      jobseeker2 = applying_jobseeker(name: "Betsy Becker", apply_to_service: @service)
+      jobseeker3 = applying_jobseeker(name: "Candice Courter", apply_to_service: @service)
+      other_jobseeker = applying_jobseeker(name: "Ophelia Other", apply_to_service: @service)
+
+      jobseeker1.apply_to_job(job: @job, on_date: @date)
+      jobseeker2.apply_to_job(job: @job, on_date: @date)
+      jobseeker3.apply_to_job(job: @job, on_date: @date)
+      other_jobseeker.apply_to_job(job: @job, on_date: @other_date)
+
+      filter = ApplicationsByDateFilter.new(@date)
+      applications = @service.select_applications_filtered_by([filter])
+
+      report = TextApplicantsReport.new(applications)
+      
+      report.render.should == "Jobseeker[Name: Anne Plier]\nJobseeker[Name: Betsy Becker]\nJobseeker[Name: Candice Courter]"
+    end
+
+    before(:each) do
+      @service = ApplicationService.new
+      @job = posted_job
+
+      @date = ApplicationDate.new(2013, 12, 13)
+      @other_date = ApplicationDate.new(2010, 9, 31)
+    end
+  end
+
   # TODO: Replace with a spec that integrates the classes above
 end
 
