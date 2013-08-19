@@ -304,6 +304,28 @@ describe "TheLadders should be able to see aggregate job application numbers by 
       report.render.should == "4"
     end
 
+    it "should report the number of applications in the given, expanded list of applications" do
+      list = @service.all_applications
+
+      other_jobseeker = applying_jobseeker(apply_to_service: @service)
+      other_application = other_jobseeker.apply_to_job
+
+      expanded_list = list.with(other_application)
+
+      report = ApplicationCountReport.new(expanded_list)
+      report.render.should == "5"
+    end
+
+    it "should report the number of applications in the given, shortened list of applications" do
+      other_jobseeker = applying_jobseeker(apply_to_service: @service)
+      other_application = other_jobseeker.apply_to_job
+
+      shortened_list = ApplicationList.new([other_application])
+
+      report = ApplicationCountReport.new(shortened_list)
+      report.render.should == "1"
+    end
+
     before(:each) do
       @service = ApplicationService.new
 
