@@ -277,6 +277,21 @@ describe "Employers should be able to see jobseekers who have applied to their j
   end
 end
 
-describe TextApplicationReport do
-  it "is pending"
+describe "TheLadders should be able to ascertain jobseeker, job, employer and job application date from the job application report" do
+  describe TextApplicationReport do
+    it "should report on the jobseeker, job, employer, and date associated with the given application " do
+      report = TextApplicationReport.new(@application)
+      report.render.should == "Jobseeker[Name: Anne Applicant];Job[Title: Applicable Job][Employer: Erin Employ];Date[Month: 12][Day: 13][Year: 2013]"
+      pending
+    end
+
+    before(:each) do
+      service = ApplicationService.new
+      jobseeker = applying_jobseeker(name: "Anne Applicant")
+      employer = posting_employer(name: "Erin Employ")
+      job = posted_job(title: "Applicable Job", poster: employer)
+      date = ApplicationDate.new(2012, 12, 13)
+      @application = jobseeker.apply_to_job(job: job, on_date: date)
+    end
+  end
 end
