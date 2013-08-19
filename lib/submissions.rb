@@ -28,6 +28,10 @@ class NewSubmission
     @jobseeker == jobseeker
   end
 
+  def valid_for?(job)
+    job.suitable_resume?(@resume)
+  end
+
   def as_reportable
     resume_reportable = @resume.as_reportable
     jobseeker_reportable = @jobseeker.as_reportable
