@@ -9,7 +9,7 @@ class JobApplierRole < DelegateClass(Object)
     super(@delegatee)
   end
 
-  def apply_to_job(job: nil, on_date: Date.new, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
+  def apply_to_job(job: nil, on_date: ApplicationDate.new, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
     if(with_resume.exists? && ! with_resume.belongs_to?(delegatee))
       raise WrongJobseekersResumeSubmissionException
     end
@@ -55,7 +55,7 @@ class Application
   end
 end
 
-class DatedApplication < SimpleDelegator
+class DatedApplication < DelegateClass(Application)
   def initialize(application: nil, submitted_on: nil)
     super(application)
     @date = submitted_on
@@ -63,6 +63,13 @@ class DatedApplication < SimpleDelegator
 
   def submitted_on?(date)
     @date == date
+  end
+
+  def as_reportable
+    original_reportable = super
+    date_reportable = @date.as_reportable
+    original_reportable.date = date_reportable
+    original_reportable
   end
 end
 
@@ -78,7 +85,7 @@ class ApplicationService
     application = Application.new(to_job: to_job, with_submission: with_submission)
     datedapplication = DatedApplication.new(application: application, submitted_on: on_date)
     save_application(datedapplication)
-    application
+    datedapplication
   end
 
   def all_applications
@@ -146,7 +153,12 @@ module JobApplier
 end
 
 class ApplicationDate
-  def initialize(year, month, day)
+  def initialize(year: Date.new.year, month: Date.new.month, day: Date.new.day)
+    @date = Date.new(year, month, day)
+  end
+
+  def as_reportable
+    OpenStruct.new(year: @date.year, month: @date.month, day: @date.day)
   end
 end
 
