@@ -235,17 +235,11 @@ end
 describe "Employers should be able to see jobseekers who have applied to their jobs by both job and day" do
   describe "If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day" do
     it "should have a way to filter down to just the applications for a specific job and a specific day" do
-      @service.all_applications.size.should == 4
-
-      job_filter = ApplicationsByJobFilter.new(@job)
-      day_filter = ApplicationsByDateFilter.new(@date)
-      filtered_applications = @service.select_applications_filtered_by([job_filter, day_filter])
-
-      filtered_applications.size.should == 1
-      filtered_applications.include?(@application1).should be_true
-      filtered_applications.include?(@application2).should be_false
-      filtered_applications.include?(@application3).should be_false
-      filtered_applications.include?(@application4).should be_false
+      @filtered_applications.size.should == 1
+      @filtered_applications.include?(@application1).should be_true
+      @filtered_applications.include?(@application2).should be_false
+      @filtered_applications.include?(@application3).should be_false
+      @filtered_applications.include?(@application4).should be_false
     end
 
     before(:each) do
@@ -266,6 +260,12 @@ describe "Employers should be able to see jobseekers who have applied to their j
       @application2 = @jobseeker2.apply_to_job(job: @job, on_date: @other_date)
       @application3 = @jobseeker3.apply_to_job(job: @other_job, on_date: @date)
       @application4 = @jobseeker4.apply_to_job(job: @other_job, on_date: @other_date)
+
+      @service.all_applications.size.should == 4
+
+      job_filter = ApplicationsByJobFilter.new(@job)
+      day_filter = ApplicationsByDateFilter.new(@date)
+      @filtered_applications = @service.select_applications_filtered_by([job_filter, day_filter])
     end
   end
 end
