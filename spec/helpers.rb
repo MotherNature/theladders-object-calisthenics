@@ -21,14 +21,11 @@ module Helpers
 
   def saving_jobseeker(name: "Sally Saver", save_to_repo: JobRepo.new)
     jobseeker = basic_jobseeker(name: name)
-    jobs = JobList.new
-    jobsaver = JobSaverRole.new(roletaker: jobseeker, save_to_repo: save_to_repo)
+    JobSaverRole.new(roletaker: jobseeker, save_to_repo: save_to_repo)
   end
 
   def applying_jobseeker(name: "Jane Jobseek", apply_to_service: ApplicationService.new)
     jobseeker = basic_jobseeker(name: name)
-    jobseeker.take_on_role(JobApplier)
-    role = JobApplierRole.new(apply_to_service: apply_to_service)
-    jobseeker.with_role(role)
+    JobApplierRole.new(roletaker: jobseeker, apply_to_service: apply_to_service)
   end
 end
