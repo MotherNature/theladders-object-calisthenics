@@ -8,8 +8,8 @@ class JobApplierRole < Role
   end
 
   def apply_to_job(job: nil, on_date: Date.new, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
-    if(with_resume.exists? && ! with_resume.belongs_to?(self))
-      throw WrongJobseekersResumeSubmissionException
+    if(with_resume.exists? && ! with_resume.belongs_to?(delegatee))
+      raise WrongJobseekersResumeSubmissionException
     end
 
     submission = NewSubmission.new(by_jobseeker: self, with_resume: with_resume)
@@ -33,7 +33,7 @@ class Application
   end
 
   def valid?
-    @submission.valid?
+    @submission.valid_for?(@job)
   end
 
   def as_reportable

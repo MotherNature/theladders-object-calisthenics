@@ -30,7 +30,7 @@ describe "Jobseekers can apply to jobs posted by employers" do
   describe "ATS jobs do not require a resume to apply to them" do
     describe Jobseeker do
       it "should be able to apply to ATS jobs without a resume" do
-        application = @jobseeker.apply_to_job_job(job: @ats_job, with_resume: NoResume)
+        application = @jobseeker.apply_to_job(job: @ats_job, with_resume: NoResume)
 
         application.valid?.should be_true
       end
@@ -86,7 +86,7 @@ describe "Jobseekers can apply to jobs posted by employers" do
       it "cannot apply to a job with another jobseeker's resume" do
         expect do
           application = @jobseeker.apply_to_job(job: @jreq_job, with_resume: @others_resume)
-        end.to throw_exception
+        end.to raise_error(WrongJobseekersResumeSubmissionException)
       end
     end
   end
