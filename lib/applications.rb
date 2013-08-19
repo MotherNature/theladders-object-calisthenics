@@ -2,19 +2,27 @@ require 'ostruct'
 
 require 'utilities'
 
-class JobApplierRole < Role
-  def initialize(apply_to_service: nil)
+class JobApplierRole < DelegateClass(Object)
+  def initialize(roletaker: nil, apply_to_service: nil)
+    @roletaker = roletaker
     @service = apply_to_service
+    super(roletaker)
   end
 
   def apply_to_job(job: nil, on_date: Date.new, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
-    if(with_resume.exists? && ! with_resume.belongs_to?(delegatee))
+    if(with_resume.exists? && ! with_resume.belongs_to?(roletaker))
       raise WrongJobseekersResumeSubmissionException
     end
 
     submission = NewSubmission.new(by_jobseeker: self, with_resume: with_resume)
 
     @service.apply(with_submission: submission, to_job: job, on_date: on_date)
+  end
+
+  private
+
+  def roletaker
+    @roletaker
   end
 end
 
