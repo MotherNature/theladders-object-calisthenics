@@ -295,3 +295,9 @@ describe "TheLadders should be able to ascertain jobseeker, job, employer and jo
     end
   end
 end
+
+describe "TheLadders should be able to see aggregate job application numbers by job and employer" do
+  describe ApplicationCountReport do
+    it "should report the number of applications in the given list of applications"
+  end
+end
