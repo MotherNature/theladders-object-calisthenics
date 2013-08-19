@@ -328,21 +328,31 @@ describe "TheLadders should be able to see aggregate job application numbers by 
 
     describe "Integration" do
       it "should report on the number of applications for a specific job" do
-        pending
+        filter = ApplicationsByJobFilter.new(@job)
+        list = @service.select_applications_filtered_by([filter])
+
+        report = TextApplicationCountReport.new(list)
+        report.render.should == "2"
       end
 
       it "should report on the number of applications for a specific employer" do
-        pending
+        filter = ApplicationsByEmployersJobsFilter.new(@employer)
+        list = @service.select_applications_filtered_by([filter])
+
+        report = TextApplicationCountReport.new(list)
+        report.render.should == "2"
       end
     end
 
     before(:each) do
       @service = ApplicationService.new
 
-      job = posted_job
+      @employer = posting_employer
+
+      @job = posted_job(poster: @employer)
       other_job = posted_job
 
-      date = ApplicationDate.new(year: 2012, month: 12, day: 13)
+      @date = ApplicationDate.new(year: 2012, month: 12, day: 13)
       other_date = ApplicationDate.new(year: 2013, month: 5, day: 9)
 
       jobseeker1 = applying_jobseeker(name: "Andy Alpha", apply_to_service: @service)
@@ -350,9 +360,9 @@ describe "TheLadders should be able to see aggregate job application numbers by 
       jobseeker3 = applying_jobseeker(name: "Gary Gamma", apply_to_service: @service)
       jobseeker4 = applying_jobseeker(name: "Debra Delta", apply_to_service: @service)
 
-      application1 = jobseeker1.apply_to_job(job: job, on_date: date)
-      application2 = jobseeker2.apply_to_job(job: job, on_date: other_date)
-      application3 = jobseeker3.apply_to_job(job: other_job, on_date: date)
+      application1 = jobseeker1.apply_to_job(job: @job, on_date: @date)
+      application2 = jobseeker2.apply_to_job(job: @job, on_date: other_date)
+      application3 = jobseeker3.apply_to_job(job: other_job, on_date: @date)
       application4 = jobseeker4.apply_to_job(job: other_job, on_date: other_date)
     end
   end
