@@ -118,3 +118,13 @@ class TextApplicationReport
     rendered_reports.join("\n")
   end
 end
+
+class ApplicationCountReport
+  def initialize(list)
+    @list = list
+  end
+
+  def render
+    @list.size.to_s
+  end
+end
