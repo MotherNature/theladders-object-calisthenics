@@ -13,6 +13,7 @@ require 'jobseekers'
 require 'employers'
 require 'resumes'
 require 'submissions'
+require 'applications'
 
 require 'helpers'
 
@@ -59,3 +60,36 @@ describe AnyPostedByFilter do
     end
   end
 end
+
+describe ApplicationsByEmployersJobsFilter do
+  it "should filter down to only applications for jobs posted by the given employer" do
+    @service.all_applications.size.should == 0
+
+    application1 = @jobseeker1.apply_to_job(job: @job)
+    application2 = @jobseeker2.apply_to_job(job: @job)
+    application3 = @jobseeker3.apply_to_job(job: @other_job)
+
+    filter = ApplicationsByEmployersJobsFilter.new(@employer)
+    filtered_applications = @service.select_applications_filtered_by([filter])
+
+    filtered_applications.size.should == 2
+    filtered_applications.include?(application1).should be_true
+    filtered_applications.include?(application2).should be_true
+    filtered_applications.include?(application3).should be_false
+  end
+
+  before(:each) do
+    @service = ApplicationService.new
+
+    @employer = posting_employer(name: "Patrick Poster")
+    @job = posted_job(poster: @employer)
+
+    @other_employer = posting_employer(name: "Olive Other")
+    @other_job = posted_job(poster: @other_employer)
+
+    @jobseeker1 = applying_jobseeker(name: "Andy Alpha", apply_to_service: @service)
+    @jobseeker2 = applying_jobseeker(name: "Betsy Beta", apply_to_service: @service)
+    @jobseeker3 = applying_jobseeker(name: "Gary Gamma", apply_to_service: @service)
+  end
+end
+
