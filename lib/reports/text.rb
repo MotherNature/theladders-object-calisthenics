@@ -92,5 +92,29 @@ class TextApplicantsReport
   end
 end
 
+class TextDateReport
+  def initialize(reportable)
+    @month = reportable.month
+    @day = reportable.day
+    @year = reportable.year
+  end
+  
+  def render
+    "Date[Month: #{@month}][Day: #{@day}][Year: #{@year}]"
+  end
+end
+
 class TextApplicationReport
+  def initialize(reportable)
+    @jobseeker_report = TextJobseekerReport.new(reportable.submission.jobseeker)
+    @job_report = TextJobReport.new(reportable.job)
+    @date_report = TextDateReport.new(reportable.date)
+  end
+
+  def render
+    rendered_reports = [@jobseeker_report, @job_report, @date_report].map do |report|
+      report.render
+    end
+    rendered_reports.join("\n")
+  end
 end
