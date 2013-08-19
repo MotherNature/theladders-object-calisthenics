@@ -40,6 +40,10 @@ class Application
     @job.posted_by?(poster)
   end
 
+  def to_job?(job)
+    @job == job
+  end
+
   def valid?
     @submission.valid_for?(@job)
   end
@@ -163,5 +167,15 @@ class ApplicationsByEmployersJobsFilter
 
   def allows?(application)
     application.posted_by?(@employer)
+  end
+end
+
+class ApplicationsByJobFilter
+  def initialize(job)
+    @job = job
+  end
+
+  def allows?(application)
+    application.to_job?(@job)
   end
 end
