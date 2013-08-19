@@ -242,6 +242,13 @@ describe "Employers should be able to see jobseekers who have applied to their j
       @filtered_applications.include?(@application4).should be_false
     end
 
+    describe TextApplicantsReport do
+      it "should report on just the applications for a specific job and a specific day" do
+        report = TextApplicantsReport.new(@filtered_applications)
+        report.render.should == "Jobseeker[Name: Andy Alpha]"
+      end
+    end
+
     before(:each) do
       @service = ApplicationService.new
 
