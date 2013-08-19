@@ -326,6 +326,16 @@ describe "TheLadders should be able to see aggregate job application numbers by 
       report.render.should == "1"
     end
 
+    describe "Integration" do
+      it "should report on the number of applications for a specific job" do
+        pending
+      end
+
+      it "should report on the number of applications for a specific employer" do
+        pending
+      end
+    end
+
     before(:each) do
       @service = ApplicationService.new
 
