@@ -25,3 +25,16 @@ describe JobSaverRole do
     end.to_not raise_error
   end
 end
+
+describe JobApplierRole do
+  it "can apply even if its role-taker has taken on additional roles" do
+    expect do
+      jobseeker = saving_jobseeker
+      applying_jobseeker = JobApplierRole.new(roletaker: jobseeker, apply_to_service: ApplicationService.new)
+      job = posted_job
+
+      applying_jobseeker.save_job(job)
+      applying_jobseeker.apply_to_job(job: job)
+    end.to_not raise_error
+  end
+end
