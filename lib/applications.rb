@@ -157,4 +157,11 @@ class ApplicationsByDateFilter
 end
 
 class ApplicationsByEmployersJobsFilter
+  def initialize(employer)
+    @employer = employer
+  end
+
+  def allows?(application)
+    application.posted_by?(@employer)
+  end
 end
