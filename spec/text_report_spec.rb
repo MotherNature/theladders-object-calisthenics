@@ -297,10 +297,10 @@ describe "TheLadders should be able to ascertain jobseeker, job, employer and jo
 end
 
 describe "TheLadders should be able to see aggregate job application numbers by job and employer" do
-  describe ApplicationCountReport do
+  describe TextApplicationCountReport do
     it "should report the number of applications in the given list of applications" do
       list = @service.all_applications
-      report = ApplicationCountReport.new(list)
+      report = TextApplicationCountReport.new(list)
       report.render.should == "4"
     end
 
@@ -312,7 +312,7 @@ describe "TheLadders should be able to see aggregate job application numbers by 
 
       expanded_list = list.with(other_application)
 
-      report = ApplicationCountReport.new(expanded_list)
+      report = TextApplicationCountReport.new(expanded_list)
       report.render.should == "5"
     end
 
@@ -322,7 +322,7 @@ describe "TheLadders should be able to see aggregate job application numbers by 
 
       shortened_list = ApplicationList.new([other_application])
 
-      report = ApplicationCountReport.new(shortened_list)
+      report = TextApplicationCountReport.new(shortened_list)
       report.render.should == "1"
     end
 

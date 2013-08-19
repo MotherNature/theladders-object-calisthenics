@@ -119,7 +119,7 @@ class TextApplicationReport
   end
 end
 
-class ApplicationCountReport
+class TextApplicationCountReport
   def initialize(list)
     @list = list
   end
