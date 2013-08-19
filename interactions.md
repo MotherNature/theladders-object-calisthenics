@@ -10,7 +10,6 @@
 
 # In Progress
 
-+ TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day.
 
 # Completed
 
@@ -28,6 +27,7 @@
 + Jobseekers can save jobs onsite for later viewing.
 + Jobseekers should be able to see a listing of jobs they have saved for later viewing.
 + Employers should be able to see a listing of the jobs they have posted.
++ TheLadders should be able to get a report of what jobseekers have applied to jobs on any given day.
 
 # Local TODO
 
