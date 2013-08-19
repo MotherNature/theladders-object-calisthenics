@@ -95,7 +95,7 @@ describe "Jobseekers can apply to jobs posted by employers" do
     it "can apply even if its role-taker has taken on additional roles" do
       expect do
         jobseeker = applying_jobseeker
-        saving_jobseeker = JobSaverRole.new(jobseeker: jobseeker, save_to_repo: JobRepo.new)
+        saving_jobseeker = JobSaverRole.new(roletaker: jobseeker, save_to_repo: JobRepo.new)
         job = posted_job
 
         saving_jobseeker.apply_to_job(job: job)
