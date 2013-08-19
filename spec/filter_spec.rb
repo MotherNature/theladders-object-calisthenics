@@ -50,8 +50,8 @@ describe ApplicationsByDateFilter do
     job = posted_job
     other_job = posted_job(title: "Other Job")
 
-    @date = ApplicationDate.new(2012, 12, 13)
-    @other_date = ApplicationDate.new(2013, 5, 9)
+    @date = ApplicationDate.new(year: 2012, month: 12, day: 13)
+    @other_date = ApplicationDate.new(year: 2013, month: 5, day: 9)
 
     @application1 = jobseeker.apply_to_job(job: job, on_date: @date)
     @application2 = jobseeker.apply_to_job(job: other_job, on_date: @other_date)

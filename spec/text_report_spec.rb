@@ -75,8 +75,8 @@ describe "TheLadders should be able to get a report of what jobseekers have appl
       @service = ApplicationService.new
       @job = posted_job
 
-      @date = ApplicationDate.new(2013, 12, 13)
-      @other_date = ApplicationDate.new(2010, 9, 31)
+      @date = ApplicationDate.new(year: 2013, month: 12, day: 13)
+      @other_date = ApplicationDate.new(year: 2010, month: 9, day: 30)
     end
   end
 
@@ -255,8 +255,8 @@ describe "Employers should be able to see jobseekers who have applied to their j
       @job = posted_job
       @other_job = posted_job
 
-      @date = ApplicationDate.new(2012, 12, 13)
-      @other_date = ApplicationDate.new(2013, 5, 9)
+      @date = ApplicationDate.new(year: 2012, month: 12, day: 13)
+      @other_date = ApplicationDate.new(year: 2013, month: 5, day: 9)
 
       @jobseeker1 = applying_jobseeker(name: "Andy Alpha", apply_to_service: @service)
       @jobseeker2 = applying_jobseeker(name: "Betsy Beta", apply_to_service: @service)
@@ -279,10 +279,9 @@ end
 
 describe "TheLadders should be able to ascertain jobseeker, job, employer and job application date from the job application report" do
   describe TextApplicationReport do
-    it "should report on the jobseeker, job, employer, and date associated with the given application " do
-      report = TextApplicationReport.new(@application)
-      report.render.should == "Jobseeker[Name: Anne Applicant];Job[Title: Applicable Job][Employer: Erin Employ];Date[Month: 12][Day: 13][Year: 2013]"
-      pending
+    it "should report on the jobseeker, job, employer, and date associated with the given application" do
+      report = TextApplicationReport.new(@application_reportable)
+      report.render.should == "Jobseeker[Name: Anne Applicant]\nJob[Title: Applicable Job][Employer: Erin Employ]\nDate[Month: 12][Day: 13][Year: 2012]"
     end
 
     before(:each) do
@@ -290,8 +289,9 @@ describe "TheLadders should be able to ascertain jobseeker, job, employer and jo
       jobseeker = applying_jobseeker(name: "Anne Applicant")
       employer = posting_employer(name: "Erin Employ")
       job = posted_job(title: "Applicable Job", poster: employer)
-      date = ApplicationDate.new(2012, 12, 13)
-      @application = jobseeker.apply_to_job(job: job, on_date: date)
+      date = ApplicationDate.new(year: 2012, month: 12, day: 13)
+      application = jobseeker.apply_to_job(job: job, on_date: date)
+      @application_reportable =  application.as_reportable
     end
   end
 end
