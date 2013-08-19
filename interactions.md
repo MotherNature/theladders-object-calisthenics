@@ -3,11 +3,11 @@
 + TheLadders wants the system to be able to handle more than one job with the same title.
 + TheLadders wants the system to be able to handle more than one jobseeker with the same name.
 + TheLadders wants the system to be able to handle more than one employer with the same name.
-+ TheLadders should be able to see aggregate job application numbers by job and employer.
 + TheLadders should be able to get the job application report in either csv or html format.
 
 # In Progress
 
++ TheLadders should be able to see aggregate job application numbers by job and employer.
 
 # Completed
 
