@@ -298,6 +298,30 @@ end
 
 describe "TheLadders should be able to see aggregate job application numbers by job and employer" do
   describe ApplicationCountReport do
-    it "should report the number of applications in the given list of applications"
+    it "should report the number of applications in the given list of applications" do
+      list = @service.all_applications
+      report = ApplicationCountReport.new(list)
+      report.render.should == "4"
+    end
+
+    before(:each) do
+      @service = ApplicationService.new
+
+      job = posted_job
+      other_job = posted_job
+
+      date = ApplicationDate.new(year: 2012, month: 12, day: 13)
+      other_date = ApplicationDate.new(year: 2013, month: 5, day: 9)
+
+      jobseeker1 = applying_jobseeker(name: "Andy Alpha", apply_to_service: @service)
+      jobseeker2 = applying_jobseeker(name: "Betsy Beta", apply_to_service: @service)
+      jobseeker3 = applying_jobseeker(name: "Gary Gamma", apply_to_service: @service)
+      jobseeker4 = applying_jobseeker(name: "Debra Delta", apply_to_service: @service)
+
+      application1 = jobseeker1.apply_to_job(job: job, on_date: date)
+      application2 = jobseeker2.apply_to_job(job: job, on_date: other_date)
+      application3 = jobseeker3.apply_to_job(job: other_job, on_date: date)
+      application4 = jobseeker4.apply_to_job(job: other_job, on_date: other_date)
+    end
   end
 end
