@@ -234,6 +234,38 @@ end
 
 describe "Employers should be able to see jobseekers who have applied to their jobs by both job and day" do
   describe "If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day" do
-    it "is pending"
+    it "should have a way to filter down to just the applications for a specific job and a specific day" do
+      @service.all_applications.size.should == 4
+
+      job_filter = ApplicationsByJobFilter.new(@job)
+      day_filter = ApplicationsByDateFilter.new(@date)
+      filtered_applications = @service.select_applications_filtered_by([job_filter, day_filter])
+
+      filtered_applications.size.should == 1
+      filtered_applications.include?(@application1).should be_true
+      filtered_applications.include?(@application2).should be_false
+      filtered_applications.include?(@application3).should be_false
+      filtered_applications.include?(@application4).should be_false
+    end
+
+    before(:each) do
+      @service = ApplicationService.new
+
+      @job = posted_job
+      @other_job = posted_job
+
+      @date = ApplicationDate.new(2012, 12, 13)
+      @other_date = ApplicationDate.new(2013, 5, 9)
+
+      @jobseeker1 = applying_jobseeker(name: "Andy Alpha", apply_to_service: @service)
+      @jobseeker2 = applying_jobseeker(name: "Betsy Beta", apply_to_service: @service)
+      @jobseeker3 = applying_jobseeker(name: "Gary Gamma", apply_to_service: @service)
+      @jobseeker4 = applying_jobseeker(name: "Debra Delta", apply_to_service: @service)
+
+      @application1 = @jobseeker1.apply_to_job(job: @job, on_date: @date)
+      @application2 = @jobseeker2.apply_to_job(job: @job, on_date: @other_date)
+      @application3 = @jobseeker3.apply_to_job(job: @other_job, on_date: @date)
+      @application4 = @jobseeker4.apply_to_job(job: @other_job, on_date: @other_date)
+    end
   end
 end
