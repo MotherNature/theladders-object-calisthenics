@@ -276,3 +276,7 @@ describe "Employers should be able to see jobseekers who have applied to their j
     end
   end
 end
+
+describe TextApplicationReport do
+  it "is pending"
+end

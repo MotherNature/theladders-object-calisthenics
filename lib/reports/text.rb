@@ -91,3 +91,6 @@ class TextApplicantsReport
     reports.join("\n")
   end
 end
+
+class TextApplicationReport
+end
