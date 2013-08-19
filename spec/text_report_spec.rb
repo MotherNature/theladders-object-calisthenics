@@ -269,3 +269,14 @@ describe "Jobseekers should be able to see a listing of jobs they have saved for
   end
 end
 
+describe "Employers should be able to see jobseekers who have applied to their jobs by both job and day" do
+  describe ApplicationsByEmployersJobsFilter do
+    it "should filter down to only applications for jobs posted by the given employer" do
+      pending
+    end
+  end
+
+  describe "If possible, we would like to be able to combine the 2 and see jobseekers who have applied to a given job on a given day" do
+    it "is pending"
+  end
+end

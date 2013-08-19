@@ -155,3 +155,6 @@ class ApplicationsByDateFilter
     application.submitted_on?(@date)
   end
 end
+
+class ApplicationsByEmployersJobsFilter
+end
