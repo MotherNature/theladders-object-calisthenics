@@ -17,7 +17,7 @@ describe JobSaverRole do
   it "can save even if its role-taker has taken on additional roles" do
     expect do
       initial_jobseeker = applying_jobseeker
-      wrapped_jobseeker = JobSaverRole.new(roletaker: initial_jobseeker, save_to_repo: JobRepo.new)
+      wrapped_jobseeker = JobSaverRole.new(delegate_to: initial_jobseeker, save_to_repo: JobRepo.new)
 
       job = posted_job
 
@@ -31,7 +31,7 @@ describe JobApplierRole do
   it "can apply even if its role-taker has taken on additional roles" do
     expect do
       initial_jobseeker = saving_jobseeker
-      wrapped_jobseeker = NewJobApplier.new(roletaker: initial_jobseeker, apply_to_service: ApplicationService.new)
+      wrapped_jobseeker = JobApplierRole.new(delegate_to: initial_jobseeker, apply_to_service: ApplicationService.new)
 
       job = posted_job
 

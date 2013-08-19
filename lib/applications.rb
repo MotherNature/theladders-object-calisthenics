@@ -3,14 +3,14 @@ require 'ostruct'
 require 'utilities'
 
 class JobApplierRole < DelegateClass(Object)
-  def initialize(roletaker: nil, apply_to_service: nil)
-    @roletaker = roletaker
+  def initialize(delegate_to: nil, apply_to_service: nil)
+    @delegatee = delegate_to
     @service = apply_to_service
-    super(roletaker)
+    super(@delegatee)
   end
 
   def apply_to_job(job: nil, on_date: Date.new, with_resume: NoResume) # TODO: Change back to just #apply_to after refactoring.
-    if(with_resume.exists? && ! with_resume.belongs_to?(roletaker))
+    if(with_resume.exists? && ! with_resume.belongs_to?(delegatee))
       raise WrongJobseekersResumeSubmissionException
     end
 
@@ -21,8 +21,8 @@ class JobApplierRole < DelegateClass(Object)
 
   private
 
-  def roletaker
-    @roletaker
+  def delegatee
+    @delegatee
   end
 end
 
